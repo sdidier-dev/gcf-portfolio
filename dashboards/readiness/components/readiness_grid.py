@@ -7,7 +7,7 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from ..countries_config import df_GCF_countries
+from ..readiness_config import df_GCF_readiness
 
 # custom header template to add an info icon to emphasize tooltips for that header
 header_template_with_icon = """
@@ -45,64 +45,93 @@ financing_header_tooltip = '''
   for each project.
 '''
 
+ref_col = {'field': 'Ref #'}
+project_col = {
+    'field': 'Project Title', 'tooltipField': 'Project Title',
+    'width': 300
+
+}
+activity_col = {
+    'field': 'Activity', 'tooltipField': 'Activity',
+    'width': 270
+}
+nap_col = {
+    'field': 'NAP', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
+    "headerComponentParams": {"template": header_template_with_icon},
+    'headerTooltip': 'National Adaptation Plans',
+    'width': 100
+}
+partner_col = {'field': 'Delivery Partner'}
+country_col = {
+    'field': 'Country', "cellRenderer": "CountriesCell",
+    'tooltipField': 'Country', "tooltipComponent": "CustomTooltipCountries",
+    'cellStyle': {'display': 'flex', 'align-items': 'center'}
+
+}
+region_col = {'field': 'Region', 'width': 150}
+sids_col = {
+    'field': 'SIDS', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
+    "headerComponentParams": {"template": header_template_with_icon},
+    'headerTooltip': 'Small Island Developing States',
+    'width': 100
+}
+ldc_col = {
+    'field': 'LDC', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
+    "headerComponentParams": {"template": header_template_with_icon},
+    'headerTooltip': 'Least Developed Countries',
+    'width': 100
+}
+as_col = {
+    'field': 'AS', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
+    "headerComponentParams": {"template": header_template_with_icon},
+    'headerTooltip': 'African States',
+    'width': 100
+}
+
+status_col = {'field': 'Status', "cellRenderer": "CustomReadinessStatusCell",
+              "cellClass": 'center-flex-cell', "pinned": "right"}
+
+date_obj = "d3.timeParse('%Y-%m-%d')(params.data['Approved Date'])"
+approved_date_col = {
+    'field': 'Approved Date', 'cellStyle': {'textAlign': 'center'},
+    "valueFormatter": {"function": f"d3.timeFormat('%b %d, %Y')({date_obj})"},
+    'width': 200, "pinned": "right"
+}
+financing_col = {
+    'field': 'Financing', 'cellStyle': {'textAlign': 'right'},
+    "valueFormatter": {"function": "d3.format('$.4s')(params.value)"},
+    'width': 100, "pinned": "right",
+    "headerComponentParams": {"template": header_template_with_icon},
+    'headerTooltip': financing_header_tooltip
+}
+
 columnDefs = [
-    {'field': 'Country Name', 'headerName': 'Country',
-     "headerComponentParams": {"template": header_template_with_icon},
-     'headerTooltip': '''
-        <u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>  
-        Countries **especially vulnerable** to the adverse impacts of  
-        climate change that are eligible to receive GCF funding.
-    ''',
-     "cellRenderer": "CountryCell",
-     # special styling for the bottom pinned row 'total' cell and center flags
-     'colSpan': {"function": "params.data['Country Name'] === 'TOTAL' ? 5 : 1"},
-     'cellStyle': {"function": "params.value == 'TOTAL' ? {'text-align': 'end'} "
-                               ": {'display': 'flex', 'align-items': 'center', 'gap': 10}"}
-     },
-    {'field': 'Region'},
-    {'headerName': 'Priority States', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
+    {
+        'headerName': 'Project', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
+        'children': [
+            ref_col,
+            project_col,
+            activity_col,
+            nap_col,
+        ]
+    },
+    partner_col,
+    country_col,
+    region_col,
+    {
+        'headerName': 'Priority States', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
+        "headerGroupComponentParams": {"template": header_template_with_icon},
+        'headerTooltip': 'Most climate vulnerable countries',
+        'children': [
+            sids_col,
+            ldc_col,
+            as_col,
+        ]
+    },
 
-     "headerGroupComponentParams": {"template": header_template_with_icon},
-
-     'headerTooltip': 'Most climate vulnerable countries',
-     'children': [
-         {'field': 'SIDS', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
-          "headerComponentParams": {"template": header_template_with_icon},
-          'headerTooltip': 'Small Island Developing States'
-          },
-         {'field': 'LDC', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
-          "headerComponentParams": {"template": header_template_with_icon},
-          'headerTooltip': 'Least Developed Countries',
-          },
-         {'field': 'AS',
-          "headerComponentParams": {"template": header_template_with_icon},
-          'headerTooltip': 'African States',
-          "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool"}
-     ]},
-    {'headerName': 'Readiness Programme', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
-     'headerTooltip': '''
-        <u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>
-    ''',
-
-     # https://www.greenclimate.fund/readiness
-     'children': [
-         {'field': 'RP Financing $', 'headerName': 'Financing',
-          'cellStyle': {'textAlign': 'right'}, "valueFormatter": {"function": "d3.format('$.4s')(params.value)"},
-          "headerComponentParams": {"template": header_template_with_icon},
-          'headerTooltip': financing_header_tooltip
-          },
-         {'field': '# RP', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'}},
-     ]},
-    {'headerName': 'Funded Activities', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
-     # https://www.greenclimate.fund/projects/access-funding
-     'children': [
-         {'field': 'FA Financing $', 'headerName': 'Financing',
-          'cellStyle': {'textAlign': 'right'}, "valueFormatter": {"function": "d3.format('$.4s')(params.value)"},
-          "headerComponentParams": {"template": header_template_with_icon},
-          'headerTooltip': financing_header_tooltip
-          },
-         {'field': '# FA', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'}, "width": 140}
-     ]},
+    status_col,
+    approved_date_col,
+    financing_col
 ]
 
 defaultColDef = {
@@ -114,48 +143,38 @@ defaultColDef = {
 
 dashGridOptions = {
     "headerHeight": 30,
+    "rowHeight": 50,
     'tooltipShowDelay': 500,
+    'tooltipHideDelay': 15000,
     'tooltipInteraction': True,
+    "popupParent": {"function": "setPopupsParent()"}
+
 }
 
-countries_grid = html.Div([
+readiness_grid = html.Div([
     dag.AgGrid(
-        id="countries-grid",
-        rowData=df_GCF_countries.to_dict("records"),
+        id="readiness-grid",
+        rowData=df_GCF_readiness.to_dict("records"),
         columnDefs=columnDefs,
         defaultColDef=defaultColDef,
         dashGridOptions=dashGridOptions,
         dangerously_allow_code=True,
         columnSize="autoSize",
+        columnSizeOptions={'keys': [
+            'Ref #', 'Delivery Partner', 'Region', 'SIDS', 'LDC', 'NAP', 'Status', 'Approved Date', 'Financing'
+        ]},
         style={
             "height": '100%',
-            "width": 1390,
+            "max-width": 2225,
             'box-shadow': 'var(--mantine-shadow-md)',
         },
     )
-], style={"flex": 1, 'width': '100%', 'overflow': 'auto'})
+], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
 
 
 @callback(
-    Output("countries-grid", "dashGridOptions"),
-    Input("countries-grid", "virtualRowData"),
-)
-def row_pinning_bottom(virtual_data):
-    if virtual_data:
-        cols = ['RP Financing $', '# RP', 'FA Financing $', '# FA']
-        dff = pd.DataFrame(virtual_data, columns=cols)
-
-        totals = dff[cols].sum()
-
-        grid_option_patch = Patch()
-        grid_option_patch["pinnedBottomRowData"] = [{"Country Name": "TOTAL", **{col: totals[col] for col in cols}}]
-        return grid_option_patch
-    return no_update
-
-
-@callback(
-    Output("countries-grid", "className"),
+    Output("readiness-grid", "className"),
     Input("color-scheme-switch", "checked"),
 )
-def countries_grid_switch_theme(checked):
+def readiness_grid_switch_theme(checked):
     return "ag-theme-quartz" if checked else "ag-theme-quartz-dark"
