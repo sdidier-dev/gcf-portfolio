@@ -12,12 +12,10 @@ _dash_renderer._set_react_version("18.2.0")
 dmc.add_figure_templates()
 
 app = Dash(external_stylesheets=dmc.styles.ALL, suppress_callback_exceptions=True)
-# print(app.config['assets_folder'])
 
 server = app.server
-# pprint(dmc.DEFAULT_THEME)
 
-dashboards = {
+dashboard_layouts = {
     "countries": countries_dashboard,
     "readiness": readiness_dashboard,
     "project": projects_dashboard,
@@ -103,7 +101,7 @@ def switch_theme(checked):
     Input("dashboard-segmented-control", "value")
 )
 def switch_dashboard(value):
-    return dashboards[value]
+    return dashboard_layouts[value]
 
 
 if __name__ == '__main__':

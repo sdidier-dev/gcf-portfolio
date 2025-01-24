@@ -8,12 +8,12 @@ import plotly.io as pio
 
 import pandas as pd
 
-from ..readiness_config import df_GCF_readiness
+from app_config import df_readiness
 
-# df_GCF_readiness.columns
+# df_readiness.columns
 
-dff = pd.DataFrame(df_GCF_readiness.groupby('Status')['Financing'].sum())
-dff['Number'] = df_GCF_readiness['Status'].value_counts()
+dff = pd.DataFrame(df_readiness.groupby('Status')['Financing'].sum())
+dff['Number'] = df_readiness['Status'].value_counts()
 
 status_color = {
     'Cancelled': '#d43a2f', 'In Legal Processing': '#f0ad4e', 'Legal Agreement Effective': '#ffdd33',
@@ -28,9 +28,8 @@ for status in status_color.keys():
         x=[dff['Financing'][status]],
         y=[status],
         customdata=[dff['Number'][status]],
-        text=[status],
         textfont={'textcase': "upper", 'size': 16, 'color': status_color[status], 'weight': "bold"},
-
+        texttemplate="%{y}<br>%{x:$.4s}",
         hovertemplate="<b>%{y}</b><br>%{x:$.4s} (%{customdata} Projects)<extra></extra>",
 
         marker=dict(
@@ -69,14 +68,14 @@ readiness_status_bar = dcc.Graph(
     State("readiness-status-bar", "figure"),
     prevent_initial_call=True
 )
-def update_parcats_data(carousel, virtual_data, fig):
+def update_status_data(carousel, virtual_data, fig):
     if not virtual_data:
         return no_update
 
     # sum financing and number of projects by status
     dff_grid = pd.DataFrame(virtual_data)
     dff = pd.DataFrame(dff_grid.groupby('Status')['Financing'].sum())
-    dff['Number'] = df_GCF_readiness['Status'].value_counts()
+    dff['Number'] = df_readiness['Status'].value_counts()
 
     patched_fig = Patch()
     for i, trace in enumerate(fig['data']):
@@ -87,7 +86,7 @@ def update_parcats_data(carousel, virtual_data, fig):
         patched_fig["data"][i]['customdata'] = [dff['Financing'][status] if carousel else dff['Number'][status]]
 
         x = '%{x}' if carousel else '%{x:$.4s}'
-        customdata = '%{customdata} Financing' if carousel else '%{customdata} Projects'
+        customdata = '%{customdata:$.4s} Financing' if carousel else '%{customdata} Projects'
         patched_fig["data"][i]['hovertemplate'] = f"<b>%{{y}}</b><br>{x} ({customdata})<extra></extra>"
 
         patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'

@@ -8,23 +8,23 @@ import plotly.io as pio
 
 import pandas as pd
 
-from ..countries_config import df_GCF_countries
+from app_config import df_countries
 
 fig = go.Figure()
 
 fig.add_choropleth(
-    locations=df_GCF_countries['ISO3'],
-    z=df_GCF_countries['FA Financing $'],
+    locations=df_countries['ISO3'],
+    z=df_countries['FA Financing $'],
     colorscale='greens',
     colorbar_tickprefix='$',
-    customdata=list(zip(df_GCF_countries['# RP'], df_GCF_countries['Country Name'])),
+    customdata=list(zip(df_countries['# RP'], df_countries['Country Name'])),
     hovertemplate='%{z:$.4s} (%{customdata[0]})<extra>%{customdata[1]}</extra>'
 )
 
 # Add map traces to highlight the priority states
 priority_states_groups = {'SIDS': '#ff6b6b', 'LDC': '#ff922b', 'AS': '#fcc419'}
 for group in priority_states_groups:
-    df_group = df_GCF_countries[df_GCF_countries[group]]
+    df_group = df_countries[df_countries[group]]
 
     fig.add_choropleth(
         visible=False,  # will be visible using the Chips

@@ -7,7 +7,7 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from ..readiness_config import df_GCF_readiness
+from app_config import df_readiness
 
 # custom header template to add an info icon to emphasize tooltips for that header
 header_template_with_icon = """
@@ -154,7 +154,7 @@ dashGridOptions = {
 readiness_grid = html.Div([
     dag.AgGrid(
         id="readiness-grid",
-        rowData=df_GCF_readiness.to_dict("records"),
+        rowData=df_readiness.to_dict("records"),
         columnDefs=columnDefs,
         defaultColDef=defaultColDef,
         dashGridOptions=dashGridOptions,

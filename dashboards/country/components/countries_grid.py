@@ -7,7 +7,7 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from ..countries_config import df_GCF_countries
+from app_config import df_countries
 
 # custom header template to add an info icon to emphasize tooltips for that header
 header_template_with_icon = """
@@ -127,7 +127,7 @@ dashGridOptions = {
 countries_grid = html.Div([
     dag.AgGrid(
         id="countries-grid",
-        rowData=df_GCF_countries.to_dict("records"),
+        rowData=df_countries.to_dict("records"),
         columnDefs=columnDefs,
         defaultColDef=defaultColDef,
         dashGridOptions=dashGridOptions,

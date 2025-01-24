@@ -8,7 +8,7 @@ import plotly.io as pio
 
 import pandas as pd
 
-from ..countries_config import df_GCF_countries
+from app_config import df_countries
 
 
 def format_df_for_parcats(df):
@@ -22,7 +22,7 @@ def format_df_for_parcats(df):
     return df
 
 
-dff = format_df_for_parcats(df_GCF_countries.copy())
+dff = format_df_for_parcats(df_countries.copy())
 
 dimensions = [
     go.parcats.Dimension(label=col.upper(), values=dff[col], categoryorder='category descending')

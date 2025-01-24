@@ -1,0 +1,144 @@
+Entity,Name,Country,DAE,Type,Stage,BM,Size,Sector,# Approved,FA Financing
+AIIB,Asian Infrastructure Investment Bank,China,FALSE,International,Accredited,B.40,Large,Public,0,0
+AFD,Agence Française de Developpement,France,FALSE,International,Accredited,B.10,Large,Public,8,751076982.9
+Meridiam,Meridiam SAS,France,FALSE,International,Accredited,B.39,Large,Private,0,0
+FAO,Food and Agriculture Organization of the United Nations,Italy,FALSE,International,Accredited,B.14,Medium,Public,23,774239437
+IFAD,International Fund for Agricultural Development,Italy,FALSE,International,Accredited,B.14,Large,Public,11,540325391.6
+MUFG_Bank,"MUFG Bank, Ltd",Japan,FALSE,International,Accredited,B.17,Large,Private,3,218000000
+SMBC,Sumitomo Mitsui Banking Corporation,Japan,FALSE,International,Accredited,B.29,Large,Private,0,0
+SK Securities,"SK Securities, Co., Ltd.",Republic of Korea (the),FALSE,International,Accredited,B.37,Medium,Private,0,0
+IsDB,Islamic Development Bank,Saudi Arabia,FALSE,International,Accredited,B.39,Large,Public,0,0
+responsAbility,responsAbility Investments AG,Switzerland,FALSE,International,Accredited,B.36,Large,Private,0,0
+Terra Global,"Terra Global Capital, LLC",United States,FALSE,International,Accredited,B.38,Small,Private,0,0
+UNICEF,United Nations Children's Fund,United States,FALSE,International,Accredited,B.40,Medium,Public,0,0
+HSBC,HSBC Holdings plc and its subsidiaries,United Kingdom,FALSE,International,AMA 1st Draft Sent,B.12,Large,Private,0,0
+MAAML,Macquarie Alternative Assets Management Limited,Australia,FALSE,International,Effectiveness,B.22,Large,Private,1,200000000
+SCA,Save the Children Australia,Australia,FALSE,International,Effectiveness,B.24,Small,Public,6,157626076
+ADA_Austria,Austrian Development Agency,Austria,FALSE,International,Effectiveness,B.21,Small,Public,0,0
+UNIDO,United Nations Industrial Development Organization,Austria,FALSE,International,Effectiveness,B.26,Small,Public,0,0
+Enabel,Enabel (formerly Belgian Technical Cooperation - Cooperation Technique Belge),Belgium,FALSE,International,Effectiveness,B.23,Small,Public,0,0
+AfDB,African Development Bank,Cote d'Ivoire,FALSE,International,Effectiveness,B.12,Large,Public,12,829164752.1
+NEFCO,Nordic Environment Finance Corporation,Finland,FALSE,International,Effectiveness,B.21,Small,Private,1,9900000
+BNP_Paribas,BNP Paribas S.A.,France,FALSE,International,Effectiveness,B.21,Large,Private,0,0
+CACIB,Crédit Agricole Corporate and Investment Bank,France,FALSE,International,Effectiveness,B.12,Large,Private,0,0
+CGIAR,CGIAR System Organization,France,FALSE,International,Effectiveness,B.21,Small,Public,0,0
+PROPARCO,"Société de Promotion et de Participation pour la Coopération Economique, SA",France,FALSE,International,Effectiveness,B.15,Large,Public,0,0
+DeutscheBank,Deutsche Bank AktienGesellschaft AG,Germany,FALSE,International,Effectiveness,B.10,Large,Private,1,80000000
+GIZ,Deutsche Gesellschaft fuer Internationale Zusammenarbeit (GIZ) GmbH,Germany,FALSE,International,Effectiveness,B.14,Medium,Public,11,357067768.7
+CDP,Cassa depositi e Prestiti S.p.A.,Italy,FALSE,International,Effectiveness,B.24,Large,Public,0,0
+WFP,World Food Programme,Italy,FALSE,International,Effectiveness,B.12,Medium,Public,7,63354359
+ITTO,International Tropical Timber Organization,Japan,FALSE,International,Effectiveness,B.38,Micro,Public,0,0
+JICA,Japan International Cooperation Agency,Japan,FALSE,International,Effectiveness,,Large,Public,2,35074102
+UNEP,United Nations Environment Programme,Kenya,FALSE,International,Effectiveness,B.10,Medium,Public,10,249157393.6
+EIB,European Investment Bank,Luxembourg,FALSE,International,Effectiveness,B.12,Large,Public,0,0
+LuxDev,"Agence luxembourgeoise pour la Coopération au Développement (Lux-Development S.A.) (known as ""Luxembourg Development Cooperation Agency"")",Luxembourg,FALSE,International,Effectiveness,B.22,Micro,Public,1,8650000
+FMO,Nederlandse Financierings-Maatschappij voor Ontwikkelingslanden,Netherlands (the),FALSE,International,Effectiveness,B.14,Large,Public,4,571350000
+AFC,Africa Finance Corporation,Nigeria,FALSE,International,Effectiveness,B.10,Large,Private,1,253755000
+ADB,Asian Development Bank,Philippines (the),FALSE,International,Effectiveness,B.09,Large,Public,14,1237401020
+COFIDES,Compañia Española de Financiación del Desarrollo,Spain,FALSE,International,Effectiveness,B.20,Medium,Public,1,34166666.67
+IUCN,International Union for Conservation of Nature,Switzerland,FALSE,International,Effectiveness,B.12,Medium,Public,6,164650488
+CAMCO,Camco Management Limited,United Kingdom,FALSE,International,Effectiveness,B.27,Medium,Private,1,50000000
+EBRD,European Bank for Reconstruction and Development,United Kingdom,FALSE,International,Effectiveness,B.10,Large,Public,8,1274657083
+Acumen,"Acumen Fund, Inc.",United States,FALSE,International,Effectiveness,B.09,Medium,Private,7,260500000
+CI,Conservation International Foundation,United States,FALSE,International,Effectiveness,B.10,Medium,Public,3,91664785
+IDB,Inter-American Development Bank,United States,FALSE,International,Effectiveness,B.10,Large,Public,9,831700000
+IDB_Invest,IDB Invest,United States,FALSE,International,Effectiveness,B.21,Large,Public,1,118975948
+PCA,Pegasus Capital Advisors,United States,FALSE,International,Effectiveness,B.21,Large,Private,4,390500000
+TNC,The Nature Conservancy,United States,FALSE,International,Effectiveness,B.35,Medium,Public,0,0
+UNDP,United Nations Development Programme,United States,FALSE,International,Effectiveness,B.09,Medium,Public,39,1224636139
+WorldBank,International Bank for Reconstruction and Development and International Development Association,United States,FALSE,International,Effectiveness,B.10,Large,Public,12,1143787592
+WWF,"World Wildlife Fund, Inc.",United States,FALSE,International,Effectiveness,B.15,Medium,Public,3,135531918
+IFC,International Finance Corporation,United States,FALSE,International,Execution,B.12,Large,Public,2,299000000
+KfW,Kreditanstalt für Wiederaufbau,Germany,FALSE,International,Former AE,B.09,Large,Public,3,178229166.7
+WMO,World Meteorological Organization,Switzerland,FALSE,International,Former AE,B.12,Small,Public,0,0
+BDP-S.A.M.,Banco de Desarrollo Productivo - Sociedad Anónima Mixta,Bolivia (Plurinational State of),TRUE,National,Accredited,B.40,Medium,Public,0,0
+YesBank,Yes Bank Limited (India),India,TRUE,National,Accredited,B.24,Medium,Private,0,0
+CVDB,Cities and Villages Development Bank (Jordan),Jordan,TRUE,National,Accredited,B.38,Medium,Public,0,0
+BNDA,Banque Nationale de Développement Agricole,Mali,TRUE,National,Accredited,B.40,Small,Private,0,0
+IOC,Indian Ocean Commission,Mauritius,TRUE,Regional,Accredited,B.39,Small,Public,0,0
+BANOBRAS,"Banco Nacional de Obras y Servicios Publicos, S.N.C",Mexico,TRUE,National,Accredited,B.38,Medium,Public,0,0
+MCT,Micronesia Conservation Trust,Micronesia (Federated States of),TRUE,Regional,Accredited,B.17,Micro,Public,2,17479625
+CAF,Corporación Andina de Fomento,Venezuela (Bolivarian Republic of),TRUE,Regional,Accredited,B.10,Large,Public,5,354170929
+CEF,Caixa Economica Federal,Brazil,TRUE,National,AMA 1st Draft Sent,B.21,Large,Public,0,0
+IDFCBank,IDFC Bank Ltd (India),India,TRUE,National,AMA 1st Draft Sent,B.21,Medium,Private,0,0
+DOE_ATG,"Department of Environment, Ministry of Health and Environment, Government of Antigua and Barbuda",Antigua and Barbuda,TRUE,National,Effectiveness,B.18,"Medium, Small",Public,2,52706595
+EPIU,"Environmental Project Implementation Unit, State Agency of the Ministry of Environment, Armenia",Armenia,TRUE,National,Effectiveness,B.22,Micro,Public,0,0
+IDCOL,Infrastructure Development Company Limited (Bangladesh),Bangladesh,TRUE,National,Effectiveness,B.17,Medium,Public,1,256480000
+PKSF,Palli Karma-Sahayak Foundation (Bangladesh),Bangladesh,TRUE,National,Effectiveness,B.18,Medium,Public,3,76840530
+CDB,Caribbean Development Bank,Barbados,TRUE,Regional,Effectiveness,B.14,Medium,Public,0,0
+CABEI,Central American Bank for Economic Integration,Belize,TRUE,Regional,Effectiveness,B.15,Large,Public,3,461052603.4
+CCCCC,Caribbean Community Climate Change Centre,Belize,TRUE,Regional,Effectiveness,B.10,Small,Public,3,91995923.29
+PACT,Protected Areas Conservation Trust,Belize,TRUE,National,Effectiveness,B.21,Micro,Public,0,0
+FNEC,Fonds National pour L’Environnement,Benin,TRUE,National,Effectiveness,B.22,Micro,Public,1,9387720
+BTFEC,Bhutan Trust Fund for Environmental Conservation,Bhutan,TRUE,National,Effectiveness,B.25,Micro,Public,1,10000000
+BNDES,Banco Nacional de Desenvolvimento Econômico e Social,Brazil,TRUE,National,Effectiveness,B.23,Large,Public,0,0
+Funbio,Fundo Brasileiro para a Biodiversidade,Brazil,TRUE,National,Effectiveness,B.21,Medium,Public,0,0
+NCDD,National Committee for Sub-National Democratic Development,Cambodia,TRUE,National,Effectiveness,B.24,Micro,Public,0,0
+FYNSA,Finanzas Y Negocios Servicios Financieros Limitada,Chile,TRUE,National,Effectiveness,B.24,Medium,Private,0,0
+FECO,Foreign Environmental Cooperation Center of the Ministry of Ecology and Environment of China (formerly Foreign Economic Cooperation Office),China,TRUE,National,Effectiveness,B.15,Small,Public,0,0
+FondoAccion,Fondo para la Acción Ambiental y la Niñez,Colombia,TRUE,National,Effectiveness,B.21,Micro,Public,0,0
+MFEM_COK,"Ministry of Finance and Economic Management, Cook Islands",Cook Islands,TRUE,National,Effectiveness,B.21,Small,Public,1,12512509
+IICA,Instituto Interamericano de Cooperación para la Agricultura,Costa Rica,TRUE,Regional,Effectiveness,B.29,Small,Public,0,0
+MoFEC,Ministry of Finance of the Federal Democratic Republic of Ethiopia,Ethiopia,TRUE,National,Effectiveness,B.12,Medium,Public,2,89997436
+FDB,Fiji Development Bank,Fiji,TRUE,National,Effectiveness,B.18,Micro,Public,1,5000000
+JSCTBC,JSC TBC Bank,Georgia,TRUE,National,Effectiveness,B.29,Medium,Private,0,0
+Ecobank,Ecobank Ghana,Ghana,TRUE,National,Effectiveness,B.23,Medium,Private,1,16197530
+IEISPL,Indo Enviro Integrated Solutions Private  Limited (formerly IL&FS Environmental Infrastructure and Services Limited),India,TRUE,National,Effectiveness,B.24,Small,Private,0,0
+NABARD,National Bank for Agriculture and Rural Development (India),India,TRUE,National,Effectiveness,B.10,Large,Public,2,134357000
+SIDBI,Small Industries Development Bank of India,India,TRUE,National,Effectiveness,B.17,Large,Public,2,240100000
+Kemitraan,Kemitraan bagi Pembaruan Tata Pemerintahan (Partnership for Governance Reform) (Indonesia),Indonesia,TRUE,National,Effectiveness,B.27,Micro,Public,0,0
+PTSMI,PT Sarana Multi Infrastruktur (Indonesia),Indonesia,TRUE,National,Effectiveness,B.15,Medium,Public,0,0
+DBJ,Development Bank of Jamaica Limited,Jamaica,TRUE,National,Effectiveness,B.36,Large,Public,0,0
+JSIF,Jamaica Social Investment Fund,Jamaica,TRUE,National,Effectiveness,B.31,Small,Public,0,0
+NEMA,National Environment Management Authority of Kenya,Kenya,TRUE,National,Effectiveness,B.12,Micro,Public,1,9526603.26
+ARIS,Community Development and Investment Agency of the Kyrgyz Republic,Kyrgyzstan,TRUE,National,Effectiveness,B.38,Small,Public,0,0
+FMCN,Fondo Mexicano para la Conservación de la Naturaleza A.C.,Mexico,TRUE,National,Effectiveness,B.22,Small,Public,1,9000000
+FSMDB,Federated States of Micronesia Development Bank,Micronesia (Federated States of),TRUE,National,Effectiveness,B.37,Micro,Public,0,0
+TDBM,Trade and Development Bank Joint Stock Company,Mongolia,TRUE,National,Effectiveness,B.25,Medium,Private,0,0
+XacBank,XacBank JSC (Mongolia),Mongolia,TRUE,National,Effectiveness,B.14,Small,Private,4,65304153
+ADA_Morocco,Agency for Agricultural Development of Morocco,Morocco,TRUE,National,Effectiveness,B.12,Small,Public,1,39292600
+AWB,Attijariwafa Bank,Morocco,TRUE,Regional,Effectiveness,B.22,Large,Private,0,0
+CDG_Capital,CDG Capital S.A.,Morocco,TRUE,National,Effectiveness,B.17,Medium,Private,0,0
+MASEN,Moroccan Agency for Sustainable Energy S.A.,Morocco,TRUE,National,Effectiveness,B.29,Large,Private,0,0
+EIF,Environmental Investment Fund,Namibia,TRUE,National,Effectiveness,B.10,Micro,Public,4,37704000
+AEPC,Alternative Energy Promotion Centre (Nepal),Nepal,TRUE,National,Effectiveness,B.22,Small,Public,1,21128224
+NIMB,Nepal Investment Mega Bank Limited,Nepal,TRUE,National,Effectiveness,B.38,Medium,Private,0,0
+NTNC,National Trust for Nature Conservation (Nepal),Nepal,TRUE,National,Effectiveness,B.27,Micro,Public,0,0
+SPC,Pacific Community,New Caledonia,TRUE,Regional,Effectiveness,B.22,Small,Public,2,39916589
+JSBank,JS Bank Limited (Pakistan),Pakistan,TRUE,National,Effectiveness,B.22,Medium,Private,1,10000000
+NRSP,National Rural Support Programme (Pakistan),Pakistan,TRUE,National,Effectiveness,B.21,Small,Public,1,25000000
+CIFI,"Corporación Interamericana para el Financiamiento de Infraestructura, S.A.",Panama,TRUE,Regional,Effectiveness,B.38,Medium,Private,0,0
+FundacionAvina,Fundación Avina,Panama,TRUE,Regional,Effectiveness,B.15,Micro,Public,1,9388923
+Profonanpe,Peruvian Trust Fund for National Parks and Protected Areas,Peru,TRUE,National,Effectiveness,B.09,Micro,Public,2,15212400
+DBP,Development Bank of the Philippines,Philippines (the),TRUE,National,Effectiveness,B.29,Medium,Public,0,0
+Landbank,Land Bank of the Philippines,Philippines (the),TRUE,National,Effectiveness,B.21,Medium,Public,1,9999042.27
+KDB,Korea Development Bank,Republic of Korea (the),TRUE,National,Effectiveness,B.15,Medium,Public,3,264430050
+KOICA,Korea International Cooperation Agency,Republic of Korea (the),TRUE,National,Effectiveness,B.29,Small,Public,0,0
+MOE_Rwanda,Ministry of Environment (formerly Ministry of Natural Resources of Rwanda),Rwanda,TRUE,National,Effectiveness,B.10,Small,Public,3,99846649
+SPREP,Secretariat of the Pacific Regional Environment Programme,Samoa,TRUE,Regional,Effectiveness,B.09,Medium,Public,1,22953000
+CSE,Centre de Suivi Ecologique,Senegal,TRUE,National,Effectiveness,B.09,Micro,Public,2,17037176.04
+LBA,La Banque Agricole (formerly Caisse Nationale de Credit Agricole du Senegal),Senegal,TRUE,National,Effectiveness,B.26,Small,Private,0,0
+DBSA,Development Bank of Southern Africa,South Africa,TRUE,Regional,Effectiveness,B.12,Large,Public,3,390610000
+SANBI,South African National Biodiversity Institute,South Africa,TRUE,National,Effectiveness,B.14,Small,Public,0,0
+DFCCBank,DFCC Bank PLC,Sri Lanka,TRUE,National,Effectiveness,B.36,Medium,Private,0,0
+CRDB,CRDB Bank Plc,Tanzania,TRUE,National,Effectiveness,B.24,Medium,Private,1,100000000
+BOAD,Banque Ouest Africaine de Développement (West African Development Bank),Togo,TRUE,Regional,Effectiveness,B.14,Medium,Public,5,246808194.8
+OSS,Sahara and Sahel Observatory,Tunisia,TRUE,Regional,Effectiveness,B.18,Micro,Public,2,19423832
+MWE_UGA,"Ministry of Water and Environment, Uganda",Uganda,TRUE,National,Effectiveness,B.23,Small,Public,0,0
+CND,Corporación Nacional para el Desarrollo,Uruguay,TRUE,National,Effectiveness,B.36,Small,Public,0,0
+VDB,Vietnam Development Bank,Viet Nam,TRUE,National,Effectiveness,B.29,Small,Public,0,0
+DBZ,Development Bank of Zambia,Zambia,TRUE,National,Effectiveness,B.29,Medium,Public,0,0
+IDBZ,Infrastructure Development Bank of Zimbabwe,Zimbabwe,TRUE,National,Effectiveness,B.29,Small,Public,0,0
+UCAR,Unidad Para el Cambio Rural,Argentina,TRUE,National,Execution,B.12,Small,Public,0,0
+CDF,CARICOM Development Fund,Barbados,TRUE,Regional,Execution,B.37,Micro,Public,0,0
+Bancoldex,Banco de Comercio Exterior de Colombia S.A.,Colombia,TRUE,National,Execution,B.38,Medium,Public,0,0
+Findeter,Findeter,Colombia,TRUE,National,Execution,B.21,Small,Public,0,0
+BCI,Bank of the Cook Islands,Cook Islands,TRUE,National,Execution,B.40,Micro,Public,0,0
+FIRCA,Fonds Interprofessionnel pour la Recherche et le Conseil Agricoles,Cote d'Ivoire,TRUE,National,Execution,B.39,Small,Private,0,0
+KCB,KCB Bank Kenya Limited,Kenya,TRUE,National,Execution,B.27,Medium,Private,0,0
+Nafin,"Nacional Financiera, Sociedad
+Nacional de Crédito, Institución de Banca de Desarrollo",Mexico,TRUE,National,Execution,B.29,Medium,Public,0,0
+DBN_Nigeria,Development Bank of Nigeria Plc,Nigeria,TRUE,National,Execution,B.39,Medium,Public,0,0
+CIIP,Center for Implementation of Investment Projects within the Committee for Environmental Protection under the government of the Republic of Tajikistan,Tajikistan,TRUE,National,Execution,B.39,Small,Public,0,0
+ZANACO,Zambia National Commercial Bank PLC,Zambia,TRUE,National,Execution,B.34,Small,Private,0,0
+China_CDM_Fund,China Clean Development Mechanism Fund Management Center,China,TRUE,National,Former AE,B.18,Medium,Public,0,0
