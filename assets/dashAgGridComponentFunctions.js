@@ -52,7 +52,13 @@ dagcomponentfuncs.CountriesCell = function (props) {
             )
         )
     }
-    return cellChildren
+    return React.createElement(
+        "div",
+        {
+            style: {display: 'flex',padding: '0px 5px'}
+        },
+        cellChildren
+    )
 }
 
 dagcomponentfuncs.CustomTooltipCountries = function (props) {

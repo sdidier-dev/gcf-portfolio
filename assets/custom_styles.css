@@ -16,13 +16,14 @@
     --color-way-8: #a1154a; /*A muted reddish-pink, adding a touch of another hue*/
     --color-way-9: #6a15a1; /*A rich, dark purple, for variety and depth.*/
     --color-way-10: #a0a115; /* A lighter, chartreuse or lime green, harmonizing with the main green.*/
-    &[data-mantine-color-scheme='light']{
-          --mantine-color-body: #fafafa !important;
+
+    &[data-mantine-color-scheme='light'] {
+        --mantine-color-body: #fafafa !important;
 
     }
 
-
 }
+
 /*- Adobe Color, Coolors, or Paletton*/
 
 #_dash-app-content {
@@ -39,6 +40,11 @@
 /* center group headers, headers and cells*/
 .center-aligned-header .ag-header-group-cell-label, .ag-header-cell-label {
     justify-content: center;
+
+    .ag-header-group-text, .ag-header-cell-text {
+        /* center text when multi lines */
+        text-align: center;
+    }
 }
 
 .center-flex-cell {
@@ -84,7 +90,7 @@
 /* Text carousel for card titles *******************************************************************************/
 /*custom class to Hide inactive controls and Show controls on hover*/
 .carousel-control {
-    border: 2px solid var(--mantine-primary-color-filled);
+    border: 2px solid var(--primary);
 
     &[data-inactive] {
         opacity: 0;
@@ -106,4 +112,35 @@
 #countries-parcats text.nums {
     font-family: inherit !important;
     font-size: 13px !important;
+}
+
+/* Readiness top partners bar *******************************************************************************/
+/* fix header number input width*/
+#readiness-top-partners-card-header .mantine-NumberInput-root {
+    width: unset !important;
+}
+
+/*custom class to Hide inactive controls and Show controls on hover*/
+.mantine-NumberInput-control[data-inactive] {
+    opacity: 0;
+    cursor: default;
+}
+
+.mantine-NumberInput-controls {
+    transition: opacity 150ms ease;
+    opacity: 0;
+}
+
+.mantine-NumberInput-root:hover .mantine-NumberInput-controls {
+    opacity: 1;
+}
+
+/*mantine-Carousel-slide justify-content*/
+#readiness-top-partners-carousel {
+    margin-left: 5px;
+
+    .mantine-Carousel-slide {
+        display: flex;
+        justify-content: left
+    }
 }

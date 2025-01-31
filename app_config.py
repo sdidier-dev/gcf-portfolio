@@ -4,13 +4,22 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
+from dashboards.entities.entities_dashboard import entities_dashboard
+
+# Main constants #####################################################################################
+PRIMARY_COLOR = '#15a14a'
+SECONDARY_COLOR = '#084081'
+
+# Load datasets #####################################################################################
+
 assets_folder = os.path.join(os.path.abspath(os.curdir), 'assets')
 
 df_countries = pd.read_csv(f'{assets_folder}/GCF-countries.csv')
+df_entities = pd.read_csv(f'{assets_folder}/GCF-entities.csv')
 df_readiness = pd.read_csv(
     f'{assets_folder}/GCF-readiness.csv', date_format={'Approved Date': '%b %d, %Y'}, parse_dates=['Approved Date']
 )
-df_entities = pd.read_csv(f'{assets_folder}/GCF-entities.csv')
+df_FA = pd.read_csv(f'{assets_folder}/GCF-FA.csv')
 
 # Country Data #####################################################################################
 df_countries.rename(columns={"LDCs": "LDC"}, inplace=True)
@@ -27,13 +36,12 @@ df_countries = df_countries.assign(**{
 # add 'priority states' col
 df_countries['priority state'] = df_countries[['SIDS', 'LDC', 'AS']].any(axis=1)
 
-# ['ISO3', 'Country Name', 'Region', 'SIDS', 'LDC', '# RP', '# FA',
-# 'RP Financing $', 'FA Financing $', 'AS', 'priority state',
-# '# RP region_sum', '# FA region_sum', 'RP Financing $ region_sum', 'FA Financing $ region_sum']
+# Entities Data #####################################################################################
+# extract entities info that will be used for readiness and FA
+entities_details = df_entities.drop(columns=['Stage', 'BM', '# Approved', 'FA Financing'])
+entities_details.rename(columns={"Name": "Entity Name", "Country": "Entity Country"}, inplace=True)
 
 # Readiness Data #####################################################################################
-# ISO string format date, note that it will text type at this point to be able to parse it with dag
-df_readiness['Approved Date'] = df_readiness['Approved Date'].dt.strftime('%Y-%m-%d')
 
 df_readiness.rename(columns={"LDCs": "LDC"}, inplace=True)
 df_readiness['Region'] = (
@@ -46,17 +54,20 @@ df_readiness['Region'] = (
 )
 df_readiness['AS'] = df_readiness['Region'] == 'Africa'
 
-# add the name of the entities from the 'entities' dataframe
+# Add a col to have dates in ISO string to parse it with dag
+df_readiness['Approved Date str'] = df_readiness['Approved Date'].dt.strftime('%Y-%m-%d')
+# add partner info
 df_readiness = pd.merge(
-    df_readiness, df_entities[['Entity', 'Name']],
-    left_on='Delivery Partner', right_on='Entity', how='left'
-)
+    df_readiness, entities_details,
+    left_on='Delivery Partner', right_on='Entity', how='left')
 df_readiness.drop('Entity', axis=1, inplace=True)
-df_readiness.rename(columns={"Name": "Partner Name"}, inplace=True)
-
-# ['Ref #', 'Activity', 'Project Title', 'Country', 'Delivery Partner',
-# 'Region', 'SIDS', 'LDCs', 'NAP', 'Status', 'Approved Date', 'Financing', 'AS', "Partner Name"]
+df_readiness.rename(columns={"Entity Country": "Partner Country", "Entity Name": "Partner Name"}, inplace=True)
+# fill missing Partner Name with '*Details Missing*' that will be used on hover
+df_readiness['Partner Name'] = df_readiness['Partner Name'].fillna('*Details Missing*')
 
 # Funded Activities Data #####################################################################################
 
-# Entities Data #####################################################################################
+# add entity name for hover
+df_FA = pd.merge(df_FA, entities_details[['Entity', "Entity Name"]], on='Entity', how='left')
+# fill missing entity Name with '*Details Missing*'
+df_FA['Entity Name'] = df_FA['Entity Name'].fillna('*Details Missing*')

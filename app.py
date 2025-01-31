@@ -18,7 +18,7 @@ server = app.server
 dashboard_layouts = {
     "countries": countries_dashboard,
     "readiness": readiness_dashboard,
-    "project": projects_dashboard,
+    "projects": FA_dashboard,
     "entities": entities_dashboard
 }
 
@@ -61,12 +61,12 @@ app.layout = dmc.MantineProvider(
                 data=[
                     {"value": "countries", "label": "COUNTRIES"},
                     {"value": "readiness", "label": "READINESS"},
-                    {"value": "project", "label": "PROJECTS"},
+                    {"value": "projects", "label": "PROJECTS"},
                     {"value": "entities", "label": "ENTITIES"},
                 ],
-                value="readiness",
+                value="projects",
                 color='var(--primary)', mt=10,
-                style={'box-shadow': 'var(--mantine-shadow-md)'},
+                style={'box-shadow': 'var(--mantine-shadow-md)', 'flex-wrap': 'wrap', 'overflow': 'auto'},
             ),
 
             dmc.Flex(id='dashboard-container', style={"flex": 1})

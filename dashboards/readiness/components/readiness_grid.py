@@ -9,6 +9,9 @@ from dash_iconify import DashIconify
 
 from app_config import df_readiness
 
+# sort by ref for the default order in the grid
+df_readiness.sort_values('Ref #', inplace=True, na_position='last')
+
 # custom header template to add an info icon to emphasize tooltips for that header
 header_template_with_icon = """
 <div class="ag-cell-label-container" role="presentation">
@@ -49,7 +52,6 @@ ref_col = {'field': 'Ref #'}
 project_col = {
     'field': 'Project Title', 'tooltipField': 'Project Title',
     'width': 300
-
 }
 activity_col = {
     'field': 'Activity', 'tooltipField': 'Activity',
@@ -61,7 +63,7 @@ nap_col = {
     'headerTooltip': 'National Adaptation Plans',
     'width': 100
 }
-partner_col = {'field': 'Delivery Partner'}
+partner_col = {'field': 'Delivery Partner', 'tooltipField': 'Partner Name', 'width': 300}
 country_col = {
     'field': 'Country', "cellRenderer": "CountriesCell",
     'tooltipField': 'Country', "tooltipComponent": "CustomTooltipCountries",
@@ -93,7 +95,7 @@ status_col = {'field': 'Status', "cellRenderer": "CustomReadinessStatusCell",
 
 date_obj = "d3.timeParse('%Y-%m-%d')(params.data['Approved Date'])"
 approved_date_col = {
-    'field': 'Approved Date', 'cellStyle': {'textAlign': 'center'},
+    'field': 'Approved Date str', 'headerName': 'Approved Date', 'cellStyle': {'textAlign': 'center'},
     "valueFormatter": {"function": f"d3.timeFormat('%b %d, %Y')({date_obj})"},
     'width': 200, "pinned": "right"
 }
@@ -128,7 +130,6 @@ columnDefs = [
             as_col,
         ]
     },
-
     status_col,
     approved_date_col,
     financing_col
@@ -148,7 +149,6 @@ dashGridOptions = {
     'tooltipHideDelay': 15000,
     'tooltipInteraction': True,
     "popupParent": {"function": "setPopupsParent()"}
-
 }
 
 readiness_grid = html.Div([

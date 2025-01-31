@@ -29,18 +29,16 @@ for status in status_color.keys():
         y=[status],
         customdata=[dff['Number'][status]],
         textfont={'textcase': "upper", 'size': 16, 'color': status_color[status], 'weight': "bold"},
-        texttemplate="%{y}<br>%{x:$.4s}",
-        hovertemplate="<b>%{y}</b><br>%{x:$.4s} (%{customdata} Projects)<extra></extra>",
+        text=[],
+        texttemplate="%{y}<br>%{x:$.4s} (%{customdata})",
+        hovertemplate="<b>%{y}</b><br>%{x:$.4s} (%{customdata})<extra></extra>",
 
         marker=dict(
             color=status_color[status],
             line={'color': status_color[status], 'width': 3},
-            # Trick to add transparency to the color marker only, not the border,
-            # as marker_opacity applies to both
-            pattern={
-                'fillmode': "replace", 'shape': "/", 'solidity': 1,
-                'fgcolor': status_color[status], 'fgopacity': 0.5
-            }
+            # Trick to add transparency to the color marker only, not the border, as marker_opacity applies to both
+            pattern={'fillmode': "replace", 'shape': "/", 'solidity': 1, 'fgcolor': status_color[status],
+                     'fgopacity': 0.5}
         ),
     )
 
@@ -48,6 +46,7 @@ fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
     margin={"r": 0, "t": 0, "l": 0, "b": 50},
     showlegend=False,
+    barcornerradius=5,  # radius of the corners of the bars of a Bar fif
 )
 fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'font_weight': "bold"},
                  showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
@@ -63,34 +62,50 @@ readiness_status_bar = dcc.Graph(
 
 @callback(
     Output("readiness-status-bar", "figure", allow_duplicate=True),
-    Input("readiness-status-bar-carousel", "active"),
+    Input("readiness-status-carousel", "active"),
     Input("readiness-grid", "virtualRowData"),
     State("readiness-status-bar", "figure"),
     prevent_initial_call=True
 )
 def update_status_data(carousel, virtual_data, fig):
+
+    patched_fig = Patch()
+    # empty figure if there is no data in the grid
     if not virtual_data:
-        return no_update
+        for i, trace in enumerate(fig['data']):
+            patched_fig["data"][i]['x'] = [0]
+            patched_fig["data"][i]['texttemplate'] = '%{y}'
+            patched_fig["data"][i]['textposition'] = 'outside'  # must for to display outside when 0
+
+        return patched_fig
 
     # sum financing and number of projects by status
     dff_grid = pd.DataFrame(virtual_data)
     dff = pd.DataFrame(dff_grid.groupby('Status')['Financing'].sum())
-    dff['Number'] = df_readiness['Status'].value_counts()
+    dff['Number'] = dff_grid['Status'].value_counts()
 
-    patched_fig = Patch()
+    # carousel 0=Financing, 1=Number enthusiasm
     for i, trace in enumerate(fig['data']):
         status = trace['name']
+        if status not in dff.index:
+            patched_fig["data"][i]['x'] = [0]
+            patched_fig["data"][i]['customdata'] = [0]
+            patched_fig["data"][i]['texttemplate'] = '%{y}'
+            patched_fig["data"][i]['textposition'] = 'outside'  # must for to display outside when 0
 
-        # carousel 0=Financing, 1=Number
-        patched_fig["data"][i]['x'] = [dff['Number'][status] if carousel else dff['Financing'][status]]
-        patched_fig["data"][i]['customdata'] = [dff['Financing'][status] if carousel else dff['Number'][status]]
+        else:
+            patched_fig["data"][i]['x'] = [dff['Number'][status] if carousel else dff['Financing'][status]]
+            patched_fig["data"][i]['customdata'] = [dff['Financing'][status] if carousel else dff['Number'][status]]
+            patched_fig["data"][i]['textposition'] = 'auto'
 
-        x = '%{x}' if carousel else '%{x:$.4s}'
-        customdata = '%{customdata:$.4s} Financing' if carousel else '%{customdata} Projects'
-        patched_fig["data"][i]['hovertemplate'] = f"<b>%{{y}}</b><br>{x} ({customdata})<extra></extra>"
+        x_template = '%{x}' if carousel else '%{x:$.4s}'
+        customdata_template = '%{customdata:$.4s}' if carousel else '%{customdata}'
+        patched_fig["data"][i]['texttemplate'] = f"%{{y}}<br>{x_template} ({customdata_template})",
+        patched_fig["data"][i]['hovertemplate'] = (f"<b>%{{y}}</b><br>{x_template} ({customdata_template})"
+                                                   f"<extra></extra>")
 
-        patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'
-        patched_fig["layout"]['xaxis']['tickprefix'] = '' if carousel else '$'
+    patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'
+    patched_fig["layout"]['xaxis']['tickprefix'] = '' if carousel else '$'
 
     return patched_fig
 

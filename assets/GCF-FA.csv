@@ -1,0 +1,288 @@
+Ref #,Modality,Project Name,Entity,Countries,BM,Sector,Theme,Project Size,ESS Category,FA Financing
+FP001,PAP,"Building the Resilience of Wetlands in the Province of Datem del Marañón, Peru",Profonanpe,Peru,B.11,Public,Cross-cutting,Micro,Category C,6240000
+FP002,PAP,Scaling up the use of Modernized Climate information and Early Warning Systems in Malawi,UNDP,Malawi,B.11,Public,Adaptation,Small,Category C,12294545
+FP003,PAP,"Increasing the resilience of ecosystems and communities through
+the restoration of the productive bases of salinized lands",CSE,Senegal,B.11,Public,Adaptation,Micro,Category C,7610000
+FP004,PAP,Climate Resilient Infrastructure Mainstreaming (CRIM),KfW,Bangladesh,B.11,Public,Adaptation,Medium,Category B,40000000
+FP005,PAP,KawiSafi Ventures Fund,Acumen,"Kenya, Rwanda",B.11,Private,Cross-cutting,Micro,Intermediation 3,25000000
+FP007,PAP,Supporting vulnerable communities in Maldives to manage climate change-induced water shortages,UNDP,Maldives,B.11,Public,Adaptation,Small,Category B,23636364
+FP008,PAP,Fiji Urban Water Supply and Wastewater Management Project,ADB,Fiji,B.11,Public,Adaptation,Large,Category B,31040000
+FP009,PAP,Energy Savings Insurance (ESI) for private energy efficiency investments by Small and Medium-Sized Enterprises (SMEs),IDB,El Salvador,B.13,Public,Mitigation,Small,Category C,21700000
+FP010,PAP,De-Risking and Scaling-up Investment in Energy Efficient Building Retrofits,UNDP,Armenia,B.13,Public,Mitigation,Medium,Category B,20000000
+FP011,PAP,"Large-scale Ecosystem-based Adaptation in The Gambia: developing a climate-resilient, natural resource-based economy",UNEP,Gambia,B.13,Public,Adaptation,Small,Category C,20546756
+FP012,PAP,Africa Hydromet Program – Strengthening Climate Resilience in Sub-Saharan Africa: Mali Country Project,WorldBank,Mali,B.13,Public,Adaptation,Small,Category B,22750000
+FP013,PAP,Improving the resilience of vulnerable coastal communities to climate change related impacts in Viet Nam,UNDP,Viet Nam,B.13,Public,Cross-cutting,Small,Category B,29523000
+FP014,PAP,Climate Adaptation and Mitigation Program For the Aral Sea Basin (CAMP4ASB),WorldBank,"Tajikistan, Uzbekistan",B.13,Public,Adaptation,Medium,Category B,19000000
+FP015,PAP,Tuvalu Coastal Adaptation Project (TCAP),UNDP,Tuvalu,B.13,Public,Adaptation,Small,Category B,36010000
+FP016,PAP,Strengthening the resilience of smallholder farmers in the Dry Zone to climate variability and extreme events through an integrated approach to water management,UNDP,Sri Lanka,B.13,Public,Adaptation,Medium,Category B,38084000
+FP017,PAP,Climate action and solar energy development programme in the Tarapacá Region in Chile,CAF,Chile,B.13,Private,Mitigation,Medium,Category B,39000000
+FP018,PAP,Scaling-up of Glacial Lake Outburst Flood (GLOF) risk reduction in Northern Pakistan,UNDP,Pakistan,B.14,Public,Adaptation,Small,Category B,36960000
+FP019,PAP,Priming Financial and Land Use Planning Instruments to Reduce Emissions from Deforestations,UNDP,Ecuador,B.14,Public,Mitigation,Medium,Category B,41172739
+FP020,PAP,Sustainable Energy Facility for the Eastern Caribbean,IDB,"Dominica, Grenada, Saint Kitts and Nevis, Saint Lucia, Saint Vincent and the Grenadines",B.14,Public,Mitigation,Medium,Category A,80000000
+FP021,PAP,Senegal Integrated Urban Flood Management Project,AFD,Senegal,B.14,Public,Adaptation,Medium,Category A,15306122.45
+FP022,PAP,Development of arganiculture orchards in degraded environment (DARED),ADA_Morocco,Morocco,B.14,Public,Cross-cutting,Small,Category B,39292600
+FP023,PAP,Climate Resilient Agriculture in three of the Vulnerable Extreme northern crop growing regions (CRAVE),EIF,Namibia,B.14,Public,Adaptation,Micro,Category C,9500000
+FP024,PAP,Enpower to Adapt: Creating Climate-Change Resilient Livelihoods through  Community-Based Natural Resource Management (CBNRM) in Namibia,EIF,Namibia,B.14,Public,Adaptation,Micro,Category C,10000000
+FP025,PAP,GCF-EBRD SEFF Co-financing Programme,EBRD,"Armenia, Egypt, Georgia, Jordan, Moldova, Mongolia, Morocco, Serbia, Tajikistan, Tunisia",B.14,Private,Cross-cutting,Large,Intermediation 2,378000000
+FP026,PAP,Sustainable Landscapes in Eastern Madagascar,CI,Madagascar,B.14,Private,Cross-cutting,Medium,Category B,18500000
+FP027,PAP,Universal Green Energy Access Programme (UGEAP),DeutscheBank,"Benin, Ethiopia, Kenya, Namibia, Nigeria, Tanzania, Uganda",B.14,Private,Mitigation,Large,Intermediation 2,80000000
+FP028,PAP,MSME Business Loan Program for GHG Emission Reduction,XacBank,Mongolia,B.15,Private,Mitigation,Medium,Intermediation 2,20000000
+FP033,PAP,Accelerating the transformational shift to a low-carbon economy in the Republic of Mauritius,UNDP,Mauritius,B.15,Public,Mitigation,Medium,Category B,28210000
+FP034,PAP,"Building Resilient Communities, Wetland Ecosystems and Associated Catchments in Uganda",UNDP,Uganda,B.15,Public,Adaptation,Small,Category B,24140160
+FP035,PAP,Climate Information Services for Resilient Development Planning in Vanuatu (Van-CIS-RDP),SPREP,Vanuatu,B.15,Public,Adaptation,Small,Category C,18106905
+FP036,PAP,Pacific Islands Renewable Energy Investment Program,ADB,"Cook Islands, Marshall Islands, Micronesia (Federated States of), Nauru, Papua New Guinea, Samoa, Tonga",B.15,Public,Cross-cutting,Small,Category B,17000000
+FP037,PAP,Integrated Flood Management to Enhance Climate Resilience of the Vaisigano River Catchment in Samoa,UNDP,Samoa,B.15,Public,Adaptation,Medium,Category B,57717748
+FP039,PAP,GCF-EBRD Egypt Renewable Energy Financing Framework,EBRD,Egypt,B.16,Private,Mitigation,Large,Category A,154700000
+FP040,PAP,Tajikistan: Scaling Up Hydropower Sector Climate Resilience,EBRD,Tajikistan,B.16,Public,Adaptation,Medium,Category B,50000000
+FP041,PAP,Simiyu Climate Resilient Project,KfW,Tanzania,B.16,Public,Adaptation,Medium,Category A,104795918.4
+FP042,PAP,Irrigation development and adaptation of irrigated agriculture to climate change in semi-arid Morocco,AFD,Morocco,B.16,Public,Adaptation,Medium,Category B,20408163.27
+FP043,PAP,The Saïss Water Conservation Project,EBRD,Morocco,B.16,Public,Adaptation,Medium,Category B,32622448.98
+FP044,PAP,Tina River Hydropower Development Project,WorldBank,Solomon Islands,B.16,Public,Cross-cutting,Medium,Category A,86000000
+FP045,PAP,Ground Water Recharge and Solar Micro Irrigation to Ensure Food Security and Enhance Resilience in Vulnerable Tribal Areas of Odisha,NABARD,India,B.16,Public,Adaptation,Medium,Category B,34357000
+FP046,PAP,Renewable Energy Program #1 - Solar,XacBank,Mongolia,B.18,Private,Mitigation,Small,Intermediation 2,8650050
+FP047,PAP,GCF-EBRD Kazakhstan Renewables Framework,EBRD,Kazakhstan,B.18,Private,Mitigation,Large,Category A,110000000
+FP048,PAP,Low Emissions and Climate Resilient Agriculture Risk Sharing Facility,IDB,"Guatemala, Mexico",B.18,Private,Cross-cutting,Medium,Intermediation 2,20000000
+FP049,PAP,Building the climate resilience of food insecure smallholder farmers through integrated management of climate risk (R4),WFP,Senegal,B.18,Public,Adaptation,Micro,Category C,9983521
+FP050,PAP,Bhutan for life,WWF,Bhutan,B.18,Public,Cross-cutting,Medium,Category B,26557354
+FP051,PAP,Scaling-up Investment in Low-Carbon Public Buildings,UNDP,Bosnia and Herzegovina,B.18,Public,Mitigation,Medium,Category C,17346000
+FP052,PAP,Sustainable and Climate Resilient Connectivity for Nauru,ADB,Nauru,B.18,Public,Cross-cutting,Medium,Category B,26910000
+FP053,PAP,Enhancing climate change adaptation in the North coast and Nile Delta Regions in Egypt,UNDP,Egypt,B.18,Public,Adaptation,Medium,Category B,31384800
+FP056,PAP,Scaling up climate resilient water management practices for vulnerable communities in La Mojana,UNDP,Colombia,B.18,Public,Adaptation,Medium,Category B,38495980
+FP058,PAP,Responding to the increasing risk of drought: building gender-responsive resilience of the most vulnerable communities,MoFEC,Ethiopia,B.18,Public,Adaptation,Small,Category B,45002759
+FP059,PAP,Climate Resilient Water Sector in Grenada (G-CREWS),GIZ,Grenada,B.19,Public,Adaptation,Small,Category B,36010301.02
+FP060,PAP,Water Sector Resilience Nexus for Sustainability in Barbados (WSRN S-Barbados),CCCCC,Barbados,B.19,Public,Cross-cutting,Small,Category B,27605010
+FP061,PAP,"Integrated physical adaptation and community resilience through an enhanced direct access pilot in the public, private, and civil society sectors of three Eastern Caribbean small island developing states",DOE_ATG,"Antigua and Barbuda, Dominica, Grenada",B.19,Public,Adaptation,Small,Category B,20000000
+FP062,PAP,"Poverty, Reforestation, Energy and Climate Change Project (PROEZA)",FAO,Paraguay,B.19,Public,Cross-cutting,Medium,Category B,25060376
+FP063,PAP,Promoting private sector investments in energy efficiency in the industrial sector and in Paraguay,IDB,Paraguay,B.19,Public,Mitigation,Small,Intermediation 3,23000000
+FP064,PAP,Promoting risk mitigation instruments and finance for renewable energy and energy efficiency investments,IDB,Argentina,B.19,Public,Mitigation,Medium,Intermediation 2,103000000
+FP066,PAP,Pacific Resilience Project Phase II for RMI,WorldBank,Marshall Islands,B.19,Public,Adaptation,Small,Category B,25000000
+FP067,PAP,Building climate resilience of vulnerable and food insecure communities through capacity strengthening and livelihood diversification in mountainous regions of Tajikistan,WFP,Tajikistan,B.19,Public,Adaptation,Micro,Category C,9273586
+FP068,PAP,Scaling-up Multi-Hazard Early Warning System and the Use of Climate Information in Georgia,UNDP,Georgia,B.19,Public,Adaptation,Medium,Category B,27053598
+FP069,PAP,"Enhancing adaptive capacities of coastal communities, especially women, to cope with climate change induced salinity",UNDP,Bangladesh,B.19,Public,Adaptation,Small,Category B,24980000
+FP070,PAP,Global Clean Cooking Program – Bangladesh,WorldBank,Bangladesh,B.19,Public,Cross-cutting,Medium,Category B,20000000
+FP071,PAP,Scaling Up Energy Efficiency for Industrial Enterprises in Vietnam,WorldBank,Viet Nam,B.19,Public,Mitigation,Large,Intermediation 1,86300000
+FP072,PAP,Strengthening climate resilience of agricultural livelihoods in Agro-Ecological Regions I and II in Zambia,UNDP,Zambia,B.19,Public,Adaptation,Medium,Category B,32000000
+FP073,PAP,Strengthening Climate Resilience of Rural Communities in Northern Rwanda,MOE_Rwanda,Rwanda,B.19,Public,Cross-cutting,Small,Category B,32794442
+FP074,PAP,Africa Hydromet Program – Strengthening Climate Resilience in Sub-Saharan Africa: Burkina Faso Country Project,WorldBank,Burkina Faso,B.19,Public,Adaptation,Small,Category B,22500000
+FP075,PAP,Institutional Development of the State Agency for Hydrometeorology of Tajikistan,ADB,Tajikistan,B.19,Public,Adaptation,Micro,Category B,5000000
+FP076,PAP,Climate-Friendly Agribusiness Value Chains Sector Project,ADB,Cambodia,B.19,Public,Cross-cutting,Medium,Category B,40000000
+FP077,PAP,Ulaanbaatar Green Affordable Housing and Resilient Urban Renewal Project (AHURP),ADB,Mongolia,B.19,Public,Cross-cutting,Large,Category B,145000000
+FP078,PAP,Acumen Resilient Agriculture Fund (ARAF),Acumen,"Ghana, Kenya, Nigeria, Uganda",B.19,Private,Adaptation,Micro,Intermediation 3,26000000
+FP080,PAP,Zambia Renewable Energy Financing Framework,AfDB,Zambia,B.19,Private,Mitigation,Medium,Category B,52500000
+FP081,PAP,"Line of Credit for Solar rooftop segment for commercial, industrial and residential housing sectors",NABARD,India,B.19,Private,Mitigation,Medium,Intermediation 3,100000000
+FP082,PAP,Catalyzing Climate Finance (Shandong Green Development Fund),ADB,China,B.24,Public,Cross-cutting,Large,Intermediation 1,100000000
+FP083,PAP,Indonesia Geothermal Resource Risk Mitigation Project,WorldBank,Indonesia,B.21,Public,Mitigation,Large,Intermediation 1,100000000
+FP084,PAP,Enhancing climate resilience of India’s coastal communities,UNDP,India,B.21,Public,Cross-cutting,Medium,Category B,43418606
+FP085,PAP,Green BRT Karachi,ADB,Pakistan,B.21,Public,Mitigation,Large,Category A,49000000
+FP086,PAP,Green Cities Facility,EBRD,"Albania, Armenia, Georgia, Jordan, North Macedonia, Moldova, Mongolia, Serbia, Tunisia",B.21,Public,Cross-cutting,Large,Category A,88775510.2
+FP087,PAP,Building livelihood resilience to climate change in the upper basins of Guatemala’s highlands,IUCN,Guatemala,B.21,Public,Adaptation,Small,Category B,22035512
+FP089,PAP,Upscaling climate resilience measures in the dry corridor agroecosystems of El Salvador (RECLIMA),FAO,El Salvador,B.21,Public,Cross-cutting,Medium,Category B,35849612
+FP090,PAP,Tonga Renewable Energy Project under the Pacific Islands Renewable Energy Investment Program,ADB,Tonga,B.21,Public,Mitigation,Small,Category B,29900000
+FP091,PAP,South Tarawa Water Supply Project,ADB,Kiribati,B.21,Public,Cross-cutting,Medium,Category B,28631020
+FP092,PAP,Programme for integrated development and adaptation to climate change in the Niger Basin (PIDACC/NB),AfDB,"Benin, Burkina Faso, Cameroon, Chad, Cote d'Ivoire, Guinea, Mali, Niger (the), Nigeria",B.21,Public,Cross-cutting,Medium,Category A,67774000
+FP093,PAP,Yeleen Rural Electrification Project in Burkina Faso,AfDB,Burkina Faso,B.21,Public,Mitigation,Medium,Category B,24795918.37
+FP094,PAP,Ensuring climate resilient water supplies in the Comoros Islands,UNDP,Comoros (the),B.21,Public,Adaptation,Medium,Category B,41919808
+FP095,PAP,Transforming Financial Systems for Climate,AFD,"Benin, Burkina Faso, Cameroon, Cote d'Ivoire, Ecuador, Egypt, Kenya, Madagascar, Mauritius, Morocco, Namibia, Nigeria, Senegal, South Africa, Tanzania, Togo, Uganda",B.21,Private,Cross-cutting,Large,Intermediation 1,244897959.2
+FP096,PAP,DRC Green Mini-Grid Program,AfDB,Democratic Republic of the Congo (the),B.21,Private,Mitigation,Medium,Category B,21000000
+FP097,PAP,Productive Investment Initiative for Adaptation to Climate Change (CAMBio II),CABEI,"Costa Rica, Dominican Republic (the), El Salvador, Guatemala, Honduras, Nicaragua, Panama",B.21,Private,Adaptation,Small,Intermediation 3,15500000
+FP098,PAP,DBSA Climate Finance Facility,DBSA,"Lesotho, Namibia, South Africa, Eswatini",B.21,Private,Cross-cutting,Medium,Intermediation 2,55610000
+FP099,PAP,Climate Investor One,FMO,"Burundi, Cameroon, Djibouti, Ecuador, Ethiopia, India, Indonesia, Kenya, Madagascar, Malawi, Mauritius, Mongolia, Morocco, Nigeria, Philippines (the), Senegal, Tunisia, Uganda, Zambia",B.21,Private,Mitigation,Large,Intermediation 1,100000000
+FP100,PAP,REDD-PLUS results-based payments for results achieved by Brazil in the Amazon biome in 2014 and 2015,UNDP,Brazil,B.22,Public,Mitigation,Medium,Category B,96452228
+FP101,PAP,Resilient Rural Belize (Be-Resilient),IFAD,Belize,B.22,Public,Adaptation,Small,Category B,8000000
+FP102,PAP,Mali solar rural electrification project,BOAD,Mali,B.22,Public,Mitigation,Small,Category B,26498583.67
+FP103,PAP,Promotion of Climate-Friendly Cooking: Kenya and Senegal,GIZ,"Kenya, Senegal",B.22,Public,Mitigation,Small,Category B,39142857.14
+FP105,PAP,BOAD Climate Finance Facility to Scale Up Solar Energy Investments in Francophone West Africa LDCs,BOAD,"Benin, Burkina Faso, Guinea-Bissau, Mali, Niger (the), Togo",B.22,Private,Mitigation,Medium,Intermediation 2,62244897.96
+FP106,PAP,Embedded Generation Investment Programme (EGIP),DBSA,South Africa,B.22,Private,Mitigation,Large,Category B,100000000
+FP107,PAP,Supporting Climate Resilience and Transformational Change in the Agriculture Sector in Bhutan,UNDP,Bhutan,B.23,Public,Adaptation,Medium,Category B,25347194
+FP108,PAP,Transforming the Indus Basin with Climate Resilient Agriculture and Water Management,FAO,Pakistan,B.23,Public,Adaptation,Small,Category B,34990832
+FP109,PAP,Safeguarding rural communities and their physical and economic assets from climate  induced disasters in Timor-Leste,UNDP,Timor-Leste,B.23,Public,Adaptation,Medium,Category B,22356805
+FP110,PAP,Ecuador REDD-plus RBP for results period 2014,UNDP,Ecuador,B.23,Public,Mitigation,Small,Category B,18571766
+FP111,PAP,Promoting climate-resilient forest restoration and silviculture for the sustainability of water-related ecosystem services,IDB,Honduras,B.23,Public,Cross-cutting,Medium,Category B,35000000
+FP112,PAP,Addressing Climate Vulnerability in the Water Sector (ACWA) in the Marshall Islands,UNDP,Marshall Islands,B.23,Public,Adaptation,Small,Category B,18631216
+FP113,PAP,TWENDE: Towards Ending Drought Emergencies: Ecosystem Based Adaptation in Kenya’s Arid and Semi-Arid Rangelands,IUCN,Kenya,B.23,Public,Adaptation,Medium,Category B,23152082
+FP114,PAP,Program on Affirmative Finance Action for Women in Africa (AFAWA): Financing Climate Resilient Agricultural Practices in Ghana,AfDB,Ghana,B.23,Private,Cross-cutting,Small,Intermediation 2,20000000
+FP115,PAP,Espejo de Tarapacá,MUFG_Bank,Chile,B.23,Private,Cross-cutting,Large,Category A,60000000
+FP116,PAP,Carbon Sequestration through Climate Investment in Forests and Rangelands in Kyrgyz Republic (CS-FOR),FAO,Kyrgyzstan,B.24,Public,Cross-cutting,Small,Category B,29988520
+FP117,PAP,Implementation of the Lao PDR Emission Reductions Programme through improved governance and sustainable forest landscape management,GIZ,Lao People's Democratic Republic (the),B.24,Public,Mitigation,Medium,Category B,15469995.92
+FP118,PAP,Building a Resilient Churia Region in Nepal (BRCRN),FAO,Nepal,B.24,Public,Cross-cutting,Small,Category B,39299905
+FP119,PAP,Water Banking and Adaptation of Agriculture to Climate Change in Northern Gaza,AFD,State of Palestine,B.24,Public,Cross-cutting,Small,Category A,24193655.1
+FP120,PAP,Chile REDD-plus results-based payments for results period 2014-2016,FAO,Chile,B.24,Public,Mitigation,Medium,Category B,63607552
+FP121,PAP,REDD+ Results-based payments in Paraguay for the period 2015-2017,UNEP,Paraguay,B.24,Public,Mitigation,Small,Category B,50000000
+FP122,PAP,Blue Action Fund (BAF): GCF Ecosystem Based Adaptation Programme in the Western Indian Ocean,KfW,"Madagascar, Mozambique, South Africa, Tanzania",B.24,Public,Adaptation,Medium,Intermediation 2,30612244.9
+FP124,PAP,"Strengthening Climate Resilience of Subsistence Farmers and Agricultural Plantation Communities residing in the vulnerable river basins, watershed areas and downstream of the Knuckles Mountain Range Catchment of Sri Lanka",IUCN,Sri Lanka,B.25,Public,Adaptation,Small,Category B,39775000
+FP125,PAP,Strengthening the resilience of smallholder agriculture to climate change-induced water insecurity in the Central Highlands and South-Central Coast regions of Vietnam,UNDP,Viet Nam,B.25,Public,Adaptation,Medium,Category B,30205367
+FP126,PAP,Increased climate resilience of rural households and communities through the rehabilitation of production landscapes in selected localities of the Republic of Cuba (IRES),FAO,Cuba,B.25,Public,Cross-cutting,Medium,Category B,38206791
+FP127,PAP,Building Climate Resilience of Vulnerable Agricultural Livelihoods in Southern Zimbabwe,UNDP,Zimbabwe,B.25,Public,Adaptation,Medium,Category B,26574567
+FP128,PAP,Arbaro Fund – Sustainable Forestry Fund,MUFG_Bank,"Colombia, Ecuador, Ethiopia, Ghana, Guatemala, Paraguay, Peru, Sierra Leone, Uganda",B.25,Private,Mitigation,Medium,Intermediation 1,25000000
+FP129,PAP,Afghanistan Rural Energy Market Transformation Initiative – Strengthening Resilience of Livelihoods Through Sustainable Energy Access,UNDP,Afghanistan,B.26,Public,Mitigation,Small,Category B,17198843
+FP130,PAP,Indonesia REDD-plus RBP for results period 2014-2016,UNDP,Indonesia,B.26,Public,Mitigation,Medium,Category B,103781250
+FP131,PAP,"Improving Climate Resilience of Vulnerable Communities and Ecosystems in the Gandaki River Basin, Nepal",IUCN,Nepal,B.26,Public,Cross-cutting,Small,Category B,27404139
+FP132,PAP,Enabling Implementation of Forest Sector Reform in Georgia to Reduce GHG Emissions from Forest Degradation,GIZ,Georgia,B.26,Public,Mitigation,Medium,Category B,33460837.76
+FP133,PAP,Resilience to hurricanes in the building sector in Antigua and Barbuda,DOE_ATG,Antigua and Barbuda,B.26,Public,Adaptation,Small,Category B,32706595
+FP134,PAP,Colombia REDD+ Results-based Payments for results period 2015-2016,FAO,Colombia,B.26,Public,Mitigation,Small,Category B,28208123
+FP135,PAP,Ecosystem-based Adaptation in the Indian Ocean – EBA IO,AFD,"Comoros (the), Madagascar, Mauritius, Seychelles",B.26,Public,Adaptation,Medium,Category C,38000000
+FP136,PAP,Resilient Landscapes and Livelihoods Project,WorldBank,Ethiopia,B.26,Public,Cross-cutting,Large,Category B,165237592
+FP137,PAP,Ghana Shea Landscape Emission Reductions Project,UNDP,Ghana,B.26,Public,Cross-cutting,Medium,Category B,30100000
+FP138,PAP,ASER Solar Rural Electrification Project,BOAD,Senegal,B.26,Public,Mitigation,Medium,Category B,76984873.47
+FP139,PAP,Building resilience in the face of climate change within traditional rain fed agricultural and pastoral systems in Sudan,UNDP,Sudan,B.26,Public,Adaptation,Small,Category B,25645114
+FP140,PAP,High Impact Programme for the Corporate Sector,EBRD,"Armenia, Jordan, Kazakhstan, Morocco, Serbia, Tunisia, Uzbekistan",B.26,Private,Mitigation,Large,Category B,258030000
+FP141,PAP,Improving Adaptive Capacity and Risk Management of Rural communities in Mongolia,UNDP,Mongolia,B.27,Public,Adaptation,Medium,Category B,23101276
+FP142,PAP,Argentina REDD-plus RBP for results period 2014-2016,FAO,Argentina,B.27,Public,Mitigation,Medium,Category B,82000000
+FP143,PAP,Planting Climate Resilience in Rural Communities of the Northeast (PCRP),IFAD,Brazil,B.27,Public,Cross-cutting,Medium,Category B,99500000
+FP144,PAP,Costa Rica REDD-plus Results-Based Payments for 2014 and 2015,UNDP,Costa Rica,B.27,Public,Mitigation,Medium,Category B,54119143
+FP145,PAP,RELIVE – REsilient LIVElihoods of vulnerable smallholder farmers in the Mayan landscapes and the Dry Corridor of Guatemala,FAO,Guatemala,B.27,Public,Adaptation,Medium,Category B,29837169
+FP147,PAP,Enhancing Climate Information and Knowledge Services for resilience in 5 island countries of the Pacific Ocean,UNEP,"Cook Islands, Marshall Islands, Niue, Palau, Tuvalu",B.27,Public,Adaptation,Small,Category C,47403174
+FP148,PAP,"Participation in Energy Access Relief Facility (""EARF"")",Acumen,"Democratic Republic of the Congo (the), Kenya, Mozambique, Nigeria, Rwanda, Senegal, Sierra Leone, Uganda, Zambia",B.27,Private,Mitigation,Large,Intermediation 3,30000000
+FP149,PAP,Green Climate Financing Facility for Local Financial Institutions in Latin-America,CAF,"Chile, Ecuador, Panama, Peru",B.27,Private,Mitigation,Medium,Intermediation 2,100000000
+FP150,PAP,Promoting private sector investment through large scale adoption of energy saving technologies and equipment for Textile and Readymade Garment (RMG) sectors of Bangladesh,IDCOL,Bangladesh,B.27,Private,Mitigation,Medium,Intermediation 2,256480000
+FP151,PAP,Global Subnational Climate Fund (SnCF Global) – Technical Assistance (TA) Facility,IUCN,"Albania, Bahamas, Brazil, Burkina Faso, Cambodia, Cameroon, Chile, Costa Rica, Cote d'Ivoire, Democratic Republic of the Congo (the), Dominica, Dominican Republic (the), Ecuador, El Salvador, Fiji, Gabon, Guatemala, Guinea, Haiti, Honduras, Indonesia, Jamaica, Jordan, Kenya, Lebanon, North Macedonia, Mali, Mauritania, Mexico, Montenegro, Morocco, Mozambique, Myanmar, Nigeria, Panama, Rwanda, Senegal, South Africa, Togo, Tunisia, Uganda, Uruguay",B.27,Private,Mitigation,Large,Intermediation 2,18500000
+FP152,PAP,Global Subnational Climate Fund (SnCF Global) – Equity,PCA,"Albania, Bahamas, Brazil, Burkina Faso, Cambodia, Cameroon, Chile, Costa Rica, Cote d'Ivoire, Democratic Republic of the Congo (the), Dominica, Dominican Republic (the), Ecuador, El Salvador, Fiji, Gabon, Guatemala, Guinea, Haiti, Honduras, Indonesia, Jamaica, Jordan, Kenya, Lebanon, North Macedonia, Mali, Mauritania, Mexico, Montenegro, Morocco, Mozambique, Myanmar, Nigeria, Panama, Rwanda, Senegal, South Africa, Togo, Tunisia, Uganda, Uruguay",B.27,Private,Mitigation,Large,Intermediation 2,150000000
+FP153,PAP,Mongolia Green Finance Corporation,XacBank,Mongolia,B.27,Private,Mitigation,Small,Intermediation 2,26654103
+FP154,PAP,Mongolia: Aimags and Soums Green Regional Development Investment Program (ASDIP),ADB,Mongolia,B.28,Public,Cross-cutting,Large,Category B,175000000
+FP155,PAP,Building resilience to cope with climate change in Jordan through improving water use efficiency in the agriculture sector (BRCCJ),FAO,Jordan,B.28,Public,Adaptation,Medium,Category B,25000000
+FP156,PAP,ASEAN Catalytic Green Finance Facility (ACGF): Green Recovery Program,ADB,"Cambodia, Indonesia, Lao People's Democratic Republic (the), Malaysia, Philippines (the)",B.28,Public,Mitigation,Large,Intermediation 1,300000000
+FP157,PAP,"Coastal Resilience to Climate Change in Cuba through Ecosystem Based Adaptation - ""MI COSTA""",UNDP,Cuba,B.28,Public,Adaptation,Small,Category B,23927294
+FP158,PAP,Ecosystem-Based Adaptation and Mitigation in Botswana’s Communal Rangelands,CI,Botswana,B.28,Public,Cross-cutting,Medium,Category B,36760394
+FP159,PAP,PREFOREST CONGO - Project to reduce greenhouse gas emissions from forests in five departments in the Republic of Congo,FAO,Congo,B.28,Public,Mitigation,Medium,Category B,28988852
+FP160,PAP,Monrovia Metropolitan Climate Resilience Project,UNDP,Liberia,B.28,Public,Adaptation,Small,Category B,17255755
+FP161,PAP,"Building Regional Resilience through Strengthened Meteorological, Hydrological and Climate Services in the Indian Ocean Commission (IOC) Member Countries",AFD,"Comoros (the), Madagascar, Mauritius, Seychelles",B.28,Public,Adaptation,Medium,Category B,52767986
+FP162,PAP,The Africa Integrated Climate Risk Management Programme: Building the resilience of smallholder farmers to climate change impacts in 7 Sahelian Countries of the Great Green  Wall (GGW),IFAD,"Burkina Faso, Chad, Gambia, Mali, Mauritania, Niger (the), Senegal",B.28,Public,Cross-cutting,Medium,Category B,82849900
+FP163,PAP,Sustainable Renewables Risk Mitigation Initiative (SRMI) Facility,WorldBank,"Botswana, Central African Republic (the), Democratic Republic of the Congo (the), Kenya, Mali, Namibia, Uzbekistan",B.28,Public,Mitigation,Large,Category A,280000000
+FP164,PAP,Green Growth Equity Fund,FMO,India,B.28,Private,Mitigation,Large,Intermediation 1,137000000
+FP165,PAP,Building Climate Resilient Safer Islands in the Maldives,JICA,Maldives,B.29,Public,Adaptation,Medium,Category B,25097880
+FP166,PAP,Light Rail Transit for the Greater Metropolitan Area (GAM),CABEI,Costa Rica,B.29,Public,Mitigation,Large,Category A,271300000
+FP167,PAP,Transforming Eastern Province through Adaptation,IUCN,Rwanda,B.29,Public,Cross-cutting,Small,Category B,33783755
+FP168,PAP,Leveraging Energy Access Finance (LEAF) Framework,AfDB,"Ethiopia, Ghana, Guinea, Kenya, Nigeria, Tunisia",B.29,Private,Mitigation,Large,Intermediation 2,170900000
+FP169,PAP,Climate change adaptation solutions for Local Authorities in the Federated States of Micronesia,SPC,Micronesia (Federated States of),B.30,Public,Adaptation,Small,Category B,16591556
+FP170,PAP,Enhancing climate resilience in Thailand through effective water management and sustainable agriculture,UNDP,Thailand,B.30,Public,Adaptation,Small,Category B,17533500
+FP171,PAP,Enhancing Early Warning Systems to build greater resilience to hydro-meteorological hazards in Timor-Leste,UNEP,Timor-Leste,B.30,Public,Adaptation,Small,Category C,20980722.33
+FP172,PAP,"Mitigating GHG emission through modern, efficient and climate friendly clean cooking solutions (CCS)",AEPC,Nepal,B.30,Public,Mitigation,Small,Category C,21128224
+FP173,PAP,The Amazon Bioeconomy Fund: Unlocking private capital by valuing bioeconomy products and services with climate mitigation and adaptation results in the Amazon,IDB,"Brazil, Colombia, Ecuador, Guyana, Peru, Suriname",B.30,Public,Cross-cutting,Large,Intermediation 2,279000000
+FP174,PAP,Ecosystem-based Adaptation to increase climate resilience in the Central American Dry Corridor and the Arid Zones of the Dominican Republic,CABEI,"Costa Rica, Dominican Republic (the), El Salvador, Guatemala, Honduras, Nicaragua, Panama",B.30,Public,Adaptation,Large,Category B,174300000
+FP175,PAP,"Enhancing community resilience and water security in the Upper Athi River Catchment Area, Kenya",NEMA,Kenya,B.30,Public,Adaptation,Micro,Category B,9526603.26
+FP176,PAP,Hydro-agricultural development with smart agriculture practices resilient to climate change in Niger,BOAD,Niger (the),B.30,Public,Cross-cutting,Small,Category B,30753848.98
+FP177,PAP,Cooling Facility,WorldBank,"Bangladesh, El Salvador, Kenya, North Macedonia, Malawi, Panama, Sao Tome and Principe, Somalia, Sri Lanka",B.30,Public,Cross-cutting,Large,Intermediation 2,157000000
+FP178,PAP,Desert to Power G5 Sahel Facility,AfDB,"Burkina Faso, Chad, Mali, Mauritania, Niger (the)",B.30,Private,Mitigation,Large,Category A,150000000
+FP179,PAP,Tanzania Agriculture Climate Adaptation Technology Deployment Programme (TACATDP),CRDB,Tanzania,B.30,Private,Adaptation,Medium,Intermediation 2,100000000
+FP180,PAP,Global Fund for Coral Reefs Investment Window,PCA,"Bahamas, Belize, Brazil, Colombia, Comoros (the), Ecuador, Fiji, Guatemala, Indonesia, Jamaica, Jordan, Mexico, Mozambique, Panama, Philippines (the), Seychelles, Sri Lanka",B.30,Private,Adaptation,Large,Intermediation 2,125000000
+FP181,PAP,CRAFT - Catalytic Capital for First Private Investment Fund for Adaptation Technologies in Developing Countries,PCA,"Bahamas, Brazil, Mexico, Rwanda, South Africa, Trinidad and Tobago",B.30,Private,Adaptation,Large,Intermediation 2,100000000
+FP182,PAP,Climate-smart initiatives for climate change adaptation and sustainability in prioritized agricultural production systems in Colombia (CSICAP),CAF,Colombia,B.31,Public,Cross-cutting,Medium,Category B,73283080
+FP183,PAP,"Inclusive Green Financing Initiative (IGREENFIN I): Greening Agricultural Banks & the Financial Sector to Foster Climate Resilient, Low Emission Smallholder Agriculture in the Great Green Wall (GGW) countries - Phase I",IFAD,"Burkina Faso, Chad, Cote d'Ivoire, Djibouti, Eritrea, Ethiopia, Ghana, Mali, Mauritania, Niger (the), Nigeria, Senegal, Sudan",B.31,Public,Cross-cutting,Medium,Category B,106546111.2
+FP184,PAP,Vanuatu community-based climate resilience project (VCCRP),SCA,Vanuatu,B.32,Public,Adaptation,Small,Category C,26182878
+FP185,PAP,Climate Change: The New Evolutionary Challenge for the Galapagos,CAF,Ecuador,B.32,Public,Cross-cutting,Medium,Category A,65271298.95
+FP186,PAP,India E-Mobility Financing Program,MAAML,India,B.32,Private,Mitigation,Large,Intermediation 2,200000000
+FP187,PAP,Ouémé Basin Climate-Resilience Initiative (OCRI) Benin,FAO,Benin,B.33,Public,Cross-cutting,Small,Category B,18453795
+FP188,PAP,Climate Resilient Fishery Initiative for Livelihood Improvement in the Gambia (PROREFISH Gambia),FAO,Gambia,B.33,Public,Cross-cutting,Small,Category B,17200000
+FP189,PAP,E-Mobility Program for Sustainable Cities in Latin America and the Caribbean,IDB,"Barbados, Chile, Colombia, Costa Rica, Dominican Republic (the), Jamaica, Panama, Paraguay, Uruguay",B.33,Public,Cross-cutting,Large,Category B,200000000
+FP190,PAP,Climate Investor Two,FMO,"Bangladesh, Botswana, Brazil, Colombia, Cote d'Ivoire, Djibouti, Ecuador, India, Indonesia, Kenya, Madagascar, Maldives, Morocco, Namibia, Nigeria, Philippines (the), Sierra Leone, South Africa, Uganda",B.33,Private,Cross-cutting,Large,Intermediation 1,145000000
+FP191,PAP,Enhancing Adaptation and Community Resilience by Improving Water Security in Vanuatu,SPC,Vanuatu,B.34,Public,Adaptation,Small,Category B,23325033
+FP192,PAP,"The R's (Reduce, Reuse and Recycle) for Climate Resilience Wastewater Systems in Barbados (3R-CReWS)",CCCCC,Barbados,B.34,Public,Cross-cutting,Small,Category B,39390913.29
+FP193,PAP,Peruvian Amazon Eco Bio Business Facility (Amazon EBBF),Profonanpe,Peru,B.34,Public,Mitigation,Micro,Intermediation 2,8972400
+FP194,PAP,Programme for Energy Efficiency in Buildings (PEEB) Cool,AFD,"Albania, Argentina, Costa Rica, Djibouti, Indonesia, North Macedonia, Mexico, Morocco, Nigeria, Sri Lanka, Tunisia",B.34,Public,Cross-cutting,Large,Category B,223571428.6
+FP195,PAP,E-Motion: E-Mobility and Low Carbon Transportation,CAF,"Panama, Paraguay, Uruguay",B.34,Public,Mitigation,Large,Category B,76616550
+FP196,PAP,Supporting Innovative Mechanisms for Industrial Energy Efficiency Financing in Indonesia with Lessons for Replication in other ASEAN Member States,KDB,Indonesia,B.34,Private,Mitigation,Medium,Intermediation 2,105000000
+FP197,PAP,"Green Guarantee Company (""GGC"")",MUFG_Bank,"Brazil, Gabon, India, Indonesia, Lao People's Democratic Republic (the), Philippines (the), Rwanda, Trinidad and Tobago",B.34,Private,Cross-cutting,Large,Intermediation 2,40500000
+FP198,PAP,CATALI.5°T Initiative: Concerted Action To Accelerate Local I.5° Technologies – Latin America and West Africa,GIZ,"Argentina, Benin, Burkina Faso, Colombia, Costa Rica, Cote d'Ivoire, Dominican Republic (the), El Salvador, Guinea, Honduras, Mauritania, Mexico, Niger (the), Peru, Senegal, Togo",B.34,Private,Mitigation,Small,Intermediation 2,27387963.27
+FP199,PAP,Public-Social-Private Partnerships for Ecologically-Sound Agriculture and Resilient Livelihood in Northern Tonle Sap Basin (PEARL),FAO,Cambodia,B.35,Public,Adaptation,Small,Category B,36231981
+FP200,PAP,Scaling up the implementation of the Lao PDR Emission Reductions Programme through improved governance and sustainable forest landscape management (Project 2),GIZ,Lao People's Democratic Republic (the),B.35,Public,Cross-cutting,Small,Category B,33493310.2
+FP201,PAP,Adapting Philippine Agriculture to Climate Change (APA),FAO,Philippines (the),B.35,Public,Cross-cutting,Small,Category B,26273510
+FP202,PAP,Upscaling Ecosystem Based Climate Resilience of Vulnerable Rural Communities in the Valles Macro-region of the Plurinational State of Bolivia (RECEM-Valles),FAO,Bolivia (Plurinational State of),B.35,Public,Adaptation,Medium,Category B,33300000
+FP203,PAP,Heritage Colombia (HECO): Maximizing the Contributions of Sustainably Managed Landscapes in Colombia for Achievement of Climate Goals,WWF,Colombia,B.35,Public,Cross-cutting,Medium,Category B,42974559
+FP204,PAP,Sustainable Renewables Risk Mitigation Initiative (SRMI) Facility (Phase 2 Resilience focus) [SRMI-Resilience],WorldBank,"Ethiopia, Guinea-Bissau, Indonesia, Kyrgyzstan, Mongolia, Seychelles, Somalia, Tajikistan, Tunisia",B.35,Public,Cross-cutting,Large,Category A,160000000
+FP205,PAP,Infrastructure Climate Resilient Fund (ICRF),AFC,"Benin, Cameroon, Chad, Cote d'Ivoire, Democratic Republic of the Congo (the), Djibouti, Gabon, Gambia, Ghana, Guinea, Kenya, Mali, Mauritania, Namibia, Nigeria, Rwanda, Sierra Leone, Togo, Zambia",B.35,Private,Adaptation,Large,Intermediation 1,253755000
+FP206,PAP,Resilient Homestead and Livelihood support to the vulnerable coastal people of Bangladesh (RHL),PKSF,Bangladesh,B.36,Public,Adaptation,Small,Category B,42201200
+FP207,PAP,Recharge Pakistan: Building Pakistan’s resilience to climate change through Ecosystem-based Adaptation (EbA) and Green Infrastructure for integrated flood risk management,WWF,Pakistan,B.36,Public,Adaptation,Medium,Category B,66000005
+FP208,PAP,Enhanced climate resilience in the Trois-Rivières region of Haiti through Integrated Flood Management,UNDP,Haiti,B.36,Public,Adaptation,Small,Category B,22427206
+FP209,PAP,Climate Change Resilience through South Africa’s Water Reuse Programme (“WRP”),DBSA,South Africa,B.36,Public,Adaptation,Large,Intermediation 2,235000000
+FP210,PAP,KawiSafi II,Acumen,"Cote d'Ivoire, Democratic Republic of the Congo (the), Kenya, Nigeria, Rwanda, Uganda, Zambia",B.36,Private,Cross-cutting,Medium,Category B,52500000
+FP211,PAP,Hardest-to-Reach,Acumen,"Benin, Burkina Faso, Burundi, Chad, Democratic Republic of the Congo (the), Guinea, Guinea-Bissau, Lesotho, Malawi, Mozambique, Niger (the), Sierra Leone, Somalia, Togo, Uganda, Zambia",B.36,Private,Cross-cutting,Medium,Intermediation 2,65000000
+FP212,PAP,&Green Fund: Investing in Inclusive Agriculture and Protecting Forests,FMO,"Brazil, Cameroon, Colombia, Cote d'Ivoire, Democratic Republic of the Congo (the), Ecuador, Gabon, Indonesia, Lao People's Democratic Republic (the), Liberia, Zambia",B.36,Private,Cross-cutting,Large,Intermediation 1,189350000
+FP213,PAP,The Blue Green Bank (BGB),PCA,Barbados,B.36,Private,Cross-cutting,Small,Intermediation 2,15500000
+FP214,PAP,Thai Rice: Strengthening Climate-Smart Rice Farming,GIZ,Thailand,B.37,Public,Cross-cutting,Medium,Category B,38953415.31
+FP215,PAP,Community Resilience Partnership Program,ADB,"Cambodia, Indonesia, Lao People's Democratic Republic (the), Pakistan, Papua New Guinea, Timor-Leste, Vanuatu",B.37,Public,Adaptation,Large,Intermediation 2,120000000
+FP216,PAP,Scaling up climate resilient flood risk management in Bosnia and Herzegovina,UNDP,Bosnia and Herzegovina,B.37,Public,Adaptation,Medium,Category B,14400000
+FP217,PAP,Building Resilience of Vulnerable Communities to Climate Variability in Rwanda’s Congo Nile Divide through Forest and Landscape Restoration,MOE_Rwanda,Rwanda,B.37,Public,Cross-cutting,N/A,Category B,39056421
+FP218,PAP,"Building climate resilience in the landscapes of Kigoma region, Tanzania",UNEP,Tanzania,B.37,Public,Adaptation,Small,Category B,19007353
+FP219,PAP,Staple Crops Processing Zone (SCPZ): Promoting Sustainable Agricultural Value Chains,AfDB,"Guinea, Senegal, Togo",B.37,Public,Cross-cutting,Medium,Intermediation 1,102790988.1
+FP220,PAP,Africa Rural Climate Adaptation Finance Mechanism (ARCAFIM) for East Africa region,IFAD,"Kenya, Rwanda, Tanzania, Uganda",B.37,Private,Adaptation,Large,Category B,55000000
+FP221,PAP,Rwanda Green Investment Facility (RGIF),AfDB,Rwanda,B.37,Private,Cross-cutting,Medium,Intermediation 2,42793000
+FP222,PAP,Renewable Energy Performance Platform (REPP 2),CAMCO,"Cameroon, Democratic Republic of the Congo (the), Lesotho, Madagascar, Malawi, Niger (the), Nigeria, Sierra Leone, Zambia",B.37,Private,Cross-cutting,N/A,Intermediation 2,50000000
+FP223,PAP,"Project GAIA (""GAIA"")",MUFG_Bank,"Barbados, Benin, Costa Rica, Cote d'Ivoire, Dominican Republic (the), Ghana, Guatemala, India, Indonesia, Jamaica, Kenya, Mauritius, Mongolia, Morocco, Panama, Peru, Philippines (the), Tanzania, Togo",B.37,Private,Cross-cutting,Large,Intermediation 1,152500000
+FP224,PAP,Renewstable Barbados Project,IFC,Barbados,B.37,Private,Mitigation,Medium,Category A,41000000
+FP225,PAP,E-Mobility Program,ADB,"Armenia, Georgia, Indonesia, Kazakhstan, Kyrgyzstan, Nepal, Uzbekistan",B.38,Public,Cross-cutting,Large,Category B,169920000
+FP226,PAP,Resilient Puna: Ecosystem based Adaptation for sustainable High Andean communities and ecosystems in Peru,GIZ,Peru,B.38,Public,Adaptation,N/A,Category B,41622448.98
+FP227,PAP,Increase Resilience to Climate Change of Smallholders Receiving the Services of the Inclusive Agricultural Value Chains Programme (DEFIS +),IFAD,Madagascar,B.38,Public,Adaptation,N/A,Category B,53861003
+FP228,PAP,Cambodian Climate Financing Facility,KDB,Cambodia,B.38,Private,Cross-cutting,Medium,Intermediation 2,54959050
+FP229,PAP,Acumen Climate Action Pakistan Fund,Acumen,Pakistan,B.38,Private,Adaptation,Medium,Category B,28000000
+FP230,PAP,Kuali Fund-GCF,COFIDES,"Brazil, Colombia, El Salvador, Guatemala, Honduras, Mexico, Panama",B.38,Private,Cross-cutting,Medium,Intermediation 2,33469387.76
+FP231,PAP,Accelerating Solar Action Program (ASAP),Ecobank,Ghana,B.38,Private,Mitigation,Small,Intermediation 2,16197530
+FP232,PAP,Jordan Integrated Landscape Management Initiative (JILMI),UNEP,Jordan,B.39,Public,Adaptation,Small,Category B,44904203
+FP233,PAP,Community-based Agriculture Support Programme ‘plus’ (CASP+),IFAD,Tajikistan,B.39,Public,Cross-cutting,Medium,Category B,39000000
+FP234,PAP,Tonga Coastal Resilience,UNDP,Tonga,B.39,Public,Adaptation,Medium,Category B,22656409
+FP235,PAP,"Mangroves for climate: Public, Private and Community Partnerships for Mitigation and Adaptation in Ecuador",CI,Ecuador,B.39,Public,Cross-cutting,Small,Category B,36404391
+FP236,PAP,Basin Approach for Livelihood Sustainability through Adaptation Strategies (BALSAS),IFAD,Mexico,B.39,Public,Cross-cutting,Medium,Category B,39500000
+FP237,PAP,E-Motion : E-Mobility and Low Carbon Transportation,AFD,"Argentina, Brazil, Colombia, Costa Rica, Dominican Republic (the), Mexico, Peru",B.39,Public,Mitigation,Large,Category B,120196056.1
+FP238,PAP,Ecosystems-based Adaptation for resilient Watersheds and Communities in Malawi (EbAM),FAO,Malawi,B.39,Public,Cross-cutting,Small,Category B,42808151
+FP239,PAP,Building Climate Resilience for Food and Livelihoods in the Horn of Africa (BREFOL),AfDB,"Djibouti, Ethiopia, Kenya, Somalia, South Sudan",B.39,Public,Cross-cutting,Large,Intermediation 2,151000000
+FP240,PAP,Collaborative R&DB Programme for Promoting the Innovation of Climate Technopreneurship,KDB,"Cambodia, Indonesia, Lao People's Democratic Republic (the), Philippines (the), Viet Nam",B.39,Private,Cross-cutting,Medium,Intermediation 2,104471000
+FP241,PAP,Financing Mitigation and Adaptation Projects (FMAP) in Indian MSMEs,SIDBI,India,B.39,Private,Cross-cutting,N/A,Intermediation 2,215600000
+FP242,PAP,Caribbean Net-Zero and Resilient Private Sector,IDB_Invest,"Bahamas, Barbados, Belize, Dominican Republic (the), Guyana, Jamaica, Suriname, Trinidad and Tobago",B.39,Private,Cross-cutting,Large,Intermediation 1,118975948
+FP243,PAP,Climate-resilient community access to safe water powered by renewable energy in drought-vulnerable regions of Ethiopia,MoFEC,Ethiopia,B.40,Public,Cross-cutting,Small,Category B,44994677
+FP244,PAP,Climate Resilient Health and Well-Being for Rural Communities in southern Malawi (CHWBRC),SCA,Malawi,B.40,Public,Adaptation,N/A,Category C,33000000
+FP245,PAP,Green City Kigali: a new model for urban development in Rwanda,MOE_Rwanda,Rwanda,B.40,Public,Adaptation,Small,Category B,27995786
+FP246,PAP,Climate Resilient Agriculture in Somalia (Ugbaad),FAO,Somalia,B.40,Public,Adaptation,N/A,Category B,79707268
+FP247,PAP,"Local Climate Adaptive Living Facility Plus (LoCAL+) – West Africa (Burkina Faso, Ivory Coast, Mali and Niger)",BOAD,"Burkina Faso, Cote d'Ivoire, Mali, Niger (the)",B.40,Public,Adaptation,Medium,Intermediation 3,45289088.78
+FP248,PAP,Land-based Mitigation and Adaptation through a Jurisdictional Approach in West Kalimantan,GIZ,Indonesia,B.40,Public,Cross-cutting,Medium,Category B,60698725.51
+FP249,PAP,Strengthening climate Resilience of Vulnerable Agriculture Livelihoods in Iraq (SRVALI),FAO,Iraq,B.40,Public,Cross-cutting,Small,Category B,29252000
+FP250,PAP,Achieving emission reduction in the Central Highlands and South Central Coast of Viet Nam to support National REDD+ Action Programme goals (RECAF),IFAD,Viet Nam,B.40,Public,Mitigation,Medium,Category B,35000000
+FP251,PAP,Barbados Climate Resilient South Coast Water Reclamation Project (SCWRP),IDB,Barbados,B.40,Public,Adaptation,N/A,Category B,70000000
+FP252,PAP,Acumen Resilient Agriculture Fund II,Acumen,"Cote d'Ivoire, Egypt, Ghana, Morocco, Nigeria, Uganda",B.40,Private,Adaptation,N/A,Intermediation 2,34000000
+FP253,PAP,Greening Financial Systems: Delivering Climate Finance for All,EBRD,"Armenia, Egypt, Georgia, Jordan, Kazakhstan, Kyrgyzstan, North Macedonia, Moldova, Mongolia, Morocco, Serbia, Tajikistan, Uzbekistan",B.40,Private,Cross-cutting,N/A,Category B,200000000
+FP254,PAP,GCF-IFC Scaling Resilient Water Infrastructure (RWI) Facility,IFC,"Azerbaijan, Chile, Cote d'Ivoire, Egypt, Gabon, India, Indonesia, Morocco, Pakistan, Peru, Tunisia, Uzbekistan",B.40,Private,Cross-cutting,Large,Category A,258000000
+SAP001,SAP,"Improving rangeland and ecosystem management practices of smallholder farmers under conditions of climate change in Sesfontein, Fransfontein, and Warmquelle areas of the Republic of Namibia",EIF,Namibia,B.19,Public,Adaptation,Micro,Category C,9300000
+SAP002,SAP,Climate services and diversification of climate sensitive livelihoods to empower food insecure and vulnerable communities in the Kyrgyz Republic.,WFP,Kyrgyzstan,B.21,Public,Adaptation,Micro,Category C,8576108
+SAP003,SAP,Enhancing climate resilience of the water sector in Bahrain,UNEP,Bahrain,B.21,Public,Adaptation,Micro,Category C,2320388
+SAP004,SAP,Energy Efficient Consumption Loan Programme,XacBank,Mongolia,B.21,Private,Mitigation,Small,Intermediation 3,10000000
+SAP005,SAP,Enhanced climate resilience of rural communities in central and north Benin through the implementation of ecosystem-based adaptation (EbA) in forest and agricultural landscapes,UNEP,Benin,B.22,Public,Adaptation,Micro,Category C,9000000
+SAP006,SAP,Building resilience of communities living in landscapes threatened under climate change through an ecosystems-based adaptation approach,EIF,Namibia,B.22,Public,Adaptation,Micro,Category C,8904000
+SAP007,SAP,Integrated Climate Risk Management for Food Security and Livelihoods in Zimbabwe focusing on Masvingo and Rushinga Districts,WFP,Zimbabwe,B.23,Public,Adaptation,Micro,Category C,8858316
+SAP008,SAP,Extended Community Climate Change Project-Flood (ECCCP-Flood),PKSF,Bangladesh,B.24,Public,Adaptation,Small,Category C,9681340
+SAP009,SAP,Building resilience of urban populations with ecosystem-based solutions in Lao PDR,UNEP,Lao People's Democratic Republic (the),B.24,Public,Adaptation,Small,Category C,10000000
+SAP010,SAP,Multi-Hazard Impact-Based Forecasting and Early Warning System  for the Philippines,Landbank,Philippines (the),B.24,Public,Adaptation,Small,Category C,9999042.27
+SAP011,SAP,Climate-resilient food security for women and men smallholders in Mozambique through integrated risk management,WFP,Mozambique,B.24,Public,Adaptation,Micro,Category C,9250000
+SAP012,SAP,Inclusive Green Financing for Climate Resilient and Low Emission Smallholder Agriculture,IFAD,Niger (the),B.24,Public,Cross-cutting,Small,Category C,8673469.39
+SAP013,SAP,"Scaling Smart, Solar, Energy Access Microgrids in Haiti",NEFCO,Haiti,B.25,Private,Cross-cutting,Small,Category C,9900000
+SAP014,SAP,"Forest resilience of Armenia, enhancing adaptation and rural green growth via mitigation",FAO,Armenia,B.26,Public,Cross-cutting,Small,Category C,10000000
+SAP015,SAP,Promoting zero-deforestation cocoa production for reducing emissions in Côte d’Ivoire (PROMIRE),FAO,Cote d'Ivoire,B.26,Public,Mitigation,Micro,Category C,10000000
+SAP016,SAP,Fiji Agrophotovoltaic Project in Ovalau,FDB,Fiji,B.26,Private,Mitigation,Small,Category C,2600000
+SAP017,SAP,Climate proofing food production investments in Imbo and Moso basins in the Republic of Burundi,IFAD,Burundi,B.27,Public,Adaptation,Small,Category C,9994500
+SAP018,SAP,Enhancing Climate Information Systems for Resilient Development in Liberia (Liberia CIS),AfDB,Liberia,B.27,Public,Adaptation,Small,Category C,10000000
+SAP019,SAP,"Gums for Adaptation and Mitigation in Sudan (GAMS): Enhancing adaptive capacity of local communities and restoring carbon sink potential of the Gum Arabic belt, expanding Africa’s Great Green Wall",FAO,Sudan,B.27,Public,Cross-cutting,Micro,Category C,9975000
+SAP020,SAP,Climate resilient food security for farming households across the Federated States of Micronesia (FSM),MCT,Micronesia (Federated States of),B.28,Public,Adaptation,Micro,Category C,8583350
+SAP021,SAP,Community-based Landscape Management for Enhanced Climate Resilience and Reduction of Deforestation in Critical Watersheds,JICA,Timor-Leste,B.28,Public,Mitigation,Small,Category C,9976222
+SAP022,SAP,Enhancing Multi-Hazard Early Warning System to increase resilience of Uzbekistan communities to climate change induced hazards,UNDP,Uzbekistan,B.28,Public,Adaptation,Small,Category C,9999455
+SAP023,SAP,River Restoration for Climate Change Adaptation (RIOS),FMCN,Mexico,B.28,Public,Cross-cutting,Micro,Category C,9000000
+SAP024,SAP,Pakistan Distributed Solar Project,JSBank,Pakistan,B.32,Private,Mitigation,Small,Category C,10000000
+SAP025,SAP,Adaptation of agricultural production systems in Coastal Areas of Northwest Guinea-Bissau,OSS,Guinea-Bissau,B.34,Public,Adaptation,Micro,Category C,9807800
+SAP026,SAP,Extended Community Climate Change Project-Drought (ECCCP-Drought),PKSF,Bangladesh,B.36,Public,Adaptation,Small,Category C,24957990
+SAP027,SAP,Solomon Islands Knowledge-Action-Sustainability for Resilient Villages (SOLKAS) Project,SCA,Solomon Islands,B.36,Public,Adaptation,Small,Category C,24965114
+SAP028,SAP,"Women-Adapt: Enhancing the climate change adaptive capacity of smallholder farmer communities in the Poro Region, focusing on vulnerable women and youth",WFP,Cote d'Ivoire,B.36,Public,Adaptation,Micro,Category C,8999880
+SAP029,SAP,Ecosystem-based Adaptation (EbA) for Reducing Community Vulnerability to Climate Change in Northern Pacific Small Island Developing States (SIDS),MCT,"Marshall Islands, Micronesia (Federated States of), Palau",B.36,Public,Adaptation,Micro,Category C,8896275
+SAP030,SAP,Strengthening Climate Resilience of the Lao People’s Democratic Republic (PDR) Health System,SCA,Lao People's Democratic Republic (the),B.37,Public,Adaptation,N/A,Category C,24978084
+SAP031,SAP,Marajó Resiliente: Enhancing the resilience of smallholders to climate change impacts through adapting and scaling up diversified agroforestry systems in the Marajo Archipelago of Brazil,FundacionAvina,Brazil,B.37,Public,Adaptation,Micro,Category C,9388923
+SAP032,SAP,Local Climate Adaptive Living Facility – LoCAL,FNEC,Benin,B.37,Public,Adaptation,N/A,Category C,9387720
+SAP033,SAP,Enhancing Climate Information Systems for Resilient Development in Sierra Leone,AfDB,Sierra Leone,B.37,Public,Adaptation,Small,Category C,15094264
+SAP034,SAP,Akamatutu’anga To Tatou Ora’anga Meitaki (ATOM): Building a healthy and resilient Cook Islands Community – one block at a time,MFEM_COK,Cook Islands,B.38,Public,Adaptation,N/A,Category C,12512509
+SAP035,SAP,Building the Adaptive Capacity of Sugarcane Farmers in Northern Belize (BaC-SuF).,CCCCC,Belize,B.38,Public,Adaptation,Small,Category C,25000000
+SAP036,SAP,Sierra Leone Coastal Resilience Project (SLCRP),SCA,Sierra Leone,B.38,Public,Adaptation,Small,Category C,25000000
+SAP037,SAP,Avaana Sustainability Fund,SIDBI,India,B.38,Private,Cross-cutting,Small,Category C,24500000
+SAP038,SAP,"Climate Adaptation, Resilience and Engagement in Local Governments (CARE-LG)",BTFEC,Bhutan,B.39,Public,Adaptation,Small,Category C,10000000
+SAP039,SAP,"Integrated climate risk management for strengthened resilience to climate change in Buner and Shangla Districts of Khyber Pakhtunkhwa Province, Pakistan",WFP,Pakistan,B.39,Public,Adaptation,Micro,Category C,8777141
+SAP040,SAP,Climate Adaptation and Resilience in Thua Thien Hue Province Vietnam (CARe Hue),LuxDev,Viet Nam,B.39,Public,Adaptation,Micro,Category C,8650000
+SAP041,SAP,ALBAdapt – Climate Services for a Resilient Albania,GIZ,Albania,B.39,Public,Adaptation,N/A,Category C,23540816.33
+SAP042,SAP,Building climate resilience by linking climate adaptation and social protection through decentralised planning in Mozambique (LINK),SCA,Mozambique,B.39,Public,Adaptation,Small,Category C,23500000
+SAP043,SAP,"Upscaling ""Naatangue"" integrated family and village farms for a resilient agriculture in Senegal",CSE,Senegal,B.39,Public,Cross-cutting,Micro,Category C,9234784.69
+SAP044,SAP,Empowering Women Groups to Build Resilience to Climate Impacts in the Province of Cunene in South West Angola (CREW Angola),OSS,Angola,B.40,Public,Adaptation,Micro,Category C,9616032
+SAP045,SAP,Scaling up Climate Resilience Solutions for Burundian Smallholders,OAF,Burundi,B.40,Public,Cross-cutting,Small,Category C,25000000
+SAP046,SAP,Strengthening Climate Information and Multi-Hazard Early Warning Systems for Increased Resilience in Azerbaijan,UNEP,Azerbaijan,B.40,Public,Adaptation,Small,Category C,24994797.3
+SAP047,SAP,Climaventures: Harnessing the Domestic Private Sector Ecosystem for Climate Action in Pakistan,NRSP,Pakistan,B.40,Private,Cross-cutting,N/A,Intermediation 3,25000000
