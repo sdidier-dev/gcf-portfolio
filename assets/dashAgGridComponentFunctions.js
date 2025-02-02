@@ -55,7 +55,7 @@ dagcomponentfuncs.CountriesCell = function (props) {
     return React.createElement(
         "div",
         {
-            style: {display: 'flex',padding: '0px 5px'}
+            style: {display: 'flex', 'alignItems': 'center', padding: '0px 5px'}
         },
         cellChildren
     )

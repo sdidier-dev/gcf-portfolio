@@ -16,9 +16,9 @@ from app_config import df_FA, PRIMARY_COLOR, SECONDARY_COLOR
 # the keys will be used for the carousel, the values will be used for the traces order and color
 cat_cols = {
     'Theme': {'Adaptation': '#15a14a', 'Cross-cutting': '#158575', 'Mitigation': '#1569a1'},
-    'Sector': {'Public': '#15a14a', 'Private': '#1569a1'},
-    'Project Size': {'*Missing*': '#9b59b6', 'Large': '#15a14a', 'Medium': '#158575', 'Small': '#3498db',
-                     'Micro': '#1569a1'},
+    'Sector': {'Private': '#15a14a', 'Public': '#1569a1'},
+    'Project Size': {'Large': '#15a14a', 'Medium': '#158575', 'Small': '#3498db',
+                     'Micro': '#1569a1', '*Missing*': '#9b59b6'},
     'ESS Category': {'Category C': '#15a14a', 'Category B': '#27ae60', 'Category A': '#2ecc71',
                      'Intermediation 3': '#1569a1', 'Intermediation 2': '#2980b9', 'Intermediation 1': '#3498db'},
     'Priority State': {'Priority States': '#15a14a', 'Not Priority States': '#1569a1'},
@@ -104,7 +104,6 @@ FA_timeline = dmc.Stack([
     prevent_initial_call=True
 )
 def update_fa_timeline_data(carousel1, carousel2, total, stack, virtual_data, fig):
-
     patched_fig = Patch()
     if not virtual_data:
         for i, trace in enumerate(fig['data']):

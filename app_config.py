@@ -27,6 +27,15 @@ def text_carousel(text_list: list[str], carousel_id: str):
     )
 
 
+def format_money_number_si(number):
+    units = ['', 'k', 'M', 'B']
+    magnitude = 0
+    while abs(number) >= 1000 and magnitude < len(units) - 1:
+        number /= 1000.0
+        magnitude += 1
+    return f"{number:.1f}{units[magnitude]}"
+
+
 # Load datasets #####################################################################################
 
 assets_folder = os.path.join(os.path.abspath(os.curdir), 'assets')

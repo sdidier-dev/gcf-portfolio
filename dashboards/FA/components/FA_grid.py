@@ -112,7 +112,8 @@ FA_grid = html.Div([
             'box-shadow': 'var(--mantine-shadow-md)',
         },
     )
-], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
+], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'maxWidth': 1800,
+          'overflow': 'auto'})
 
 
 @callback(

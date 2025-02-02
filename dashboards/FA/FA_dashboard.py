@@ -20,7 +20,8 @@ FA_dashboard = dmc.Stack([
                 text_carousel(["Financing", "Number"], "fa-timeline-carousel1"),
                 "by",
                 text_carousel(components.cat_cols.keys(), "fa-timeline-carousel2"),
-            ], id={"type": "card-header", "index": 'fa-timeline'}, fz=20, h=40, style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+            ], id={"type": "card-header", "index": 'fa-timeline'}, fz=20, h=40,
+                style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
             components.FA_timeline
         ], withBorder=True, shadow="sm", radius='md',
@@ -29,11 +30,13 @@ FA_dashboard = dmc.Stack([
         ),
         dmc.Card([
             dmc.Center([
-                "Treemap",
-
-            ], id={"type": "card-header", "index": 'fa-treemap'}, fz=20, h=40, style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                "Projects",
+                text_carousel(["Financing", "Number"], "fa-bar-carousel"),
+                "Distribution by Categories",
+            ], id={"type": "card-header", "index": 'fa-bar'}, fz=20, h=40,
+                style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
-            # components.FA_treemap
+            components.FA_bar
         ], withBorder=True, shadow="sm", radius='md',
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
             miw=600, mih=400, style={"flex": 2, 'overflow': 'visible'}
@@ -53,4 +56,3 @@ def fa_card_switch_theme(checked):
     card_patch = Patch()
     card_patch['background-color'] = f"var(--mantine-color-{'gray-1' if checked else 'dark-8'})"
     return [card_patch] * len(ctx.outputs_list)
-

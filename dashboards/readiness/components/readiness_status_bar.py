@@ -10,8 +10,6 @@ import pandas as pd
 
 from app_config import df_readiness
 
-# df_readiness.columns
-
 dff = pd.DataFrame(df_readiness.groupby('Status')['Financing'].sum())
 dff['Number'] = df_readiness['Status'].value_counts()
 
@@ -29,7 +27,6 @@ for status in status_color.keys():
         y=[status],
         customdata=[dff['Number'][status]],
         textfont={'textcase': "upper", 'size': 16, 'color': status_color[status], 'weight': "bold"},
-        text=[],
         texttemplate="%{y}<br>%{x:$.4s} (%{customdata})",
         hovertemplate="<b>%{y}</b><br>%{x:$.4s} (%{customdata})<extra></extra>",
 
@@ -84,7 +81,7 @@ def update_status_data(carousel, virtual_data, fig):
     dff = pd.DataFrame(dff_grid.groupby('Status')['Financing'].sum())
     dff['Number'] = dff_grid['Status'].value_counts()
 
-    # carousel 0=Financing, 1=Number enthusiasm
+    # carousel 0=Financing, 1=Number
     for i, trace in enumerate(fig['data']):
         status = trace['name']
         if status not in dff.index:
