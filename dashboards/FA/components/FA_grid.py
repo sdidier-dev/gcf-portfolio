@@ -60,7 +60,6 @@ columnDefs = [
             {'field': 'Sector', "cellClass": 'center-flex-cell', 'width': 130},
             {'field': 'Project Size', "cellClass": 'center-flex-cell', 'width': 130},
             {'field': 'ESS Category', 'headerTooltip': 'Environmental and Social Safeguards Category', 'width': 150},
-
         ]
     },
 
@@ -70,9 +69,12 @@ columnDefs = [
         'tooltipField': 'Countries', "tooltipComponent": "CustomTooltipCountries",
         'cellStyle': {'display': 'flex', 'align-items': 'center'}, 'width': 300
     },
+    {'field': 'Priority State', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool", 'width': 100},
     {'field': 'Entity', 'tooltipField': 'Entity Name'},
     {
-        'field': 'BM', 'headerName': 'Board Meeting', "cellClass": 'center-flex-cell', "pinned": "right", 'width': 100
+        'field': 'BM', 'headerName': 'Board Meeting', "cellClass": 'center-flex-cell', "pinned": "right", 'width': 100,
+        "valueFormatter": {"function": "'B.' + params.value"},
+
     },
     {
         'field': 'FA Financing', 'headerTooltip': 'Funded Activities Financing', 'cellStyle': {'textAlign': 'right'},
@@ -98,15 +100,12 @@ dashGridOptions = {
 
 FA_grid = html.Div([
     dag.AgGrid(
-        id="FA-grid",
+        id="fa-grid",
         rowData=df_FA.to_dict("records"),
         columnDefs=columnDefs,
         defaultColDef=defaultColDef,
         dashGridOptions=dashGridOptions,
         dangerously_allow_code=True,
-        # columnSize="autoSize",
-        # columnSizeOptions={'keys': [
-        #      'Modality', 'Entity', 'BM', 'Sector', 'Theme', 'Project Size', 'ESS Category', 'FA Financing']},
         style={
             "height": '100%',
             # "max-width": 2225,
@@ -117,7 +116,7 @@ FA_grid = html.Div([
 
 
 @callback(
-    Output("FA-grid", "className"),
+    Output("fa-grid", "className"),
     Input("color-scheme-switch", "checked"),
 )
 def fa_grid_switch_theme(checked):

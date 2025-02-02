@@ -74,10 +74,9 @@ readiness_top_partners_bar = dcc.Graph(
     Input("readiness-top-partners-carousel", "active"),
     Input("readiness-top-partners-input", "value"),
     Input("readiness-grid", "virtualRowData"),
-    State("readiness-top-partners-bar", "figure"),
     prevent_initial_call=True
 )
-def update_status_data(carousel, n_top, virtual_data, fig):
+def update_status_data(carousel, n_top, virtual_data):
     if not virtual_data:
         patched_fig = Patch()
         patched_fig["data"][0]['x'] = None
@@ -86,7 +85,6 @@ def update_status_data(carousel, n_top, virtual_data, fig):
 
     # sum financing and number of projects by status
     dff_grid = pd.DataFrame(virtual_data)
-    #     dff = pd.DataFrame(dff_grid.groupby('Status')['Financing'].sum())
     dff = dff_grid.groupby('Delivery Partner').agg({
         'Financing': 'sum', 'Delivery Partner': 'size',
         **{col: 'first' for col in ['Partner Name', 'Partner Country', 'DAE', 'Type', 'Size', 'Sector']}

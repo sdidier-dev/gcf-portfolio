@@ -9,23 +9,7 @@ from dash_iconify import DashIconify
 import pandas as pd
 
 import dashboards.readiness.components as components
-
-
-def text_carousel(text_list: list[str], carousel_id: str):
-    return dmc.Carousel(
-        [dmc.CarouselSlide(dmc.Center(text, h='100%', fw='bold', td='underline', c='var(--primary)')) for text in
-         text_list],
-        id=carousel_id,
-        orientation="vertical",
-        height=40,
-        # remove the padding, so the controls are at the max top/bottom of the Carousel
-        controlsOffset=-50,
-        controlSize=15,
-        # custom class to Hide inactive controls and Show controls on hover
-        classNames={"control": "carousel-control", "controls": "carousel-controls", "root": "carousel-root"},
-        style={'display': 'flex', 'align-items': 'center', 'height': 60}
-    )
-
+from app_config import text_carousel
 
 # Seeds of Climate Action: Readiness Programme Flow of Funds
 

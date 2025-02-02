@@ -17,12 +17,18 @@
     --color-way-9: #6a15a1; /*A rich, dark purple, for variety and depth.*/
     --color-way-10: #a0a115; /* A lighter, chartreuse or lime green, harmonizing with the main green.*/
 
+
+    --color-way-10: #269567;
+    --color-way-10: #388984;
+    --color-way-10: #2980b9;
+
     &[data-mantine-color-scheme='light'] {
         --mantine-color-body: #fafafa !important;
 
     }
 
 }
+
 
 /*- Adobe Color, Coolors, or Paletton*/
 
@@ -136,11 +142,16 @@
 }
 
 /*mantine-Carousel-slide justify-content*/
-#readiness-top-partners-carousel {
+#readiness-top-partners-carousel, #fa-timeline-carousel2 {
     margin-left: 5px;
 
     .mantine-Carousel-slide {
         display: flex;
         justify-content: left
     }
+}
+
+/* Funded Activities timeline - let the labels overflow the plot area*/
+#fa-timeline-graph .plotclip rect {
+    width: 100%;
 }
