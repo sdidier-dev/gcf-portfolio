@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -114,6 +115,26 @@ FA_grid = html.Div([
     )
 ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'maxWidth': 1800,
           'overflow': 'auto'})
+
+
+@callback(
+    Output("fa-grid", "filterModel"),
+    Input("fa-grid", "id"),
+    State("fa-grid-filter-state-store", "data"),
+)
+def apply_filter(_, temp_filter):
+    # apply existing filter from the store once the grid is ready,
+    return json.loads(temp_filter) if temp_filter else no_update
+
+
+@callback(
+    Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
+    Input("fa-grid", "filterModel"),
+    prevent_initial_call=True
+)
+def save_filter(filter_model):
+    # save the current filter state to reapply it when switching tabs
+    return json.dumps(filter_model)
 
 
 @callback(

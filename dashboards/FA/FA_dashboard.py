@@ -16,7 +16,7 @@ FA_dashboard = dmc.Stack([
 
         dmc.Card([
             dmc.Center([
-                "Approved Funded Activities",
+                "Approved Projects",
                 text_carousel(["Financing", "Number"], "fa-timeline-carousel1"),
                 "by",
                 text_carousel(components.cat_cols.keys(), "fa-timeline-carousel2"),
@@ -26,7 +26,7 @@ FA_dashboard = dmc.Stack([
             components.FA_timeline
         ], withBorder=True, shadow="sm", radius='md',
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
-            miw=600, mih=400, style={"flex": 1, 'overflow': 'visible'}
+            miw=500, mih=400, style={"flex": 2, 'overflow': 'visible'}
         ),
         dmc.Card([
             dmc.Center([
@@ -41,8 +41,19 @@ FA_dashboard = dmc.Stack([
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
             miw=600, mih=400, style={"flex": 2, 'overflow': 'visible'}
         ),
+        dmc.Card([
+            dmc.Center([
+                "Projects Financing Distribution",
+            ], id={"type": "card-header", "index": 'fa-histogram'}, fz=20, h=40,
+                style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+            dmc.Divider(),
+            components.FA_histogram
+        ], withBorder=True, shadow="sm", radius='md',
+            p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
+            miw=400, mih=400, style={"flex": 1, 'overflow': 'visible'}
+        ),
 
-    ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
+            ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
     ),
     components.FA_grid
 ], w='100%', style={"flex": 1}, align='center')

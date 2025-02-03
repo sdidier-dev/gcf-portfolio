@@ -155,3 +155,23 @@
 #fa-timeline-graph .plotclip rect {
     width: 100%;
 }
+
+/* Funded Activities histogram custom group button border */
+:where([data-mantine-color-scheme='light']) #fa-histogram-grp-btn {
+    border-radius: 4px;
+    box-shadow: 2px 2px var(--mantine-color-gray-4);
+
+    button {
+        border: 1px solid var(--mantine-color-gray-4);
+    }
+}
+
+:where([data-mantine-color-scheme='dark']) #fa-histogram-grp-btn {
+    border-radius: 4px;
+    box-shadow: 2px 2px var(--mantine-color-dark-4);
+
+    button {
+        border: 1px solid var(--mantine-color-dark-4);
+    }
+
+}

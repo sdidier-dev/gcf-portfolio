@@ -132,6 +132,56 @@ dagcomponentfuncs.CustomTooltipHeaders = function (props) {
         props.value
     )
 }
+
+// dagcomponentfuncs.CustomButtonCell = function (props) {
+//     const {setData, data} = props;
+//
+//     function onClick() {
+//         setData();
+//     }
+//
+//     return React.createElement(
+//         window.dash_bootstrap_components.Button,
+//         {
+//             onClick,
+//             color: props.color,
+//         },
+//         props.value
+//     )
+// }
+
+// dagcomponentfuncs.CustomButtonCell = function (props) {
+//     const {setData, data} = props;
+//
+//     function onClick() {
+//         setData();
+//     }
+//
+//     return React.createElement(
+//         window.dash_bootstrap_components.ActionIcon,
+//         {
+//             onClick,
+//             color: props.color,
+//         },
+//         [
+//             props.value,
+//             React.createElement(
+//                 window.dash_iconify.DashIconify,
+//                 {icon: 'mingcute:check-fill', width: 25, color: primaryColor},
+//             )
+//         ]
+//     );
+// if (props.value) {
+//     primaryColor = window.getComputedStyle(document.body).getPropertyValue('--primary')
+//     return React.createElement(
+//         window.dash_iconify.DashIconify,
+//         {icon: 'mingcute:check-fill', width: 25, color: primaryColor},
+//     );
+// } else {
+//     return '-'
+// }
+// }
+
 dagcomponentfuncs.CustomReadinessStatusCell = function (props) {
 
     let width = props.value === "In Legal Processing" ? 120 : null

@@ -43,7 +43,7 @@ fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
     margin={"r": 0, "t": 0, "l": 0, "b": 50},
     showlegend=False,
-    barcornerradius=5,  # radius of the corners of the bars of a Bar fif
+    barcornerradius=5,  # radius of the corners of the bars
 )
 fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'font_weight': "bold"},
                  showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')

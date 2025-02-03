@@ -1,3 +1,4 @@
+import json
 import os
 from pprint import pprint
 
@@ -57,7 +58,8 @@ countries_map = dmc.Stack([
                 [dmc.Chip(group, value=group.lower(), color=priority_states_groups[group])
                  for group in priority_states_groups],
                 id="countries-map-chipgroup",
-                multiple=True
+                multiple=True,
+                # persistence=True, persisted_props=["value"]
             ),
             'Scope',
             dmc.Select(
@@ -74,7 +76,7 @@ countries_map = dmc.Stack([
         config={'displayModeBar': False},
         responsive=True,
         figure=fig,
-        style={'height': '100%'}
+        style={'height': '100%'},
     )
 ], p=10, style={"flex": 1}
 )
@@ -158,6 +160,30 @@ def update_map_scope(scope):
     patched_fig["layout"]['geo']['center'] = scope_frame[scope.lower()]['center']
     patched_fig["layout"]['geo']['projection'] = scope_frame[scope.lower()]['projection']
     return patched_fig
+
+
+@callback(
+    Output("dashboard-segmented-control", "value"),
+    Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
+    Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
+    Input("countries-map", "clickData"),
+    State("countries-map-carousel-1", "active"),
+    prevent_initial_call=True
+)
+def map_click(click_data, carousel_1):
+    # set the readiness/fa grid filters state and switch tab, the state will be applied once the grid is ready
+    if not click_data:
+        return no_update
+
+    selected_country = click_data['points'][0]['customdata'][1]
+
+    # carousel_1 0=readiness 1=FA
+    if carousel_1:
+        grid_filter = {'Countries': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
+        return "fa", no_update, json.dumps(grid_filter)
+    else:
+        grid_filter = {'Country': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
+        return "readiness", json.dumps(grid_filter), no_update
 
 
 @callback(

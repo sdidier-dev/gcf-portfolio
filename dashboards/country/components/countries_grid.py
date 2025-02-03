@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -52,7 +53,7 @@ columnDefs = [
         <u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>  
         Countries **especially vulnerable** to the adverse impacts of  
         climate change that are eligible to receive GCF funding.
-    ''',
+        ''',
      "cellRenderer": "CountriesCell",
      # special styling for the bottom pinned row 'total' cell and center flags
      'colSpan': {"function": "params.data['Country Name'] === 'TOTAL' ? 5 : 1"},
@@ -61,10 +62,9 @@ columnDefs = [
      },
     {'field': 'Region'},
     {'headerName': 'Priority States', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
-
      "headerGroupComponentParams": {"template": header_template_with_icon},
-
      'headerTooltip': 'Most climate vulnerable countries',
+
      'children': [
          {'field': 'SIDS', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
           "headerComponentParams": {"template": header_template_with_icon},
@@ -80,9 +80,7 @@ columnDefs = [
           "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool"}
      ]},
     {'headerName': 'Readiness Programme', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
-     'headerTooltip': '''
-        <u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>
-    ''',
+     'headerTooltip': '''<u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>''',
 
      # https://www.greenclimate.fund/readiness
      # is designed to provide resources for capacity-building activities and technical assistance to enable
@@ -95,7 +93,9 @@ columnDefs = [
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': financing_header_tooltip
           },
-         {'field': '# RP', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'}},
+         {'field': '# RP', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'},
+          # "cellRenderer": "CustomButtonCell",
+          },
      ]},
     {'headerName': 'Funded Activities', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
      # https://www.greenclimate.fund/projects/access-funding
@@ -142,6 +142,8 @@ countries_grid = html.Div([
 ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
 
 
+
+
 @callback(
     Output("countries-grid", "dashGridOptions"),
     Input("countries-grid", "virtualRowData"),
@@ -157,6 +159,23 @@ def row_pinning_bottom(virtual_data):
         grid_option_patch["pinnedBottomRowData"] = [{"Country Name": "TOTAL", **{col: totals[col] for col in cols}}]
         return grid_option_patch
     return no_update
+
+# @callback(
+#     Output("dbc-btn-simple-value-changed", "children"),
+#     Input("dbc-btn-simple-btn-grid", "cellRendererData"),
+# )
+# def showChange(n):
+#     return json.dumps(n)
+
+
+@callback(
+    Output("countries-grid-filter-state-store", "data", allow_duplicate=True),
+    Input("countries-grid", "filterModel"),
+    prevent_initial_call=True
+)
+def save_filter(filter_model):
+    # save the current filter state to reapply it when switching tabs
+    return json.dumps(filter_model)
 
 
 @callback(

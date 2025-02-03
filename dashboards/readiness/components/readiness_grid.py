@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -93,7 +94,8 @@ as_col = {
 status_col = {'field': 'Status', "cellRenderer": "CustomReadinessStatusCell",
               "cellClass": 'center-flex-cell', "pinned": "right"}
 
-date_obj = "d3.timeParse('%Y-%m-%d')(params.data['Approved Date'])"
+date_obj = "d3.timeParse('%Y-%m-%dT%H:%M:%S')(params.data['Approved Date'])"
+
 approved_date_col = {
     'field': 'Approved Date str', 'headerName': 'Approved Date', 'cellStyle': {'textAlign': 'center'},
     "valueFormatter": {"function": f"d3.timeFormat('%b %d, %Y')({date_obj})"},
@@ -170,6 +172,26 @@ readiness_grid = html.Div([
         },
     )
 ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
+
+
+@callback(
+    Output("readiness-grid", "filterModel"),
+    Input("readiness-grid", "id"),
+    State("readiness-grid-filter-state-store", "data"),
+)
+def apply_filter(_, temp_filter):
+    # apply existing filter from the store once the grid is ready,
+    return json.loads(temp_filter) if temp_filter else no_update
+
+
+@callback(
+    Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
+    Input("readiness-grid", "filterModel"),
+    prevent_initial_call=True
+)
+def save_filter(filter_model):
+    # save the current filter state to reapply it when switching tabs
+    return json.dumps(filter_model)
 
 
 @callback(

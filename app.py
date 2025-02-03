@@ -18,7 +18,7 @@ server = app.server
 dashboard_layouts = {
     "countries": countries_dashboard,
     "readiness": readiness_dashboard,
-    "projects": FA_dashboard,
+    "fa": FA_dashboard,
     "entities": entities_dashboard
 }
 
@@ -60,32 +60,35 @@ app.layout = dmc.MantineProvider(
                 id="dashboard-segmented-control",
                 data=[
                     {"value": "countries", "label": "COUNTRIES"},
-                    {"value": "readiness", "label": "READINESS"},
-                    {"value": "projects", "label": "PROJECTS"},
+                    {"value": "readiness", "label": "READINESS PROGRAMMES"},
+                    {"value": "fa", "label": "FUNDED ACTIVITIES"},
                     {"value": "entities", "label": "ENTITIES"},
                 ],
-                value="projects",
+                value="countries",
                 color='var(--primary)', mt=10,
-                style={'box-shadow': 'var(--mantine-shadow-md)', 'flex-wrap': 'wrap', 'overflow': 'auto'},
+                style={'box-shadow': 'var(--mantine-shadow-md)', 'flex-wrap': 'wrap',
+                       'overflow': 'auto', 'min-height': 50},
             ),
 
             dmc.Flex(id='dashboard-container', style={"flex": 1})
 
-        ], h='100vh', p=10, style={'gap': 0})
+        ], h='100vh', p=10, style={'gap': 0}),
+
+        # keep the grids filter state to reapply it when switching tabs
+        dcc.Store(id="countries-grid-filter-state-store"),
+        dcc.Store(id="readiness-grid-filter-state-store"),
+        dcc.Store(id="fa-grid-filter-state-store"),
+        dcc.Store(id="entities-grid-filter-state-store"),
     ],
     id="mantine-provider",
     theme={
         "primaryColor": "teal",
-        "defaultGradient": {
-            "from": 'teal',
-            "to": 'blue',
-            "deg": 45,
-        },
+        "defaultGradient": {"from": 'teal', "to": 'blue', "deg": 45},
         'spacing': {'md': '10px'},
-
     }
-
 )
+
+
 
 
 @callback(

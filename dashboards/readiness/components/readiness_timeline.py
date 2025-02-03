@@ -73,9 +73,7 @@ fig.add_bar(
     xperiod=agg_init,
     xperiodalignment="middle",
     yaxis='y2',
-    textposition="inside",
-    textfont={'color': '#97cd3f', 'weight': "bold"},
-
+    textfont_color='var(--mantine-color-text)', textangle=0,
     hovertemplate=f'{date_hovertemplate[agg_init]}<br><b>%{{y}} Projects</b><extra></extra>',
     marker=dict(
         color='#97cd3f',

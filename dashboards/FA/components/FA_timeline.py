@@ -142,7 +142,11 @@ def update_fa_timeline_data(carousel1, carousel2, total, stack, virtual_data, fi
     # as the number of traces (=cat) is not the same for each col,
     # we generate a new fig and keep only the 'data' to patch the current fig, so that we keep the layout def
     data_fig = go.Figure()
+    # loop though cat_cols to keep the order of the cats
     for cat in cat_cols[col]:
+        # skip the cat if not in dff
+        if cat not in dff[col].unique():
+            continue
         # merge with Board series to add the missing boards for that cat, add 0 for missing boards and
         # sort by BM to be sure there are ordered for the cumulated sum
         df_cat = pd.merge(boards, dff[dff[col] == cat], on='BM', how='left').fillna(value=0).sort_values('BM')
@@ -207,6 +211,7 @@ def update_fa_timeline_data(carousel1, carousel2, total, stack, virtual_data, fi
         )
 
     patched_fig["data"] = data_fig["data"]
+    patched_fig["layout"]["xaxis"]["range"] = [boards.min(), boards.max()]
     patched_fig["layout"]["yaxis"]["title"]["text"] = 'Number of Projects' if carousel1 else 'Financing'
     patched_fig["layout"]["yaxis"]["tickprefix"] = None if carousel1 else '$'
 

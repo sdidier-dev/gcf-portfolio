@@ -56,7 +56,7 @@ for col in cat_cols:
             name=cat,
             x=[dff['FA Financing'][cat]],
             y=[col],
-            textfont={'color': 'var(--mantine-color-text)'},
+            textfont_color='var(--mantine-color-text)',
             textposition="inside", insidetextanchor="middle", textangle=0,
             # customdata: 0=cat, 1=financing %, 2=number, 3=cat_hover
             customdata=[(cat, dff['FA Financing'][cat] / total_financing_sum, dff['Number'][cat], cat_hover(col, cat))],
@@ -100,6 +100,7 @@ fig.update_layout(
     margin={"r": 20, "t": 20, "l": 0, "b": 0},
     showlegend=False,
 )
+
 FA_bar = dcc.Graph(
     id='fa-bar-graph',
     config={'displayModeBar': False}, responsive=True,
