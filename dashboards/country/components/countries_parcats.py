@@ -80,15 +80,17 @@ countries_parcats = dmc.Stack([
     prevent_initial_call=True
 )
 def update_parcats_data(carousel_1, carousel_2, virtual_data):
+    patched_fig = Patch()
     if not virtual_data:
-        return no_update
+        for i, dim in enumerate(['priority state', 'SIDS', 'LDC', 'AS', 'Region']):
+            patched_fig["data"][0]['dimensions'][i]['values'] = None
+        return patched_fig
 
     dff = format_df_for_parcats(pd.DataFrame(virtual_data))
 
     col = 'FA' if carousel_1 else 'RP'  # 0=Readiness, 1=Funded Activities
     col = f"# {col}" if carousel_2 else f"{col} Financing $"  # 0=Financing, 1=Number
 
-    patched_fig = Patch()
     patched_fig["data"][0]['counts'] = dff[col]
 
     for i, dim in enumerate(['priority state', 'SIDS', 'LDC', 'AS', 'Region']):
@@ -123,31 +125,6 @@ def highlight_priority_countries(checked, virtual_data):
     patched_fig = Patch()
     patched_fig["data"][0]['line']['color'] = color
     return patched_fig
-
-
-# @callback(
-#     Output("dashboard-segmented-control", "value"),
-#     Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
-#     Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
-#     Input("countries-map", "clickData"),
-#     State("countries-map-carousel-1", "active"),
-#     prevent_initial_call=True
-# )
-# def map_click(click_data, carousel_1):
-#     # set the readiness/fa grid filters state and switch tab, the state will be applied once the grid is ready
-#     if not click_data:
-#         return no_update
-#
-#     selected_country = click_data['points'][0]['customdata'][1]
-#
-#     # carousel_1 0=readiness 1=FA
-#     if carousel_1:
-#         grid_filter = {'Countries': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
-#         return "fa", no_update, json.dumps(grid_filter)
-#     else:
-#         grid_filter = {'Country': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
-#         return "readiness", json.dumps(grid_filter), no_update
-#
 
 @callback(
     Output("countries-parcats", "figure"),

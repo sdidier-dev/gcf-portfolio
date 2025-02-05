@@ -51,6 +51,11 @@ fig.update_layout(
 )
 
 countries_map = dmc.Stack([
+    dmc.Group([
+        dmc.Text('Pro tip:', size="xs", c="dimmed", td="underline"),
+        dmc.Text('Click on any country to have details on Readiness Programmes/Funded Activities '
+                 '(depending on the selected activity in the title) for this country.', size="xs", c="dimmed")
+    ]),
     dmc.Group(
         [
             'Show Priority States:',
@@ -91,8 +96,10 @@ countries_map = dmc.Stack([
     prevent_initial_call=True
 )
 def update_map_data(carousel_1, carousel_2, carousel_3, virtual_data):
+    patched_fig = Patch()
     if not virtual_data:
-        return no_update
+        patched_fig["data"][0]['z'] = None
+        return patched_fig
 
     dff = pd.DataFrame(virtual_data)
 
@@ -112,7 +119,6 @@ def update_map_data(carousel_1, carousel_2, carousel_3, virtual_data):
     # format label depending on financing|#
     customdata_0_format = ':$.4s' if carousel_2 else ''
 
-    patched_fig = Patch()
     # data
     patched_fig["data"][0]['locations'] = dff['ISO3']
     patched_fig["data"][0]['z'] = dff[z_col]
@@ -163,7 +169,7 @@ def update_map_scope(scope):
 
 
 @callback(
-    Output("dashboard-segmented-control", "value"),
+    Output("dashboard-segmented-control", "value", allow_duplicate=True),
     Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
     Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
     Input("countries-map", "clickData"),
@@ -171,7 +177,9 @@ def update_map_scope(scope):
     prevent_initial_call=True
 )
 def map_click(click_data, carousel_1):
-    # set the readiness/fa grid filters state and switch tab, the state will be applied once the grid is ready
+    """
+    set the readiness/fa grid filters state and switch tab, the state will be applied once the grid is ready
+    """
     if not click_data:
         return no_update
 

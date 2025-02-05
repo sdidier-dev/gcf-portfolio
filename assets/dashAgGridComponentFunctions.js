@@ -133,22 +133,40 @@ dagcomponentfuncs.CustomTooltipHeaders = function (props) {
     )
 }
 
-// dagcomponentfuncs.CustomButtonCell = function (props) {
-//     const {setData, data} = props;
-//
-//     function onClick() {
-//         setData();
-//     }
-//
-//     return React.createElement(
-//         window.dash_bootstrap_components.Button,
-//         {
-//             onClick,
-//             color: props.color,
-//         },
-//         props.value
-//     )
-// }
+dagcomponentfuncs.CustomButtonCell = function (props) {
+    // no icon for bottom pinned row
+    if (props.node.rowPinned == 'bottom') {
+        return props.value
+    }
+
+    const {setData, data} = props;
+
+    function onClick() {
+        setData(data['Country Name']);
+    }
+
+
+    return React.createElement(
+        "div",
+        {style: {display: 'flex', 'alignItems': 'center', width: '100%', padding: '0px 5px'}},
+        [
+            React.createElement(
+                "div",
+                {style: {flex: 1, textAlign: 'center'}},
+                props.value,
+            ),
+            React.createElement(
+                window.dash_iconify.DashIconify,
+                {
+                    onClick,
+                    icon: 'mingcute:external-link-line',
+                    className: "custom-cell-icon-link", //custom class adding hover effect
+                    width: 20,
+                },
+            )
+        ]
+    )
+}
 
 // dagcomponentfuncs.CustomButtonCell = function (props) {
 //     const {setData, data} = props;

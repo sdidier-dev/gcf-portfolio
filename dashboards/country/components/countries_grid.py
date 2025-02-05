@@ -80,7 +80,7 @@ columnDefs = [
           "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool"}
      ]},
     {'headerName': 'Readiness Programme', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
-     'headerTooltip': '''<u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>''',
+     # 'headerTooltip': '''<u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>''',
 
      # https://www.greenclimate.fund/readiness
      # is designed to provide resources for capacity-building activities and technical assistance to enable
@@ -93,8 +93,8 @@ columnDefs = [
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': financing_header_tooltip
           },
-         {'field': '# RP', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'},
-          # "cellRenderer": "CustomButtonCell",
+         {'field': '# RP', 'headerName': 'Nb of Projects', "cellClass": 'center-flex-cell',
+          "cellRenderer": "CustomButtonCell",
           },
      ]},
     {'headerName': 'Funded Activities', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
@@ -105,7 +105,9 @@ columnDefs = [
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': financing_header_tooltip
           },
-         {'field': '# FA', 'headerName': 'Nb of Projects', 'cellStyle': {'textAlign': 'center'}, "width": 140}
+         {'field': '# FA', 'headerName': 'Nb of Projects', "cellClass": 'center-flex-cell',
+          "cellRenderer": "CustomButtonCell", "width": 140
+          }
      ]},
 ]
 
@@ -142,8 +144,6 @@ countries_grid = html.Div([
 ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
 
 
-
-
 @callback(
     Output("countries-grid", "dashGridOptions"),
     Input("countries-grid", "virtualRowData"),
@@ -160,12 +160,26 @@ def row_pinning_bottom(virtual_data):
         return grid_option_patch
     return no_update
 
-# @callback(
-#     Output("dbc-btn-simple-value-changed", "children"),
-#     Input("dbc-btn-simple-btn-grid", "cellRendererData"),
-# )
-# def showChange(n):
-#     return json.dumps(n)
+
+@callback(
+    Output("dashboard-segmented-control", "value", allow_duplicate=True),
+    Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
+    Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
+    Input("countries-grid", "cellRendererData"),
+    prevent_initial_call=True
+)
+def cell_icon_click(click_data):
+    if not click_data:
+        return no_update
+
+    if click_data['colId'] == '# RP':
+        grid_filter = {'Country': {'filterType': 'text', 'type': 'contains', 'filter': click_data['value']}}
+        return "readiness", json.dumps(grid_filter), no_update
+    elif click_data['colId'] == '# FA':
+        grid_filter = {'Countries': {'filterType': 'text', 'type': 'contains', 'filter': click_data['value']}}
+        return "fa", no_update, json.dumps(grid_filter)
+    else:
+        return no_update
 
 
 @callback(

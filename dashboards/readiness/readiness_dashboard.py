@@ -88,6 +88,11 @@ readiness_dashboard = dmc.Stack([
 
     ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
     ),
+    dmc.Group([
+        dmc.Text('Pro tip:', size="xs", c="dimmed", td="underline"),
+        dmc.Text('The Graphs above are linked to the data of the Grid, filtering the data of the Grid will '
+                 'update the Graphs accordingly.', size="xs", c="dimmed")
+    ], style={"align-self": 'flex-start'}),
     components.readiness_grid
 ], w='100%', style={"flex": 1}, align='center')
 

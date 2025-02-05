@@ -109,12 +109,13 @@ def update_max_bins(_1, _2, nbinsx):
     prevent_initial_call=True
 )
 def update_x(virtual_data):
+    patched_fig = Patch()
     if not virtual_data:
-        return no_update
+        patched_fig["data"][0]['x'] = None
+        return patched_fig
 
     dff = pd.DataFrame(virtual_data)
 
-    patched_fig = Patch()
     patched_fig["data"][0]['x'] = dff['FA Financing']
     return patched_fig
 

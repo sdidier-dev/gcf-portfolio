@@ -30,8 +30,6 @@
 }
 
 
-/*- Adobe Color, Coolors, or Paletton*/
-
 #_dash-app-content {
     height: 100vh;
 }
@@ -92,6 +90,14 @@
     background-color: var(--ag-header-background-color);
     font-weight: bold;
 }
+
+/* custom cell icon link class */
+.custom-cell-icon-link:hover {
+    color: var(--primary);
+    border-bottom: 1px solid var(--primary);
+    cursor: pointer;
+}
+
 
 /* Text carousel for card titles *******************************************************************************/
 /*custom class to Hide inactive controls and Show controls on hover*/
