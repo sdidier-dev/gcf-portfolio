@@ -19,11 +19,30 @@ FA_dashboard = dmc.Stack([
                 "Approved Projects",
                 text_carousel(["Financing", "Number"], "fa-timeline-carousel1"),
                 "by",
-                text_carousel(components.cat_cols.keys(), "fa-timeline-carousel2"),
+                dmc.Select(
+                    id="fa-timeline-select",
+                    data=[v for v in components.cat_cols.keys()],
+                    value="Theme",
+                    size="xs", w=200,
+                    allowDeselect=False, checkIconPosition="right",
+                    variant='unstyled',
+                    leftSection=DashIconify(icon="mynaui:chevron-up-down", color='var(--primary)'),
+                    leftSectionWidth=15,
+                    rightSection=' ', rightSectionWidth=0,
+                    leftSectionPointerEvents="none", rightSectionPointerEvents="none",
+                    ml=-5,  # add a negative margin left to remove the gap
+                    styles={"input": {'color': 'var(--primary)', 'font-size': 20, 'font-weight': 'bold',
+                                      'text-decoration': 'underline', 'cursor': 'pointer'},
+                            "dropdown": {'border': '1px solid var(--primary)'},
+                            "option": {'font-size': 14, 'font-weight': 'bold'}},
+                    comboboxProps={"transitionProps": {"transition": "scale-y", "duration": 200}},
+                ),
             ], id={"type": "card-header", "index": 'fa-timeline'}, fz=20, h=40,
                 style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
+
             components.FA_timeline
+
         ], withBorder=True, shadow="sm", radius='md',
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
             miw=500, mih=400, style={"flex": 2, 'overflow': 'visible'}
@@ -36,7 +55,9 @@ FA_dashboard = dmc.Stack([
             ], id={"type": "card-header", "index": 'fa-bar'}, fz=20, h=40,
                 style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
+
             components.FA_bar
+
         ], withBorder=True, shadow="sm", radius='md',
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
             miw=600, mih=400, style={"flex": 2, 'overflow': 'visible'}
@@ -47,28 +68,34 @@ FA_dashboard = dmc.Stack([
             ], id={"type": "card-header", "index": 'fa-histogram'}, fz=20, h=40,
                 style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
+
             components.FA_histogram
+
         ], withBorder=True, shadow="sm", radius='md',
             p=0, mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
             miw=400, mih=400, style={"flex": 1, 'overflow': 'visible'}
         ),
 
-            ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
+    ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
     ),
     dmc.Group([
-        dmc.Text('Pro tip:', size="xs", c="dimmed", td="underline"),
-        dmc.Text('The Graphs above are linked to the data of the Grid, filtering the data of the Grid will '
-                 'update the Graphs accordingly.', size="xs", c="dimmed")
-    ], style={"align-self": 'flex-start'}),
+        dmc.Button("Reset Grid Filters", id='fa-grid-reset-btn', variant="outline", color='var(--primary)',
+                   size='compact-xs', radius="lg", px=10, style={"align-self": 'center '}),
+        dmc.Tooltip(
+            dmc.Center(DashIconify(icon='clarity:info-line', color='var(--primary)', width=25)),
+            label=[
+                dcc.Markdown(
+                    '<u>Pro tip:</u><br>'
+                    'The Grid and the Graphs are linked.<br>'
+                    'Try to filter the Grid or click on the Graphs.',
+                    dangerously_allow_html=True, style={'margin': 0}, className='no-margin-markdown'),
+            ],
+            multiline=True, withArrow=True, arrowSize=6, position="right",
+            bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
+            transitionProps={"transition": "scale-x", "duration": 300},
+        ),
+    ], style={"align-self": 'center'}),
+
     components.FA_grid
+
 ], w='100%', style={"flex": 1}, align='center')
-
-
-@callback(
-    Output({"type": "card-header", "index": ALL}, "style"),
-    Input("color-scheme-switch", "checked"),
-)
-def fa_card_switch_theme(checked):
-    card_patch = Patch()
-    card_patch['background-color'] = f"var(--mantine-color-{'gray-1' if checked else 'dark-8'})"
-    return [card_patch] * len(ctx.outputs_list)

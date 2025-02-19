@@ -2,7 +2,8 @@ import json
 import os
 from pprint import pprint
 
-from dash import Dash, dcc, html, Input, Output, State, callback, no_update, clientside_callback, _dash_renderer
+from dash import Dash, dcc, html, Input, Output, State, callback, no_update, clientside_callback, _dash_renderer, Patch, \
+    ctx, ALL
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
@@ -89,6 +90,14 @@ app.layout = dmc.MantineProvider(
 )
 
 
+@callback(
+    Output({"type": "card-header", "index": ALL}, "style"),
+    Input("color-scheme-switch", "checked"),
+)
+def card_header_switch_theme(checked):
+    card_patch = Patch()
+    card_patch['background-color'] = f"var(--mantine-color-{'gray-1' if checked else 'dark-8'})"
+    return [card_patch] * len(ctx.outputs_list)
 
 
 @callback(

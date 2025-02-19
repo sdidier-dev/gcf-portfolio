@@ -21,7 +21,7 @@ cat_cols = {
                      'Micro': '#1569a1', '*Missing*': '#9b59b6'},
     'ESS Category': {'Category C': '#15a14a', 'Category B': '#27ae60', 'Category A': '#2ecc71',
                      'Intermediation 3': '#1569a1', 'Intermediation 2': '#2980b9', 'Intermediation 1': '#3498db'},
-    'Priority State': {'Yes': '#15a14a', 'No': '#1569a1'},
+    'Priority States': {'Yes': '#15a14a', 'No': '#1569a1'},
     'Multiple Countries': {'No': '#15a14a', 'Yes': '#1569a1'},
     'Modality': {'PAP': '#15a14a', 'SAP': '#1569a1'},
 }
@@ -31,7 +31,7 @@ total_financing_sum = df_FA['FA Financing'].sum()
 
 
 def cat_hover(col, cat):
-    if col == 'Priority State':
+    if col == 'Priority States':
         return 'Priority States' if cat == 'Yes' else 'Not Priority States'
     elif col == 'Multiple Countries':
         return 'Multiple Countries Projects' if cat == 'Yes' else 'Single Country Projects'
@@ -47,10 +47,11 @@ for col in cat_cols:
     dff['Number'] = df_FA[col].value_counts()
 
     # rename bool as Yes/No
-    if col in ['Priority State', 'Multiple Countries']:
+    if col in ['Priority States', 'Multiple Countries']:
         dff = dff.rename({True: 'Yes', False: 'No'})
 
     for cat in cat_cols[col]:
+
         fig.add_bar(
             orientation='h',
             name=cat,
@@ -58,13 +59,16 @@ for col in cat_cols:
             y=[col],
             textfont_color='var(--mantine-color-text)',
             textposition="inside", insidetextanchor="middle", textangle=0,
-            # customdata: 0=cat, 1=financing %, 2=number, 3=cat_hover
-            customdata=[(cat, dff['FA Financing'][cat] / total_financing_sum, dff['Number'][cat], cat_hover(col, cat))],
-            texttemplate="<b>%{customdata[0]} %{customdata[1]:.0%}</b><br>"
-                         "%{x:$.4s} (%{customdata[2]})<br>",
-            hovertemplate="<b>%{customdata[3]}</b><br>"
+            # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
+            customdata=[(cat,
+                         # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
+                         format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
+                         dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat))],
+            texttemplate="<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
+                         "%{customdata[1]} (%{customdata[2]})<br>",
+            hovertemplate="<b>%{customdata[4]}</b><br>"
                           "%{customdata[1]:.0%} of Total<br>"
-                          "%{x:$.4s} (%{customdata[2]})<extra></extra>",
+                          "%{customdata[1]} (%{customdata[2]})<extra></extra>",
             marker=dict(
                 color=cat_cols[col][cat],
                 line={'color': cat_cols[col][cat], 'width': 2},
@@ -82,7 +86,7 @@ fig.add_annotation(
     x=total_financing_sum,
     yref="y domain", yanchor="bottom", y=1,
     font={'size': 16, 'color': total_color, 'weight': "bold"},
-    text='$' + format_money_number_si(total_financing_sum),
+    text=format_money_number_si(total_financing_sum),
 )
 
 fig.update_xaxes(
@@ -116,15 +120,13 @@ FA_bar = dcc.Graph(
     State("fa-bar-graph", "figure"),
     prevent_initial_call=True
 )
-def update_fa_timeline_data(carousel, virtual_data, fig):
+def update_fa_bar_data(carousel, virtual_data, fig):
     patched_fig = Patch()
     if not virtual_data:
         for i, trace in enumerate(fig['data']):
             patched_fig["data"][i]['x'] = None
-            patched_fig["layout"]['shapes'][1]['x0'] = 0
-            patched_fig["layout"]['shapes'][1]['x1'] = 0
-            patched_fig["layout"]['annotations'][0]['x'] = 0
-            patched_fig["layout"]['annotations'][0]['text'] = 0
+            patched_fig["layout"]['shapes'][1] = {"x0": 0, "x1": 0}
+            patched_fig["layout"]['annotations'][0] = {"x": 0, "text": 0}
             patched_fig["layout"]['xaxis']['range'] = None
         return patched_fig
 
@@ -138,7 +140,7 @@ def update_fa_timeline_data(carousel, virtual_data, fig):
     for col in cat_cols:
         dff_cols[col] = pd.DataFrame(dff_grid.groupby(col)['FA Financing'].sum())
         dff_cols[col]['Number'] = dff_grid[col].value_counts()
-        if col in ['Priority State', 'Multiple Countries']:
+        if col in ['Priority States', 'Multiple Countries']:
             dff_cols[col] = dff_cols[col].rename({True: 'Yes', False: 'No'})
 
     for i, trace in enumerate(fig['data']):
@@ -151,44 +153,47 @@ def update_fa_timeline_data(carousel, virtual_data, fig):
             # set x=0 for the cat will hide the bar so no need to update customdata, texttemplate, hovertemplate
             patched_fig["data"][i]['x'] = [0]
         else:
+            # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
+            customdata = [(cat,
+                           # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
+                           format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
+                           dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat))]
+
             # carousel 0=Financing, 1=Number
             if carousel:
                 x = [dff['Number'][cat]]
-                # customdata: 0=cat, 1=number %, 2=financing, 3=cat_hover
-                customdata = [(cat, dff['Number'][cat] / total_number_sum,
-                               dff['FA Financing'][cat], cat_hover(col, cat))]
-                texttemplate = ("<b>%{customdata[0]} %{customdata[1]:.0%}</b><br>"
-                                "%{x} (%{customdata[2]:$.4s})<br>")
-                hovertemplate = ("<b>%{customdata[3]}</b><br>"
-                                 "%{customdata[1]:.0%} of Total<br>"
-                                 "%{x} (%{customdata[2]:$.4s})<extra></extra>")
+                texttemplate = ("<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
+                                "%{customdata[2]} (%{customdata[1]})<br>")
+                hovertemplate = ("<b>%{customdata[4]}</b><br>"
+                                 "%{customdata[3]:.0%} of Total<br>"
+                                 "%{customdata[2]} (%{customdata[1]})<extra></extra>")
             else:
                 x = [dff['FA Financing'][cat]]
-                # customdata: 0=cat, 1=financing %, 2=number, 3=cat_hover
-                customdata = [(cat, dff['FA Financing'][cat] / total_financing_sum,
-                               dff['Number'][cat], cat_hover(col, cat))]
-                texttemplate = ("<b>%{customdata[0]} %{customdata[1]:.0%}</b><br>"
-                                "%{x:$.4s} (%{customdata[2]})<br>")
-                hovertemplate = ("<b>%{customdata[3]}</b><br>"
-                                 "%{customdata[1]:.0%} of Total<br>"
-                                 "%{x:$.4s} (%{customdata[2]})<extra></extra>")
+                texttemplate = ("<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
+                                "%{customdata[1]} (%{customdata[2]})<br>")
+                hovertemplate = ("<b>%{customdata[4]}</b><br>"
+                                 "%{customdata[3]:.0%} of Total<br>"
+                                 "%{customdata[1]} (%{customdata[2]})<extra></extra>")
 
-            patched_fig["data"][i]['x'] = x
-            patched_fig["data"][i]['customdata'] = customdata
-            patched_fig["data"][i]['texttemplate'] = texttemplate
-            patched_fig["data"][i]['hovertemplate'] = hovertemplate
+            patched_fig["data"][i].update(dict(
+                x=x, customdata=customdata, texttemplate=texttemplate, hovertemplate=hovertemplate))
 
     # update total line and annotation
-    patched_fig["layout"]['shapes'][1]['x0'] = total_number_sum if carousel else total_financing_sum
-    patched_fig["layout"]['shapes'][1]['x1'] = total_number_sum if carousel else total_financing_sum
-    patched_fig["layout"]['annotations'][0]['x'] = total_number_sum if carousel else total_financing_sum
-    text = total_number_sum if carousel else '$' + format_money_number_si(total_financing_sum)
-    patched_fig["layout"]['annotations'][0]['text'] = text
-    # update x axis
-    patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'
-    patched_fig["layout"]['xaxis']['range'] = [0, (total_number_sum if carousel else total_financing_sum) * 1.03]
-    patched_fig["layout"]['xaxis']['tickprefix'] = '' if carousel else '$'
+    patched_fig["layout"]['shapes'][1].update(dict(
+        x0=total_number_sum if carousel else total_financing_sum,
+        x1=total_number_sum if carousel else total_financing_sum,
+    ))
+    patched_fig["layout"]['annotations'][0].update(dict(
+        x=total_number_sum if carousel else total_financing_sum,
+        text=total_number_sum if carousel else format_money_number_si(total_financing_sum),
+    ))
 
+    # update x axis
+    patched_fig["layout"]['xaxis'].update(dict(
+        title={'text': 'Number of Projects' if carousel else 'Financing'},
+        range=[0, (total_number_sum if carousel else total_financing_sum) * 1.03],
+        tickprefix='' if carousel else '$',
+    ))
     return patched_fig
 
 

@@ -39,6 +39,38 @@
     display: none;
 }
 
+/* remove margin of markdown */
+.no-margin-markdown p {
+    margin: 0;
+}
+
+/* add custom border and shadow for dmc.Tooltips for light and dark themes*/
+/*:where([data-mantine-color-scheme='light']) .mantine-Tooltip-tooltip {*/
+/*    box-shadow: 2px 2px 5px*/
+/*}*/
+
+:where([data-mantine-color-scheme='light']) {
+    .mantine-Tooltip-tooltip {
+        border: 1px solid grey;
+        box-shadow: 2px 2px 5px
+    }
+
+    .mantine-Tooltip-arrow {
+        border: 1px solid grey;
+    }
+}
+
+:where([data-mantine-color-scheme='dark']) {
+    .mantine-Tooltip-tooltip {
+        border: 1px solid var(--primary);
+        box-shadow: 0 0 10px var(--primary)
+    }
+
+    .mantine-Tooltip-arrow {
+        border: 1px solid var(--primary);
+    }
+}
+
 /* Grid *******************************************************************************/
 
 /* center group headers, headers and cells*/
@@ -148,12 +180,21 @@
 }
 
 /*mantine-Carousel-slide justify-content*/
-#readiness-top-partners-carousel, #fa-timeline-carousel2 {
+#readiness-top-partners-carousel, #fa-timeline-carousel2, #entities-map-carousel {
     margin-left: 5px;
 
     .mantine-Carousel-slide {
         display: flex;
         justify-content: left
+    }
+}
+
+#entities-map-carousel {
+    margin-right: 5px;
+
+    .mantine-Carousel-slide {
+        display: flex;
+        justify-content: right
     }
 }
 
@@ -180,4 +221,16 @@
         border: 1px solid var(--mantine-color-dark-4);
     }
 
+}
+
+/* Entities mini-grid to use drag and drop for treemap *******************************************************************************/
+#entities-levels-drag-grid {
+
+    .ag-center-cols-container {
+        width: 100% !important;
+    }
+
+    .ag-header-cell {
+        padding-right: 0
+    }
 }

@@ -8,33 +8,7 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from app_config import df_countries
-
-# custom header template to add an info icon to emphasize tooltips for that header
-header_template_with_icon = """
-<div class="ag-cell-label-container" role="presentation">
-    <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button"></span>
-    <span ref="eFilterButton" class="ag-header-icon ag-header-cell-filter-button"></span>
-    <div ref="eLabel" class="ag-header-cell-label" role="presentation">          
-        <span ref="eText" class="ag-header-cell-text" role="columnheader"></span>       
-        <span ref="eFilter" class="ag-header-icon ag-filter-icon"></span>
-        <span ref="eSortOrder" class="ag-header-icon ag-sort-order ag-hidden"></span>
-        <span ref="eSortAsc" class="ag-header-icon ag-sort-ascending-icon ag-hidden"></span>
-        <span ref="eSortDesc" class="ag-header-icon ag-sort-descending-icon ag-hidden"></span>
-        <span ref="eSortMixed" class="ag-header-icon ag-sort-mixed-icon ag-hidden"></span>
-        <span ref="eSortNone" class="ag-header-icon ag-sort-none-icon ag-hidden"></span> 
-
-        &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-        <path fill="var(--ag-header-foreground-color)" d="M12 1.999c5.524 0 10.002 4.478 10.002 10.002c0 5.523-4.478 
-        10.001-10.002 10.001S2 17.524 2 12.001C1.999 6.477 6.476 1.999 12 1.999" 
-        class="duoicon-secondary-layer" opacity="0.3"/>
-        <path fill="var(--ag-header-foreground-color)" d="M12.001 6.5a1.252 1.252 0 1 0 .002 2.503A1.252 1.252 0 0 0 
-        12 6.5zm-.005 3.749a1 1 0 0 0-.992.885l-.007.116l.004 5.502l.006.117a1 1 0 0 0 1.987-.002L13 
-        16.75l-.004-5.501l-.007-.117a1 1 0 0 0-.994-.882z" class="duoicon-primary-layer"/></svg>
-
-    </div>
-</div>
-"""
+from app_config import df_countries, header_template_with_icon
 
 financing_header_tooltip = '''
   The amount of GCF funding allocated to each country  
@@ -77,7 +51,9 @@ columnDefs = [
          {'field': 'AS',
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': 'African States',
-          "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool"}
+          "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool"},
+         # add this col as hidden to use it with filter, clicking on the parcats fig
+         {'field': 'Priority States', 'hide': True}
      ]},
     {'headerName': 'Readiness Programme', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
      # 'headerTooltip': '''<u>**[Non-annex 1 countries:](https://unfccc.int/parties-observers)**</u>''',
@@ -89,7 +65,8 @@ columnDefs = [
      # Contributions (NDCs) and National Adaptation Plans (NAPs), to develop climate action agendas.
      'children': [
          {'field': 'RP Financing $', 'headerName': 'Financing',
-          'cellStyle': {'textAlign': 'right'}, "valueFormatter": {"function": "d3.format('$.4s')(params.value)"},
+          'cellStyle': {'textAlign': 'right'},
+          "valueFormatter": {"function": "formatMoneyNumberSI(params.value)"},
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': financing_header_tooltip
           },
@@ -101,7 +78,8 @@ columnDefs = [
      # https://www.greenclimate.fund/projects/access-funding
      'children': [
          {'field': 'FA Financing $', 'headerName': 'Financing',
-          'cellStyle': {'textAlign': 'right'}, "valueFormatter": {"function": "d3.format('$.4s')(params.value)"},
+          'cellStyle': {'textAlign': 'right'},
+          "valueFormatter": {"function": "formatMoneyNumberSI(params.value)"},
           "headerComponentParams": {"template": header_template_with_icon},
           'headerTooltip': financing_header_tooltip
           },
@@ -183,13 +161,32 @@ def cell_icon_click(click_data):
 
 
 @callback(
+    Output("countries-grid", "filterModel"),
+    Input("countries-grid", "id"),
+    State("countries-grid-filter-state-store", "data"),
+)
+def apply_filter(_, temp_filter):
+    # apply existing filter from the store once the grid is ready,
+    return json.loads(temp_filter) if temp_filter else no_update
+
+
+@callback(
     Output("countries-grid-filter-state-store", "data", allow_duplicate=True),
     Input("countries-grid", "filterModel"),
     prevent_initial_call=True
 )
 def save_filter(filter_model):
     # save the current filter state to reapply it when switching tabs
-    return json.dumps(filter_model)
+    return json.dumps(filter_model) if filter_model else no_update
+
+
+@callback(
+    Output("countries-grid", "filterModel", allow_duplicate=True),
+    Input("countries-grid-reset-btn", "n_clicks"),
+    prevent_initial_call=True
+)
+def reset_filter(_):
+    return {}
 
 
 @callback(

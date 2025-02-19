@@ -8,36 +8,10 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from app_config import df_readiness
+from app_config import df_readiness, header_template_with_icon
 
 # sort by ref for the default order in the grid
 df_readiness.sort_values('Ref #', inplace=True, na_position='last')
-
-# custom header template to add an info icon to emphasize tooltips for that header
-header_template_with_icon = """
-<div class="ag-cell-label-container" role="presentation">
-    <span ref="eMenu" class="ag-header-icon ag-header-cell-menu-button"></span>
-    <span ref="eFilterButton" class="ag-header-icon ag-header-cell-filter-button"></span>
-    <div ref="eLabel" class="ag-header-cell-label" role="presentation">          
-        <span ref="eText" class="ag-header-cell-text" role="columnheader"></span>       
-        <span ref="eFilter" class="ag-header-icon ag-filter-icon"></span>
-        <span ref="eSortOrder" class="ag-header-icon ag-sort-order ag-hidden"></span>
-        <span ref="eSortAsc" class="ag-header-icon ag-sort-ascending-icon ag-hidden"></span>
-        <span ref="eSortDesc" class="ag-header-icon ag-sort-descending-icon ag-hidden"></span>
-        <span ref="eSortMixed" class="ag-header-icon ag-sort-mixed-icon ag-hidden"></span>
-        <span ref="eSortNone" class="ag-header-icon ag-sort-none-icon ag-hidden"></span> 
-
-        &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-        <path fill="var(--ag-header-foreground-color)" d="M12 1.999c5.524 0 10.002 4.478 10.002 10.002c0 5.523-4.478 
-        10.001-10.002 10.001S2 17.524 2 12.001C1.999 6.477 6.476 1.999 12 1.999" 
-        class="duoicon-secondary-layer" opacity="0.3"/>
-        <path fill="var(--ag-header-foreground-color)" d="M12.001 6.5a1.252 1.252 0 1 0 .002 2.503A1.252 1.252 0 0 0 
-        12 6.5zm-.005 3.749a1 1 0 0 0-.992.885l-.007.116l.004 5.502l.006.117a1 1 0 0 0 1.987-.002L13 
-        16.75l-.004-5.501l-.007-.117a1 1 0 0 0-.994-.882z" class="duoicon-primary-layer"/></svg>
-
-    </div>
-</div>
-"""
 
 financing_header_tooltip = '''
   The amount of GCF funding allocated to each country  
@@ -192,6 +166,15 @@ def apply_filter(_, temp_filter):
 def save_filter(filter_model):
     # save the current filter state to reapply it when switching tabs
     return json.dumps(filter_model)
+
+
+@callback(
+    Output("readiness-grid", "filterModel", allow_duplicate=True),
+    Input("readiness-grid-reset-btn", "n_clicks"),
+    prevent_initial_call=True
+)
+def reset_filter(_):
+    return {}
 
 
 @callback(

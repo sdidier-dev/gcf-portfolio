@@ -1,6 +1,6 @@
 import os
 
-from dash import Dash, _dash_renderer, Input, Output, State, callback, clientside_callback, Patch
+from dash import Dash, _dash_renderer, Input, Output, State, callback, clientside_callback, Patch, dcc
 import dash_ag_grid as dag
 
 import dash_mantine_components as dmc
@@ -34,7 +34,9 @@ readiness_dashboard = dmc.Stack([
                 "Readiness Programme Flow of Funds"
             ], id='readiness-timeline-card-header', fz=20, h=40, style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
             dmc.Divider(),
+
             components.readiness_timeline
+
         ],
             withBorder=True, shadow="sm", radius='md',
             mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
@@ -50,7 +52,9 @@ readiness_dashboard = dmc.Stack([
                 ], id='readiness-status-card-header', fz=20, h=40,
                     style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
+
                 components.readiness_status_bar
+
             ],
                 withBorder=True, shadow="sm", radius='md',
                 mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
@@ -75,7 +79,9 @@ readiness_dashboard = dmc.Stack([
                 ], id='readiness-top-partners-card-header', fz=20, h=40,
                     style={'border-radius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
+
                 components.readiness_top_partners_bar
+
             ],
                 withBorder=True, shadow="sm", radius='md',
                 mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
@@ -89,11 +95,25 @@ readiness_dashboard = dmc.Stack([
     ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
     ),
     dmc.Group([
-        dmc.Text('Pro tip:', size="xs", c="dimmed", td="underline"),
-        dmc.Text('The Graphs above are linked to the data of the Grid, filtering the data of the Grid will '
-                 'update the Graphs accordingly.', size="xs", c="dimmed")
-    ], style={"align-self": 'flex-start'}),
+        dmc.Button("Reset Grid Filters", id='readiness-grid-reset-btn', variant="outline", color='var(--primary)',
+                   size='compact-xs', radius="lg", px=10, style={"align-self": 'center '}),
+        dmc.Tooltip(
+            dmc.Center(DashIconify(icon='clarity:info-line', color='var(--primary)', width=25)),
+            label=[
+                dcc.Markdown(
+                    '<u>Pro tip:</u><br>'
+                    'The Grid and the Graphs are linked.<br>'
+                    'Try to filter the Grid or click on the Graphs.',
+                    dangerously_allow_html=True, style={'margin': 0}, className='no-margin-markdown'),
+            ],
+            multiline=True, withArrow=True, arrowSize=6, position="right",
+            bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
+            transitionProps={"transition": "scale-x", "duration": 300},
+        ),
+    ], style={"align-self": 'center'}),
+
     components.readiness_grid
+
 ], w='100%', style={"flex": 1}, align='center')
 
 

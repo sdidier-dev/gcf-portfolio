@@ -1,3 +1,4 @@
+import json
 import os
 from pprint import pprint
 
@@ -12,8 +13,8 @@ from app_config import df_countries
 
 
 def format_df_for_parcats(df):
-    for col in ['priority state', 'SIDS', 'LDC', 'AS']:
-        df[col] = df[col].apply(lambda x: 'Yes' if x is True else 'No')
+    df = df.groupby(['Priority States', 'SIDS', 'LDC', 'AS', 'Region'], as_index=False).sum()
+    df.replace({True: 'Yes', False: 'No'}, inplace=True)
     df['Region'] = df['Region'].apply(
         lambda x: 'Latin America<br>and the Caribbean' if 'Latin' in x
         else 'Western Europe<br>and Others' if 'Western' in x
@@ -26,7 +27,7 @@ dff = format_df_for_parcats(df_countries.copy())
 
 dimensions = [
     go.parcats.Dimension(label=col.upper(), values=dff[col], categoryorder='category descending')
-    for col in ['priority state', 'SIDS', 'LDC', 'AS']
+    for col in ['Priority States', 'SIDS', 'LDC', 'AS']
 ]
 
 dimensions.append(
@@ -36,7 +37,7 @@ dimensions.append(
 fig = go.Figure()
 fig.add_parcats(
     dimensions=dimensions,
-    counts=dff['FA Financing $'],
+    counts=dff['RP Financing $'],
     line={'shape': 'hspline', 'colorscale': [[0, '#a0a115'], [1, '#15a14a']], 'color': '#15a14a'},
     hoveron='color',
     labelfont_size=16,
@@ -57,10 +58,7 @@ countries_parcats = dmc.Stack([
         dmc.Checkbox(id="countries-parcats-chk", label="Highlight Priority States Lines", fz=16),
         multiline=True, withArrow=True, arrowSize=6, w=300, position="bottom",
         label="States categorized in at least one priority group SIDS/LDC/AS",
-        bg='var(--mantine-color-body)', c='var(--mantine-color-text)', bd='1px solid var(--primary)',
-        styles={
-            'arrow': {'border-top': '1px solid var(--primary)', 'border-left': '1px solid var(--primary)'},
-        },
+        bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
     ),
     dcc.Graph(
         id='countries-parcats',
@@ -73,6 +71,31 @@ countries_parcats = dmc.Stack([
 
 
 @callback(
+    Output("countries-grid", "filterModel", allow_duplicate=True),
+    Input("countries-parcats", "clickData"),
+    State("countries-parcats", "figure"),
+    prevent_initial_call=True
+)
+def countries_parcats_graph_click(click_data, fig):
+    if not click_data:
+        return no_update
+    points = [p['pointNumber'] for p in click_data['points']]
+
+    grid_filter = {}
+    for dim in fig['data'][0]['dimensions']:
+        # get the categories set of clicked points, if only one cat, it is added for the grid filter
+        if len(cat := set(dim['values'][i] for i in points)) == 1:
+            if dim['label'] == 'REGION':
+                text = cat.pop().replace('<br>', ' ')
+                grid_filter['Region'] = {'filterType': 'text', 'type': 'contains', 'filter': text}
+            elif dim['label'] == 'PRIORITY STATES':
+                grid_filter['Priority States'] = {'filterType': 'text', 'type': 'true' if cat == {'Yes'} else 'false'}
+            else:
+                grid_filter[dim['label']] = {'filterType': 'text', 'type': 'true' if cat == {'Yes'} else 'false'}
+    return grid_filter
+
+
+@callback(
     Output("countries-parcats", "figure", allow_duplicate=True),
     Input("countries-parcats-carousel-1", "active"),
     Input("countries-parcats-carousel-2", "active"),
@@ -82,7 +105,7 @@ countries_parcats = dmc.Stack([
 def update_parcats_data(carousel_1, carousel_2, virtual_data):
     patched_fig = Patch()
     if not virtual_data:
-        for i, dim in enumerate(['priority state', 'SIDS', 'LDC', 'AS', 'Region']):
+        for i, dim in enumerate(['Priority States', 'SIDS', 'LDC', 'AS', 'Region']):
             patched_fig["data"][0]['dimensions'][i]['values'] = None
         return patched_fig
 
@@ -93,7 +116,7 @@ def update_parcats_data(carousel_1, carousel_2, virtual_data):
 
     patched_fig["data"][0]['counts'] = dff[col]
 
-    for i, dim in enumerate(['priority state', 'SIDS', 'LDC', 'AS', 'Region']):
+    for i, dim in enumerate(['Priority States', 'SIDS', 'LDC', 'AS', 'Region']):
         patched_fig["data"][0]['dimensions'][i]['values'] = dff[dim]
 
     patched_fig["data"][0]['hovertemplate'] = (
@@ -120,11 +143,12 @@ def highlight_priority_countries(checked, virtual_data):
         return no_update
 
     dff = format_df_for_parcats(pd.DataFrame(virtual_data))
-    color = dff['priority state'].apply(lambda x: 0 if x == 'Yes' else 1) if checked else '#15a14a'
+    color = dff['Priority States'].apply(lambda x: 0 if x == 'Yes' else 1) if checked else '#15a14a'
 
     patched_fig = Patch()
     patched_fig["data"][0]['line']['color'] = color
     return patched_fig
+
 
 @callback(
     Output("countries-parcats", "figure"),

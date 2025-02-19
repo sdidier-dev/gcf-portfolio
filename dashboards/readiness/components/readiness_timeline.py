@@ -145,7 +145,6 @@ fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
     legend=dict(
-        # orientation="h",
         xanchor="left", x=0.05,
         yanchor="top", y=0.95,
     ),
@@ -227,15 +226,17 @@ def update_data(agg, split_line, virtual_data):
             y_data += period_data['Cumulative Financing'].tolist() + [None]
             marker_opacity += [0] * (len(period_data) - 1) + [1, None]
             text_data += [''] * (len(period_data) - 1) + [period_data['Cumulative Financing'].iloc[-1]] + [None]
-        patched_fig["data"][0]['x'] = x_data
-        patched_fig["data"][0]['y'] = y_data
-        patched_fig["data"][0]['marker']['opacity'] = marker_opacity
-        patched_fig["data"][0]['text'] = text_data
+
+        patched_fig["data"][0].update(dict(
+            x=x_data, y=y_data, marker={'opacity': marker_opacity}, text=text_data,
+        ))
+
     else:
-        patched_fig["data"][0]['x'] = dff['Approved Date']
-        patched_fig["data"][0]['y'] = dff['Cumulative Financing']
-        patched_fig["data"][0]['marker']['opacity'] = [0] * (len(dff) - 1) + [1]
-        patched_fig["data"][0]['text'] = [''] * (len(dff) - 1) + [dff['Cumulative Financing'].iloc[-1]]
+        patched_fig["data"][0].update(dict(
+            x=dff['Approved Date'], y=dff['Cumulative Financing'],
+            marker={'opacity': [0] * (len(dff) - 1) + [1]},
+            text=[''] * (len(dff) - 1) + [dff['Cumulative Financing'].iloc[-1]],
+        ))
 
     # bar patch
     if agg == 'GCF':
@@ -268,9 +269,11 @@ def update_data(agg, split_line, virtual_data):
         patched_fig["data"][1]['width'] = None
         patched_fig["layout"]["yaxis2"]['autorange'] = True
 
-    patched_fig["data"][1]['x'] = dff_agg['Approved Date']
-    patched_fig["data"][1]['y'] = dff_agg['Number']
-    patched_fig["data"][1]['hovertemplate'] = f'{date_hovertemplate[agg]}<br><b>%{{y}} Projects</b><extra></extra>'
+    patched_fig["data"][1].update(dict(
+        x=dff_agg['Approved Date'],
+        y=dff_agg['Number'],
+        hovertemplate=f'{date_hovertemplate[agg]}<br><b>%{{y}} Projects</b><extra></extra>'
+    ))
 
     return patched_fig
 
@@ -285,11 +288,6 @@ def update_data(agg, split_line, virtual_data):
 def update_xticks(_, agg, fig):
     # NOTE: we use the fig to have the xrange, as relayout_data may not have it
 
-    # pprint(fig["layout"]["yaxis2"])
-
-    # if not fig or pandas_agg_period == 'ALL':
-    #     return no_update
-
     # no update if no date format for x axis, like having no data in grid
     if not isinstance(fig["layout"]["xaxis"]["range"][0], str):
         return no_update
@@ -298,11 +296,14 @@ def update_xticks(_, agg, fig):
                    datetime.fromisoformat(fig["layout"]["xaxis"]["range"][1])]
     xticks = set_time_xticks(xaxis_range, agg)
 
-    patched_figure = Patch()
-    patched_figure["layout"]["xaxis"]["dtick"] = xticks["dtick"]
-    patched_figure["layout"]["xaxis"]["tickformat"] = xticks["tickformat"]
-    patched_figure["layout"]["xaxis"]["minor"]["dtick"] = xticks["minor_dtick"]
-    return patched_figure
+    patched_fig = Patch()
+
+    patched_fig["layout"]["xaxis"].update(dict(
+        dtick=xticks["dtick"],
+        tickformat=xticks["tickformat"],
+        minor=dict(dtick=xticks["minor_dtick"]),
+    ))
+    return patched_fig
 
 
 @callback(
