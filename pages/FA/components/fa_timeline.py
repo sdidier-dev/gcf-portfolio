@@ -60,36 +60,38 @@ fig.update_layout(
     hovermode="x"
 )
 
-FA_timeline = dmc.Stack([
-    dmc.Group([
-        dmc.Checkbox(id="fa-timeline-total-chk", label="Add Total Line"),
-        dmc.Checkbox(id="fa-timeline-stack-chk", label="Stack Lines"),
-    ]),
-    dcc.Graph(
-        id='fa-timeline-graph',
-        config={'displayModeBar': False}, responsive=True,
-        figure=fig,
-        style={"flex": 1}
-    )
-], p=10, style={"flex": 1})
+
+def fa_timeline(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Stack([
+        dmc.Group([
+            dmc.Checkbox(id="fa-timeline-total-chk", label="Add Total Line"),
+            dmc.Checkbox(id="fa-timeline-stack-chk", label="Stack Lines"),
+        ]),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'line', 'index': 'fa'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={"flex": 1}
+        )
+    ], p=10, style={"flex": 1})
 
 
 @callback(
-    Output("fa-timeline-graph", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'line', 'index': 'fa'}, "figure", allow_duplicate=True),
     Input("fa-timeline-carousel1", "active"),
     Input("fa-timeline-select", "value"),
     Input("fa-timeline-total-chk", "checked"),
     Input("fa-timeline-stack-chk", "checked"),
-    Input("fa-grid", "virtualRowData"),
-    State("fa-timeline-graph", "figure"),
+    Input({'type': 'grid', 'index': 'fa'}, "virtualRowData"),
+    State({'type': 'figure', 'subtype': 'line', 'index': 'fa'}, "figure"),
     prevent_initial_call=True
 )
 def update_fa_timeline_data(carousel1, col, total, stack, virtual_data, fig):
     patched_fig = Patch()
     if not virtual_data:
         for i, trace in enumerate(fig['data']):
-            patched_fig["data"][i]['x'] = None
-            patched_fig["data"][i]['y'] = None
+            patched_fig["data"][i].update(dict({'x': None, 'y': None}))
         return patched_fig
 
     dff_grid = pd.DataFrame(virtual_data)
@@ -203,14 +205,4 @@ def update_fa_timeline_data(carousel1, col, total, stack, virtual_data, fig):
     patched_fig["layout"]["yaxis"]["title"]["text"] = 'Number of Projects' if carousel1 else 'Financing'
     patched_fig["layout"]["yaxis"]["tickprefix"] = None if carousel1 else '$'
 
-    return patched_fig
-
-
-@callback(
-    Output("fa-timeline-graph", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
     return patched_fig

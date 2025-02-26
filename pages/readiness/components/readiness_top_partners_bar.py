@@ -61,26 +61,28 @@ fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'f
                  showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
 fig.update_yaxes(showticklabels=False, autorange="reversed")
 
-readiness_top_partners_bar = dcc.Graph(
-    id='readiness-top-partners-bar',
-    config={'displayModeBar': False}, responsive=True,
-    figure=fig,
-    style={"flex": 1, 'padding': 10}
-)
+
+def readiness_top_partners_bar(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dcc.Graph(
+        id={'type': 'figure', 'subtype': 'bar', 'index': 'readiness-top-partners'},
+        config={'displayModeBar': False}, responsive=True,
+        figure=fig,
+        style={"flex": 1, 'padding': 10}
+    )
 
 
 @callback(
-    Output("readiness-top-partners-bar", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'bar', 'index': 'readiness-top-partners'}, "figure", allow_duplicate=True),
     Input("readiness-top-partners-carousel", "active"),
     Input("readiness-top-partners-input", "value"),
-    Input("readiness-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'readiness'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_status_data(carousel, n_top, virtual_data):
     if not virtual_data:
         patched_fig = Patch()
-        patched_fig["data"][0]['x'] = None
-        patched_fig["data"][0]['y'] = None
+        patched_fig["data"][0].update({'x': None, 'y': None})
         return patched_fig
 
     # sum financing and number of projects by status
@@ -96,26 +98,21 @@ def update_status_data(carousel, n_top, virtual_data):
     top_partners = dff.sort_values(data_col, ascending=False).head(n_top)
     top_partners['hovertext'] = top_partners.apply(hovertext_format, axis=1)
 
-    patched_fig = Patch()
-    patched_fig["data"][0]['x'] = top_partners[data_col]
-    patched_fig["data"][0]['y'] = top_partners.index
-    patched_fig["data"][0]['customdata'] = list(zip(*[top_partners[col] for col in top_partners.columns]))
     x = '%{x} Projects' if carousel else '%{x:$.4s}'
     customdata = '%{customdata[0]:$.4s}' if carousel else '%{customdata[1]}'
-    patched_fig["data"][0]['texttemplate'] = f'<b>%{{y}}</b> {x} ({customdata})'
-    patched_fig["data"][0]['hovertext'] = top_partners['hovertext']
 
-    patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'
-    patched_fig["layout"]['xaxis']['tickprefix'] = '' if carousel else '$'
-
-    return patched_fig
-
-
-@callback(
-    Output("readiness-top-partners-bar", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
     patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
+    patched_fig["data"][0].update(dict(
+        x=top_partners[data_col],
+        y=top_partners.index,
+        customdata=list(zip(*[top_partners[col] for col in top_partners.columns])),
+        texttemplate=f'<b>%{{y}}</b> {x} ({customdata})',
+        hovertext=top_partners['hovertext'],
+    ))
+
+    patched_fig["layout"]['xaxis'].update(dict(
+        title={'text': 'Number of Projects' if carousel else 'Financing'},
+        tickprefix='' if carousel else '$'
+    ))
+
     return patched_fig

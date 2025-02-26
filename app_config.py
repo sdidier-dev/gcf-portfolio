@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from urllib.parse import parse_qs
 
 import numpy as np
 import pandas as pd
@@ -143,3 +144,116 @@ df_FA['Priority States'] = df_FA['Countries'].apply(
 )
 # add multi countries
 df_FA['Multiple Countries'] = df_FA['Countries'].apply(lambda countries: len(countries.split(',')) > 1)
+
+
+# URL queries to grid filters and the opposite #################################################################
+
+# parse str to int/float
+def parse_as_number(value):
+    try:
+        return int(value)  # Try parsing as an integer
+    except ValueError:
+        try:
+            return float(value)  # Try parsing as a float
+        except ValueError:
+            return None  # Not a valid number
+
+
+# def app wide variables that will be populated in Grids scrips
+# those variables are used to map query params names to col names
+query_to_col = {}
+col_to_query = {}
+
+
+def query_to_filter(query, query_to_col):
+    if not query:
+        return {}
+
+    # http://127.0.0.1:8050/countries?country=a+b&country=c&countryOperator=AND&SIDS=true&RPnb=10-20
+    filterModel = {}
+
+    query_params = parse_qs(query[1:])  # remove the '?'
+
+    for param, values in query_params.items():
+        # first check if the param has a corresponding col else skipped
+        if param in query_to_col:
+
+            #  queries examples: ?country=bra, ?country=a+b&country=c&countryOperator=AND, ?country=a_d
+            # note the '_' is used to keep the space in the filter instead of splitting the text in 2 filters
+            if query_to_col[param]['type'] == 'text':
+                # check if operator is provided and its value is valid else operator default to OR
+                # note that it will be skipped if only one value in param
+                if param + 'Operator' in query_params and query_params[param + 'Operator'][0] in ['AND', 'OR']:
+                    operator = query_params[param + 'Operator'][0]
+                else:
+                    operator = 'OR'
+
+                # split if value is like 'a+b' or 'a b' (note that '+' is parsed as space using parse_qs()
+                values = [v.replace('_', ' ') for value in values for v in value.split()]
+                filterModel[query_to_col[param]['field']] = {
+                    'filterType': 'text', 'operator': operator,
+                    'conditions': [{'filterType': 'text', 'type': 'contains', 'filter': value} for value in values]
+                }
+
+            # queries examples: ?SIDS=true, ?SIDS=True, ?SIDS=TRUE
+            elif query_to_col[param]['type'] == 'bool':
+                value = values[0].lower()
+                if value in ['true', 'false']:
+                    filterModel[query_to_col[param]['field']] = {'filterType': 'text', 'type': value}
+
+            # queries examples: ?RPnb=10, ?RPnb=10-20, ?RPnb=10&RPnbOperator=greaterThan
+            elif query_to_col[param]['type'] == 'num':
+                # try to split in case of range
+                values = values[0].split('-')
+                if len(values) == 1:
+                    value = parse_as_number(values[0])
+                    # process only if value is a number else skip
+                    if value is not None:
+                        # check if operator is provided and its value is valid else operator default to 'equals'
+                        operators = ['greaterThan', 'lessThan', 'equals', 'notEqual',
+                                     'greaterThanOrEqual', 'lessThanOrEqual', 'blank', 'notBlank']
+                        if param + 'Operator' in query_params and query_params[param + 'Operator'][0] in operators:
+                            operator = query_params[param + 'Operator'][0]
+                        else:
+                            operator = 'equals'
+
+                        filterModel[query_to_col[param]['field']] = {
+                            'filterType': 'number', 'type': operator, 'filter': value}
+                # range like ?RPnb=10-20
+                elif len(values) == 2:
+                    values = [parse_as_number(values[0]), parse_as_number(values[1])]
+                    # process only if values are both a number else skip
+                    if values[0] is not None and values[1] is not None:
+                        filterModel[query_to_col[param]['field']] = {
+                            'filterType': 'number', 'type': 'inRange', 'filter': values[0], 'filterTo': values[1]}
+
+    return filterModel
+
+
+def filter_to_query(filter_model, col_to_query):
+    if not filter_model:
+        return ''
+
+    queries_list = []
+    for col, col_filter in filter_model.items():
+
+        if col_filter['filterType'] == 'text':
+            if 'conditions' in col_filter:  # multi conditions
+                query_value = f"{col_to_query[col]}={'+'.join([cond['filter'] for cond in col_filter['conditions']])}"
+                query_operator = f"{col_to_query[col]}Operator={col_filter['operator']}"
+                queries_list += [query_value, query_operator]
+            else:  # simple condition
+                if col_filter['type'] in ['true', 'false']:  # bool
+                    queries_list += [f"{col_to_query[col]}={col_filter['type']}"]
+                else:  # text
+                    queries_list += [f"{col_to_query[col]}={col_filter['filter']}"]
+
+        elif col_filter['filterType'] == 'number':
+            if col_filter['type'] == 'inRange':  # range has 'filter' and 'filterTo'
+                queries_list += [f"{col_to_query[col]}={col_filter['filter']}-{col_filter['filterTo']}"]
+            else:
+                queries_list += [f"{col_to_query[col]}={col_filter['filter']}"]
+                # no need to add operator when 'equals' as it is the default, that makes the query a bit simpler
+                if col_filter['type'] != 'equals':
+                    queries_list += [f"{col_to_query[col]}Operator={col_filter['type']}"]
+    return '?' + '&'.join(queries_list).replace(' ', '_')

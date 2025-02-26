@@ -134,14 +134,15 @@ dagcomponentfuncs.CustomTooltipHeaders = function (props) {
 }
 
 dagcomponentfuncs.CustomButtonCell = function (props) {
-    // no icon for bottom pinned row
-    if (props.node.rowPinned == 'bottom') {
-        return props.value
-    }
+    // // no icon for bottom pinned row
+    // if (props.node.rowPinned == 'bottom') {
+    //     return props.value
+    // }
 
     const {setData, data} = props;
 
     function onClick() {
+        console.log(data)
         setData(data['Country Name']);
     }
 

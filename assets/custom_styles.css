@@ -29,9 +29,19 @@
 
 }
 
+/* to try for a smooth transition light/dark*/
+/*.ag-theme-quartz,*/
+/*.ag-theme-quartz-dark {*/
+/*    transition: background-color 5s, color 5s; !* Smoothly transition changes *!*/
+/*}*/
 
 #_dash-app-content {
     height: 100vh;
+}
+
+#_pages_content {
+    height: 100%;
+    display: flex;
 }
 
 /* remove the info control from the maps */
@@ -44,11 +54,9 @@
     margin: 0;
 }
 
-/* add custom border and shadow for dmc.Tooltips for light and dark themes*/
-/*:where([data-mantine-color-scheme='light']) .mantine-Tooltip-tooltip {*/
-/*    box-shadow: 2px 2px 5px*/
-/*}*/
-
+/*General light/dark customization*/
+/* custom border and shadow for dmc.Tooltips */
+/* card headers */
 :where([data-mantine-color-scheme='light']) {
     .mantine-Tooltip-tooltip {
         border: 1px solid grey;
@@ -57,6 +65,10 @@
 
     .mantine-Tooltip-arrow {
         border: 1px solid grey;
+    }
+
+    .card-header {
+        background-color: var(--mantine-color-gray-1);
     }
 }
 
@@ -68,6 +80,10 @@
 
     .mantine-Tooltip-arrow {
         border: 1px solid var(--primary);
+    }
+
+    .card-header {
+        background-color: var(--mantine-color-dark-8);
     }
 }
 
@@ -153,7 +169,7 @@
 
 /* Countries Parcats *******************************************************************************/
 /* fix parcats fig text on hover */
-#countries-parcats text.nums {
+[id='{"index":"countries","subtype":"parcats","type":"figure"}'] text.nums {
     font-family: inherit !important;
     font-size: 13px !important;
 }
@@ -198,10 +214,20 @@
     }
 }
 
-/* Funded Activities timeline - let the labels overflow the plot area*/
-#fa-timeline-graph .plotclip rect {
-    width: 100%;
+/* Readiness and Funded Activities timelines - let the labels overflow the plot area*/
+[id='{"index":"readiness-timeline","subtype":"line+bar","type":"figure"}'] .main-svg {
+    overflow: visible;
+
+    .clips rect {
+        height: 100%;
+        y: -10px;
+    }
 }
+
+[id='{"index":"fa","subtype":"line","type":"figure"}'] .plotclip rect {
+    width: 100% !important;
+}
+
 
 /* Funded Activities histogram custom group button border */
 :where([data-mantine-color-scheme='light']) #fa-histogram-grp-btn {
@@ -224,13 +250,16 @@
 }
 
 /* Entities mini-grid to use drag and drop for treemap *******************************************************************************/
-#entities-levels-drag-grid {
-
+[id='{"index":"entities-levels-drag","type":"grid"}'] {
     .ag-center-cols-container {
         width: 100% !important;
     }
 
     .ag-header-cell {
-        padding-right: 0
+        padding-right: 0 !important;
+    }
+
+    .ag-center-cols-container {
+        width: 100% !important;
     }
 }

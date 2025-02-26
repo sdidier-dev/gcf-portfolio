@@ -152,58 +152,59 @@ fig.update_layout(
     yaxis=yaxis, yaxis2=yaxis2,
 )
 
-readiness_timeline = dmc.Stack([
-    dmc.Group(
-        [
-            'Project Number by',
-            dmc.Select(
-                id="readiness-timeline-dropdown",
-                data=[
-                    {"value": "M1", "label": "Month"},
-                    {"value": "M3", "label": "Quarter"},
-                    {"value": "M6", "label": "Half Year"},
-                    {"value": "M12", "label": "Year"},
-                    {"value": "GCF", "label": "GCF Replenishments"},
-                ],
-                value="M3",
-                checkIconPosition='right', w=150,
-                comboboxProps={'transitionProps': {'duration': 300, 'transition': 'scale-y'}},
-            ),
-            dmc.Checkbox(id="readiness-timeline-labels-chk", label="Show labels"),
-            dmc.Checkbox(id="readiness-timeline-reple-lines-chk", label="Show Replenishments Periods"),
-            dmc.Checkbox(
-                id="readiness-timeline-reple-split-chk",
-                w=200, label="Split Financing by Replenishments Periods",
-                styles={'body': {'align-items': 'center'}}
-            ),
-        ]
-    ),
 
-    dcc.Graph(
-        id='readiness-timeline-graph',
-        config={'displayModeBar': False}, responsive=True,
-        figure=fig,
-        style={"flex": 1}
+def readiness_timeline(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Stack([
+        dmc.Group(
+            [
+                'Project Number by',
+                dmc.Select(
+                    id="readiness-timeline-dropdown",
+                    data=[
+                        {"value": "M1", "label": "Month"},
+                        {"value": "M3", "label": "Quarter"},
+                        {"value": "M6", "label": "Half Year"},
+                        {"value": "M12", "label": "Year"},
+                        {"value": "GCF", "label": "GCF Replenishments"},
+                    ],
+                    value="M3",
+                    checkIconPosition='right', w=150,
+                    comboboxProps={'transitionProps': {'duration': 300, 'transition': 'scale-y'}},
+                ),
+                dmc.Checkbox(id="readiness-timeline-labels-chk", label="Show labels"),
+                dmc.Checkbox(id="readiness-timeline-reple-lines-chk", label="Show Replenishments Periods"),
+                dmc.Checkbox(
+                    id="readiness-timeline-reple-split-chk",
+                    w=200, label="Split Financing by Replenishments Periods",
+                    styles={'body': {'align-items': 'center'}}
+                ),
+            ]
+        ),
+
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={"flex": 1}
+        )
+    ], p=10, style={"flex": 1}
     )
-], p=10, style={"flex": 1}
-)
 
 
 @callback(
-    Output('readiness-timeline-graph', 'figure', allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure', allow_duplicate=True),
     Input('readiness-timeline-dropdown', 'value'),
     Input('readiness-timeline-reple-split-chk', 'checked'),
-    Input("readiness-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'readiness'}, "virtualRowData"),
     prevent_initial_call=True,
 )
 def update_data(agg, split_line, virtual_data):
     # empty figure if there is no data in the grid
     patched_fig = Patch()
     if not virtual_data:
-        patched_fig["data"][0]['x'] = None
-        patched_fig["data"][0]['y'] = None
-        patched_fig["data"][1]['x'] = None
-        patched_fig["data"][1]['y'] = None
+        patched_fig["data"][0].update({'x': None, 'y': None})
+        patched_fig["data"][1].update({'x': None, 'y': None})
         return patched_fig
 
     dff = pd.DataFrame(virtual_data)
@@ -279,10 +280,10 @@ def update_data(agg, split_line, virtual_data):
 
 
 @callback(
-    Output('readiness-timeline-graph', 'figure', allow_duplicate=True),
-    Input('readiness-timeline-graph', 'relayoutData'),  # Triggered by zooming/panning on figure
+    Output({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure', allow_duplicate=True),
+    Input({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'relayoutData'),  # Triggered by zooming/panning on figure
     Input('readiness-timeline-dropdown', 'value'),
-    State('readiness-timeline-graph', 'figure'),
+    State({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure'),
     prevent_initial_call=True,
 )
 def update_xticks(_, agg, fig):
@@ -301,13 +302,13 @@ def update_xticks(_, agg, fig):
     patched_fig["layout"]["xaxis"].update(dict(
         dtick=xticks["dtick"],
         tickformat=xticks["tickformat"],
-        minor=dict(dtick=xticks["minor_dtick"]),
+        minor_dtick=xticks["minor_dtick"],
     ))
     return patched_fig
 
 
 @callback(
-    Output('readiness-timeline-graph', 'figure', allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure', allow_duplicate=True),
     Input('readiness-timeline-labels-chk', 'checked'),
     prevent_initial_call=True
 )
@@ -318,11 +319,12 @@ def toggle_bar_labels(checked):
 
 
 @callback(
-    Output('readiness-timeline-graph', 'figure', allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure', allow_duplicate=True),
     Input('readiness-timeline-reple-lines-chk', 'checked'),
+    State({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure'),
     prevent_initial_call=True
 )
-def toggle_replenishment_visibility(checked):
+def toggle_replenishment_visibility(checked, fig):
     patched_fig = Patch()
     # Toggle vlines
     for i, shape in enumerate(fig["layout"]["shapes"]):
@@ -331,14 +333,4 @@ def toggle_replenishment_visibility(checked):
     for i, annotation in enumerate(fig["layout"]["annotations"]):
         patched_fig["layout"]["annotations"][i]['visible'] = checked
 
-    return patched_fig
-
-
-@callback(
-    Output("readiness-timeline-graph", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
     return patched_fig

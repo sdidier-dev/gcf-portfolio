@@ -78,46 +78,50 @@ fig_distrib.update_layout(
     margin={"r": 0, "t": 0, "l": 0, "b": 15},
 )
 
-entities_map = dmc.Stack([
-    dmc.Group([
-        dmc.Checkbox(id="entities-map-hover-chk", label="Show Entities Names on Hover", w=150,
-                     styles={'body': {'align-items': 'center'}}),
-        dmc.Stack([
-            dcc.Graph(
-                id='entities-map-distrib',
-                config={'displayModeBar': False},
-                responsive=True,
-                figure=fig_distrib,
-                style={'flex': 1}
-            ),
-            dmc.Slider(
-                id="entities-map-distrib-slider",
-                min=0, max=dff['Entity'].max(), value=6,
-                color=PRIMARY_COLOR, size=2, pl=15, my=5,
-                showLabelOnHover=False,
-            ),
-            dmc.Text("Use the Slider to adapt the colorbar range", size="xs", c="dimmed", pl=10),
 
-        ], style={'gap': 0, 'height': 100})
-    ], fz=14, justify='space-around',
-    ),
-    dcc.Graph(
-        id='entities-map',
-        config={'displayModeBar': False},
-        responsive=True,
-        figure=fig,
-        style={'height': '100%'},
-    )
-], p=10, style={"flex": 1})
+def entities_map(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"],
+                      geo_landcolor='#f1f3f5' if theme == 'light' else '#1f1f1f')
+    fig_distrib.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Stack([
+        dmc.Group([
+            dmc.Checkbox(id="entities-map-hover-chk", label="Show Entities Names on Hover", w=150,
+                         styles={'body': {'align-items': 'center'}}),
+            dmc.Stack([
+                dcc.Graph(
+                    id={'type': 'figure', 'index': 'entities-map-distrib'},
+                    config={'displayModeBar': False},
+                    responsive=True,
+                    figure=fig_distrib,
+                    style={'flex': 1}
+                ),
+                dmc.Slider(
+                    id="entities-map-distrib-slider",
+                    min=0, max=dff['Entity'].max(), value=6,
+                    color=PRIMARY_COLOR, size=2, pl=15, my=5,
+                    showLabelOnHover=False,
+                ),
+                dmc.Text("Use the Slider to adapt the colorbar range", size="xs", c="dimmed", pl=10),
+
+            ], style={'gap': 0, 'height': 100})
+        ], fz=14, justify='space-around',
+        ),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'map', 'index': 'entities'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={'height': '100%'},
+        )
+    ], p=10, style={"flex": 1})
 
 
 @callback(
-    Output("entities-map", "figure", allow_duplicate=True),
-    Output("entities-map-distrib", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'entities'}, "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'index': 'entities-map-distrib'}, "figure", allow_duplicate=True),
     Output("entities-map-distrib-slider", "value", allow_duplicate=True),
     Output("entities-map-distrib-slider", "max", allow_duplicate=True),
     Input("entities-map-carousel", "active"),
-    Input("entities-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'entities'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_map_distrib_data(carousel, virtual_data):
@@ -190,7 +194,7 @@ def update_map_distrib_data(carousel, virtual_data):
 
 
 @callback(
-    Output("entities-map", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'entities'}, "figure", allow_duplicate=True),
     Input("entities-map-hover-chk", "checked"),
     prevent_initial_call=True
 )
@@ -208,7 +212,7 @@ def entities_names_on_hover(show_names):
 
 
 @callback(
-    Output("entities-map", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'entities'}, "figure", allow_duplicate=True),
     Input("entities-map-distrib-slider", "value"),
     prevent_initial_call=True
 )
@@ -216,17 +220,3 @@ def update_colorbar(value):
     patched_fig = Patch()
     patched_fig["data"][0]['zmax'] = value
     return patched_fig
-
-
-@callback(
-    Output("entities-map", "figure"),
-    Output("entities-map-distrib", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figures_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
-    patched_fig["layout"]['geo']['landcolor'] = '#f1f3f5' if checked else '#1f1f1f'
-    patched_fig_distrib = Patch()
-    patched_fig_distrib["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
-    return patched_fig, patched_fig_distrib

@@ -49,31 +49,30 @@ fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'f
                  showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
 fig.update_yaxes(showticklabels=False, autorange="reversed")
 
-readiness_status_bar = dcc.Graph(
-    id='readiness-status-bar',
-    config={'displayModeBar': False}, responsive=True,
-    figure=fig,
-    style={"flex": 1, 'padding': 10}
-)
+
+def readiness_status_bar(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dcc.Graph(
+        id={'type': 'figure', 'subtype': 'bar', 'index': 'readiness-status'},
+        config={'displayModeBar': False}, responsive=True,
+        figure=fig,
+        style={"flex": 1, 'padding': 10}
+    )
 
 
 @callback(
-    Output("readiness-status-bar", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'bar', 'index': 'readiness-status'}, "figure", allow_duplicate=True),
     Input("readiness-status-carousel", "active"),
-    Input("readiness-grid", "virtualRowData"),
-    State("readiness-status-bar", "figure"),
+    Input({'type': 'grid', 'index': 'readiness'}, "virtualRowData"),
+    State({'type': 'figure', 'subtype': 'bar', 'index': 'readiness-status'}, "figure"),
     prevent_initial_call=True
 )
 def update_status_data(carousel, virtual_data, fig):
-
     patched_fig = Patch()
     # empty figure if there is no data in the grid
     if not virtual_data:
         for i, trace in enumerate(fig['data']):
-            patched_fig["data"][i]['x'] = [0]
-            patched_fig["data"][i]['texttemplate'] = '%{y}'
-            patched_fig["data"][i]['textposition'] = 'outside'  # must for to display outside when 0
-
+            patched_fig["data"][i].update(dict(x=[0], texttemplate='%{y}', textposition='outside'))
         return patched_fig
 
     # sum financing and number of projects by status
@@ -85,33 +84,24 @@ def update_status_data(carousel, virtual_data, fig):
     for i, trace in enumerate(fig['data']):
         status = trace['name']
         if status not in dff.index:
-            patched_fig["data"][i]['x'] = [0]
-            patched_fig["data"][i]['customdata'] = [0]
-            patched_fig["data"][i]['texttemplate'] = '%{y}'
-            patched_fig["data"][i]['textposition'] = 'outside'  # must for to display outside when 0
+            patched_fig["data"][i].update(dict(x=[0], customdata=[0], texttemplate='%{y}', textposition='outside'))
 
         else:
-            patched_fig["data"][i]['x'] = [dff['Number'][status] if carousel else dff['Financing'][status]]
-            patched_fig["data"][i]['customdata'] = [dff['Financing'][status] if carousel else dff['Number'][status]]
-            patched_fig["data"][i]['textposition'] = 'auto'
+            patched_fig["data"][i].update(dict(
+                x=[dff['Number'][status] if carousel else dff['Financing'][status]],
+                customdata=[dff['Financing'][status] if carousel else dff['Number'][status]],
+                textposition='auto'))
 
         x_template = '%{x}' if carousel else '%{x:$.4s}'
         customdata_template = '%{customdata:$.4s}' if carousel else '%{customdata}'
-        patched_fig["data"][i]['texttemplate'] = f"%{{y}}<br>{x_template} ({customdata_template})",
-        patched_fig["data"][i]['hovertemplate'] = (f"<b>%{{y}}</b><br>{x_template} ({customdata_template})"
-                                                   f"<extra></extra>")
+        patched_fig["data"][i].update(dict(
+            texttemplate=f"%{{y}}<br>{x_template} ({customdata_template})",
+            hovertemplate=f"<b>%{{y}}</b><br>{x_template} ({customdata_template})<extra></extra>"
+        ))
 
-    patched_fig["layout"]['xaxis']['title']['text'] = 'Number of Projects' if carousel else 'Financing'
-    patched_fig["layout"]['xaxis']['tickprefix'] = '' if carousel else '$'
+    patched_fig["layout"]['xaxis'].update(dict(
+        title={'text': 'Number of Projects' if carousel else 'Financing'},
+        tickprefix='' if carousel else '$'
+    ))
 
-    return patched_fig
-
-
-@callback(
-    Output("readiness-status-bar", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
     return patched_fig

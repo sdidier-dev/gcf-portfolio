@@ -48,36 +48,39 @@ fig.update_layout(
     barcornerradius=5,  # radius of the corners of the bars
 )
 
-FA_histogram = dmc.Stack([
-    dmc.Group([
-        dmc.ButtonGroup([
-            dmc.Button(
-                "-", id='fa-histogram-minus-btn', variant="outline",
-                color='Gray', fz=16, w=20, h=20, p=0,
-                styles={"label": {'align-items': 'normal'}},
-            ),
-            dmc.Button(
-                "+", id='fa-histogram-plus-btn', variant="outline",
-                color='Gray', fz=16, w=20, h=20, p=0,
-                styles={"label": {'align-items': 'normal'}},
-            ),
-        ], id='fa-histogram-grp-btn'),
-        'Bins Size',
-        dmc.Checkbox(id="fa-histogram-labels-chk", label="Show labels"),
-    ], fz=14),
-    dcc.Graph(
-        id='fa-histogram-graph',
-        config={'displayModeBar': False}, responsive=True,
-        figure=fig,
-        style={"flex": 1}
-    ),
-    # Note: we need to use a store to keep the nbinsx value (max bins) as it is not saved as param in fig
-    dcc.Store(id='fa-histogram-nbinsx-store', data=19)
-], p=10, style={"flex": 1})
+
+def fa_histogram(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Stack([
+        dmc.Group([
+            dmc.ButtonGroup([
+                dmc.Button(
+                    "-", id='fa-histogram-minus-btn', variant="outline",
+                    color='Gray', fz=16, w=20, h=20, p=0,
+                    styles={"label": {'align-items': 'normal'}},
+                ),
+                dmc.Button(
+                    "+", id='fa-histogram-plus-btn', variant="outline",
+                    color='Gray', fz=16, w=20, h=20, p=0,
+                    styles={"label": {'align-items': 'normal'}},
+                ),
+            ], id='fa-histogram-grp-btn'),
+            'Bins Size',
+            dmc.Checkbox(id="fa-histogram-labels-chk", label="Show labels"),
+        ], fz=14),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'histogram', 'index': 'fa'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={"flex": 1}
+        ),
+        # Note: we need to use a store to keep the nbinsx value (max bins) as it is not saved as param in fig
+        dcc.Store(id='fa-histogram-nbinsx-store', data=19)
+    ], p=10, style={"flex": 1})
 
 
 @callback(
-    Output('fa-histogram-graph', 'figure', allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'histogram', 'index': 'fa'}, 'figure', allow_duplicate=True),
     Output('fa-histogram-nbinsx-store', 'data'),
     Input('fa-histogram-minus-btn', 'n_clicks'),
     Input('fa-histogram-plus-btn', 'n_clicks'),
@@ -104,8 +107,8 @@ def update_max_bins(_1, _2, nbinsx):
 
 
 @callback(
-    Output("fa-histogram-graph", "figure", allow_duplicate=True),
-    Input("fa-grid", "virtualRowData"),
+    Output({'type': 'figure', 'subtype': 'histogram', 'index': 'fa'}, "figure", allow_duplicate=True),
+    Input({'type': 'grid', 'index': 'fa'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_x(virtual_data):
@@ -121,7 +124,7 @@ def update_x(virtual_data):
 
 
 @callback(
-    Output('fa-histogram-graph', 'figure', allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'histogram', 'index': 'fa'}, 'figure', allow_duplicate=True),
     Input('fa-histogram-labels-chk', 'checked'),
     prevent_initial_call=True
 )
@@ -130,12 +133,3 @@ def toggle_histogram_labels(checked):
     patched_fig["data"][0]['texttemplate'] = '%{y}' if checked else None
     return patched_fig
 
-
-@callback(
-    Output("fa-histogram-graph", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
-    return patched_fig

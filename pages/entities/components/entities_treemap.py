@@ -99,51 +99,55 @@ fig.update_layout(
     treemapcolorway=["#15a14a", "#1569a1"],
 )
 
-entities_treemap = dmc.Group([
-    dmc.Stack([
-        dmc.NumberInput(
-            id="entities-treemap-max-depth-input",
-            label="Level Depth: ",
-            min=1, max=5, value=5,
-            size="xs", w=120,
-            styles={'input': {'textAlign': 'center', 'fontSize': 14}},
-        ),
-        dmc.Select(
-            id="entities-treemap-values-select",
-            label="Size by:",
-            data=[
-                {"label": "# Entity", "value": "counts"},
-                {"label": "FA Number", "value": "sum_number"},
-                {"label": "FA Financing", "value": "sum_financing"},
-            ],
-            value="counts",
-            checkIconPosition="right", size="xs", w=120,
-        ),
-        dmc.Checkbox(id="entities-treemap-more-chk", label="More Info"),
-        dag.AgGrid(
-            id='entities-levels-drag-grid',
-            rowData=[{'level': 'DAE'}, {'level': 'Type'}, {'level': 'Sector'}, {'level': 'Size'}],
-            columnDefs=[{'field': 'level', 'headerName': 'Levels Order', 'rowDrag': True}],
-            defaultColDef={'sortable': False, "resizable": False},
-            columnSize="sizeToFit",
-            dashGridOptions={"rowDragManaged": True, "rowHeight": 30, 'headerHeight': 30},
-            style={"height": 153, "width": 120}
-        ),
-    ], justify='space-around'),
-    dcc.Graph(
-        id='entities-treemap-graph',
-        config={'displayModeBar': False}, responsive=True,
-        figure=fig,
-        style={"flex": 1},
-    )
-], p=10, align='stretch', style={"flex": 1})
+
+def entities_treemap(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Group([
+        dmc.Stack([
+            dmc.NumberInput(
+                id="entities-treemap-max-depth-input",
+                label="Level Depth: ",
+                min=1, max=5, value=5,
+                size="xs", w=120,
+                styles={'input': {'textAlign': 'center', 'fontSize': 14}},
+            ),
+            dmc.Select(
+                id="entities-treemap-values-select",
+                label="Size by:",
+                data=[
+                    {"label": "# Entity", "value": "counts"},
+                    {"label": "FA Number", "value": "sum_number"},
+                    {"label": "FA Financing", "value": "sum_financing"},
+                ],
+                value="counts",
+                checkIconPosition="right", size="xs", w=120,
+            ),
+            dmc.Checkbox(id="entities-treemap-more-chk", label="More Info"),
+            dag.AgGrid(
+                id={'type': 'grid', 'index': 'entities-levels-drag'},
+                rowData=[{'level': 'DAE'}, {'level': 'Type'}, {'level': 'Sector'}, {'level': 'Size'}],
+                columnDefs=[{'field': 'level', 'headerName': 'Levels Order', 'rowDrag': True}],
+                defaultColDef={'sortable': False, "resizable": False},
+                columnSize="sizeToFit",
+                dashGridOptions={"rowDragManaged": True, "rowHeight": 30, 'headerHeight': 30},
+                className=f"ag-theme-quartz{'' if theme == 'light' else '-dark'}",
+                style={"height": 153, "width": 120}
+            ),
+        ], justify='space-around'),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'treemap', 'index': 'entities'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={"flex": 1},
+        )
+    ], p=10, align='stretch', style={"flex": 1})
 
 
 @callback(
-    Output("entities-treemap-graph", "figure", allow_duplicate=True),
-    Input("entities-grid", "virtualRowData"),
+    Output({'type': 'figure', 'subtype': 'treemap', 'index': 'entities'}, "figure", allow_duplicate=True),
+    Input({'type': 'grid', 'index': 'entities'}, "virtualRowData"),
     Input("entities-treemap-values-select", "value"),
-    Input("entities-levels-drag-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'entities-levels-drag'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_tree_data(virtual_data, selected_value, virtual_data_level):
@@ -187,7 +191,7 @@ def update_tree_data(virtual_data, selected_value, virtual_data_level):
 
 
 @callback(
-    Output("entities-treemap-graph", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'treemap', 'index': 'entities'}, "figure", allow_duplicate=True),
     Input("entities-treemap-max-depth-input", "value"),
     prevent_initial_call=True
 )
@@ -198,7 +202,7 @@ def update_max_level(value):
 
 
 @callback(
-    Output("entities-treemap-graph", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'treemap', 'index': 'entities'}, "figure", allow_duplicate=True),
     Input("entities-treemap-values-select", "value"),
     Input("entities-treemap-more-chk", "checked"),
     prevent_initial_call=True
@@ -237,15 +241,3 @@ def update_text_hover_info(selected_value, show_more):
         hovertemplate='%{currentPath}<br><br>' + template + '<extra></extra>'
     ))
     return patched_fig
-
-
-@callback(
-    Output("entities-treemap-graph", "figure"),
-    Output("entities-levels-drag-grid", "className"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
-    patched_fig["data"][0]["root"]["color"] = "rgba(0,0,0,0.1)" if checked else "rgba(255,255,255,0.1)"
-    return patched_fig, "ag-theme-quartz" if checked else "ag-theme-quartz-dark"

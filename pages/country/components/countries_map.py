@@ -47,52 +47,50 @@ fig.update_layout(
         center={'lat': -1.2, 'lon': 28.5}, projection={'scale': 1.15},
         bgcolor='rgba(0,0,0,0)', countrycolor='rgba(0,0,0,0)',
         showframe=False, showlakes=False, showcountries=True,
-    ),
+    )
 )
 
-countries_map = dmc.Stack([
-    dmc.Group([
-        dmc.Text('Pro tip:', size="xs", c="dimmed", td="underline"),
-        dmc.Text('Click on any country to have details on Readiness Programmes/Funded Activities '
-                 '(depending on the selected activity in the title) for this country.', size="xs", c="dimmed")
-    ]),
-    dmc.Group(
-        [
-            'Show Priority States:',
-            dmc.ChipGroup(
-                [dmc.Chip(group, value=group.lower(), color=priority_states_groups[group])
-                 for group in priority_states_groups],
-                id="countries-map-chipgroup",
-                multiple=True,
-                # persistence=True, persisted_props=["value"]
-            ),
-            'Scope',
-            dmc.Select(
-                id="countries-map-dropdown",
-                data=["World", "Africa", "Asia", "Europe", "North America", "South America"],
-                value="World",
-                checkIconPosition='right', w=150,
-                comboboxProps={'transitionProps': {'duration': 300, 'transition': 'scale-y'}},
-            ),
-        ]
-    ),
-    dcc.Graph(
-        id='countries-map',
-        config={'displayModeBar': False},
-        responsive=True,
-        figure=fig,
-        style={'height': '100%'},
-    )
-], p=10, style={"flex": 1}
-)
+
+def countries_map(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"],
+                      geo_landcolor='#f1f3f5' if theme == 'light' else '#1f1f1f')
+    return dmc.Stack([
+        dmc.Group(
+            [
+                'Show Priority States:',
+                dmc.ChipGroup(
+                    [dmc.Chip(group, value=group.lower(), color=priority_states_groups[group])
+                     for group in priority_states_groups],
+                    id="countries-map-chipgroup",
+                    multiple=True,
+                    # persistence=True, persisted_props=["value"]
+                ),
+                'Scope',
+                dmc.Select(
+                    id="countries-map-dropdown",
+                    data=["World", "Africa", "Asia", "Europe", "North America", "South America"],
+                    value="World",
+                    checkIconPosition='right', w=150,
+                    comboboxProps={'transitionProps': {'duration': 300, 'transition': 'scale-y'}},
+                ),
+            ]
+        ),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'map', 'index': 'countries'},
+            config={'displayModeBar': False},
+            responsive=True,
+            figure=fig,
+            style={'height': '100%'},
+        )
+    ], p=10, style={"flex": 1})
 
 
 @callback(
-    Output("countries-map", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'countries'}, "figure", allow_duplicate=True),
     Input("countries-map-carousel-1", "active"),
     Input("countries-map-carousel-2", "active"),
     Input("countries-map-carousel-3", "active"),
-    Input("countries-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'countries'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_map_data(carousel_1, carousel_2, carousel_3, virtual_data):
@@ -119,24 +117,21 @@ def update_map_data(carousel_1, carousel_2, carousel_3, virtual_data):
     # format label depending on financing|#
     customdata_0_format = ':$.4s' if carousel_2 else ''
 
-    # data
-    patched_fig["data"][0]['locations'] = dff['ISO3']
-    patched_fig["data"][0]['z'] = dff[z_col]
-    # hover text
-    patched_fig["data"][0]['customdata'] = list(zip(dff[customdata_0_col], dff[customdata_1_col]))
-    patched_fig["data"][0]['hovertemplate'] = (
-        f'%{{z{z_format}}} (%{{customdata[0]{customdata_0_format}}})<extra>%{{customdata[1]}}</extra>'
-    )
-    # change the color bar prefix depending on financing/number
-    patched_fig["data"][0]['colorbar']['tickprefix'] = None if carousel_2 else '$'
+    patched_fig["data"][0].update(dict(
+        locations=dff['ISO3'],
+        z=dff[z_col],
+        customdata=list(zip(dff[customdata_0_col], dff[customdata_1_col])),
+        hovertemplate=f'%{{z{z_format}}} (%{{customdata[0]{customdata_0_format}}})<extra>%{{customdata[1]}}</extra>',
+        colorbar={'tickformat': '' if carousel_2 else '$.4s'},
+    ))
 
     return patched_fig
 
 
 @callback(
-    Output("countries-map", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'countries'}, "figure", allow_duplicate=True),
     Input("countries-map-chipgroup", "value"),
-    State("countries-map", "figure"),
+    State({'type': 'figure', 'subtype': 'map', 'index': 'countries'}, "figure"),
     prevent_initial_call=True
 )
 def show_priority_states(values, fig):
@@ -148,7 +143,7 @@ def show_priority_states(values, fig):
 
 
 @callback(
-    Output("countries-map", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'map', 'index': 'countries'}, "figure", allow_duplicate=True),
     Input("countries-map-dropdown", "value"),
     prevent_initial_call=True
 )
@@ -167,39 +162,3 @@ def update_map_scope(scope):
     patched_fig["layout"]['geo']['projection'] = scope_frame[scope.lower()]['projection']
     return patched_fig
 
-
-@callback(
-    Output("dashboard-segmented-control", "value", allow_duplicate=True),
-    Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
-    Output("fa-grid-filter-state-store", "data", allow_duplicate=True),
-    Input("countries-map", "clickData"),
-    State("countries-map-carousel-1", "active"),
-    prevent_initial_call=True
-)
-def map_click(click_data, carousel_1):
-    """
-    set the readiness/fa grid filters state and switch tab, the state will be applied once the grid is ready
-    """
-    if not click_data:
-        return no_update
-
-    selected_country = click_data['points'][0]['customdata'][1]
-
-    # carousel_1 0=readiness 1=FA
-    if carousel_1:
-        grid_filter = {'Countries': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
-        return "fa", no_update, json.dumps(grid_filter)
-    else:
-        grid_filter = {'Country': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
-        return "readiness", json.dumps(grid_filter), no_update
-
-
-@callback(
-    Output("countries-map", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
-    patched_fig["layout"]['geo']['landcolor'] = '#f1f3f5' if checked else '#1f1f1f'
-    return patched_fig

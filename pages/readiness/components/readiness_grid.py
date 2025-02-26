@@ -8,7 +8,7 @@ import dash_ag_grid as dag
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from app_config import df_readiness, header_template_with_icon
+from app_config import df_readiness, header_template_with_icon, query_to_col, col_to_query
 
 # sort by ref for the default order in the grid
 df_readiness.sort_values('Ref #', inplace=True, na_position='last')
@@ -23,11 +23,10 @@ financing_header_tooltip = '''
   for each project.
 '''
 
-ref_col = {'field': 'Ref #'}
-project_col = {
-    'field': 'Project Title', 'tooltipField': 'Project Title',
-    'width': 300
-}
+ref_col = {'field': 'Ref #', "filterParams": {"maxNumConditions": 10, "buttons": ["reset"]}}
+project_col = {'field': 'Project Title', 'tooltipField': 'Project Title',
+               'width': 300
+               }
 activity_col = {
     'field': 'Activity', 'tooltipField': 'Activity',
     'width': 270
@@ -42,10 +41,10 @@ partner_col = {'field': 'Delivery Partner', 'tooltipField': 'Partner Name', 'wid
 country_col = {
     'field': 'Country', "cellRenderer": "CountriesCell",
     'tooltipField': 'Country', "tooltipComponent": "CustomTooltipCountries",
-    'cellStyle': {'display': 'flex', 'align-items': 'center'}
-
+    'cellStyle': {'display': 'flex', 'align-items': 'center'},
+    "filterParams": {"maxNumConditions": 200, "buttons": ["reset"]},
 }
-region_col = {'field': 'Region', 'width': 150}
+region_col = {'field': 'Region', 'width': 150, "filterParams": {"maxNumConditions": 5, "buttons": ["reset"]}}
 sids_col = {
     'field': 'SIDS', "cellClass": 'center-flex-cell', "cellRenderer": "CheckBool",
     "headerComponentParams": {"template": header_template_with_icon},
@@ -66,10 +65,11 @@ as_col = {
 }
 
 status_col = {'field': 'Status', "cellRenderer": "CustomReadinessStatusCell",
-              "cellClass": 'center-flex-cell', "pinned": "right"}
+              "cellClass": 'center-flex-cell', "pinned": "right",
+              "filterParams": {"maxNumConditions": 5, "buttons": ["reset"]},
+              }
 
 date_obj = "d3.timeParse('%Y-%m-%dT%H:%M:%S')(params.data['Approved Date'])"
-
 approved_date_col = {
     'field': 'Approved Date str', 'headerName': 'Approved Date', 'cellStyle': {'textAlign': 'center'},
     "valueFormatter": {"function": f"d3.timeFormat('%b %d, %Y')({date_obj})"},
@@ -113,7 +113,7 @@ columnDefs = [
 
 defaultColDef = {
     "headerClass": 'center-aligned-header',
-    'filter': True, "filterParams": {"buttons": ["reset"]}, "floatingFilter": True,
+    'filter': True, "filterParams": {"maxNumConditions": 1, "buttons": ["reset"]}, "floatingFilter": True,
     'suppressHeaderMenuButton': True,
     "tooltipComponent": "CustomTooltipHeaders",
 }
@@ -127,59 +127,39 @@ dashGridOptions = {
     "popupParent": {"function": "setPopupsParent()"}
 }
 
-readiness_grid = html.Div([
-    dag.AgGrid(
-        id="readiness-grid",
-        rowData=df_readiness.to_dict("records"),
-        columnDefs=columnDefs,
-        defaultColDef=defaultColDef,
-        dashGridOptions=dashGridOptions,
-        dangerously_allow_code=True,
-        columnSize="autoSize",
-        columnSizeOptions={'keys': [
-            'Ref #', 'Delivery Partner', 'Region', 'SIDS', 'LDC', 'NAP', 'Status', 'Approved Date', 'Financing'
-        ]},
-        style={
-            "height": '100%',
-            "max-width": 2225,
-            'box-shadow': 'var(--mantine-shadow-md)',
-        },
-    )
-], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
+
+def readiness_grid(theme='light'):
+    return html.Div([
+        dag.AgGrid(
+            id={'type': 'grid', 'index': 'readiness'},
+            rowData=df_readiness.to_dict("records"),
+            columnDefs=columnDefs,
+            defaultColDef=defaultColDef,
+            dashGridOptions=dashGridOptions,
+            dangerously_allow_code=True,
+            columnSize="autoSize",
+            columnSizeOptions={'keys': [
+                'Ref #', 'Delivery Partner', 'Region', 'SIDS', 'LDC', 'NAP', 'Status', 'Approved Date', 'Financing'
+            ]},
+            className=f"ag-theme-quartz{'' if theme == 'light' else '-dark'}",
+            style={"height": '100%', "max-width": 2225, 'box-shadow': 'var(--mantine-shadow-md)'},
+        )
+    ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
 
 
-@callback(
-    Output("readiness-grid", "filterModel"),
-    Input("readiness-grid", "id"),
-    State("readiness-grid-filter-state-store", "data"),
-)
-def apply_filter(_, temp_filter):
-    # apply existing filter from the store once the grid is ready,
-    return json.loads(temp_filter) if temp_filter else no_update
-
-
-@callback(
-    Output("readiness-grid-filter-state-store", "data", allow_duplicate=True),
-    Input("readiness-grid", "filterModel"),
-    prevent_initial_call=True
-)
-def save_filter(filter_model):
-    # save the current filter state to reapply it when switching tabs
-    return json.dumps(filter_model)
-
-
-@callback(
-    Output("readiness-grid", "filterModel", allow_duplicate=True),
-    Input("readiness-grid-reset-btn", "n_clicks"),
-    prevent_initial_call=True
-)
-def reset_filter(_):
-    return {}
-
-
-@callback(
-    Output("readiness-grid", "className"),
-    Input("color-scheme-switch", "checked"),
-)
-def readiness_grid_switch_theme(checked):
-    return "ag-theme-quartz" if checked else "ag-theme-quartz-dark"
+query_to_col['readiness'] = {
+    'ref': {'field': 'Ref #', 'type': 'text'},
+    'project': {'field': 'Project Title', 'type': 'text'},
+    'activity': {'field': 'Activity', 'type': 'text'},
+    'NAP': {'field': 'NAP', 'type': 'bool'},
+    'deliveryPartner': {'field': 'Delivery Partner', 'type': 'text'},
+    'country': {'field': 'Country', 'type': 'text'},
+    'region': {'field': 'Region', 'type': 'text'},
+    'SIDS': {'field': 'SIDS', 'type': 'bool'},
+    'LDC': {'field': 'LDC', 'type': 'bool'},
+    'AS': {'field': 'AS', 'type': 'bool'},
+    'status': {'field': 'Status', 'type': 'text'},
+    # 'approvedDate': {'field': 'Approved Date str', 'type': 'num'},
+    'financing': {'field': 'Financing', 'type': 'num'},
+}
+col_to_query['readiness'] = {v['field']: k for k, v in query_to_col['readiness'].items()}

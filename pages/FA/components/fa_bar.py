@@ -51,7 +51,6 @@ for col in cat_cols:
         dff = dff.rename({True: 'Yes', False: 'No'})
 
     for cat in cat_cols[col]:
-
         fig.add_bar(
             orientation='h',
             name=cat,
@@ -105,19 +104,22 @@ fig.update_layout(
     showlegend=False,
 )
 
-FA_bar = dcc.Graph(
-    id='fa-bar-graph',
-    config={'displayModeBar': False}, responsive=True,
-    figure=fig,
-    style={"flex": 1, "padding": 10},
-)
+
+def fa_bar(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dcc.Graph(
+        id={'type': 'figure', 'subtype': 'bar', 'index': 'fa'},
+        config={'displayModeBar': False}, responsive=True,
+        figure=fig,
+        style={"flex": 1, "padding": 10},
+    )
 
 
 @callback(
-    Output("fa-bar-graph", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'bar', 'index': 'fa'}, "figure", allow_duplicate=True),
     Input("fa-bar-carousel", "active"),
-    Input("fa-grid", "virtualRowData"),
-    State("fa-bar-graph", "figure"),
+    Input({'type': 'grid', 'index': 'fa'}, "virtualRowData"),
+    State({'type': 'figure', 'subtype': 'bar', 'index': 'fa'}, "figure"),
     prevent_initial_call=True
 )
 def update_fa_bar_data(carousel, virtual_data, fig):
@@ -154,10 +156,12 @@ def update_fa_bar_data(carousel, virtual_data, fig):
             patched_fig["data"][i]['x'] = [0]
         else:
             # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
-            customdata = [(cat,
-                           # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
-                           format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
-                           dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat))]
+            customdata = [(
+                cat,
+                # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
+                format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
+                dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat)
+            )]
 
             # carousel 0=Financing, 1=Number
             if carousel:
@@ -194,14 +198,4 @@ def update_fa_bar_data(carousel, virtual_data, fig):
         range=[0, (total_number_sum if carousel else total_financing_sum) * 1.03],
         tickprefix='' if carousel else '$',
     ))
-    return patched_fig
-
-
-@callback(
-    Output("fa-bar-graph", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
     return patched_fig

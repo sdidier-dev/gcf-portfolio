@@ -34,11 +34,13 @@ dimensions.append(
     go.parcats.Dimension(label='REGION', values=dff['Region'], categoryorder='category ascending')
 )
 
+color = dff['Priority States'].apply(lambda x: 0 if x == 'Yes' else 1)
+
 fig = go.Figure()
 fig.add_parcats(
     dimensions=dimensions,
     counts=dff['RP Financing $'],
-    line={'shape': 'hspline', 'colorscale': [[0, '#a0a115'], [1, '#15a14a']], 'color': '#15a14a'},
+    line={'shape': 'hspline', 'colorscale': [[0, '#a0a115'], [1, '#15a14a']], 'color': color},
     hoveron='color',
     labelfont_size=16,
     tickfont_size=14,
@@ -53,53 +55,30 @@ fig.update_layout(
     margin={"t": 30, "r": 70, "b": 30, "l": 20},
 )
 
-countries_parcats = dmc.Stack([
-    dmc.Tooltip(
-        dmc.Checkbox(id="countries-parcats-chk", label="Highlight Priority States Lines", fz=16),
-        multiline=True, withArrow=True, arrowSize=6, w=300, position="bottom",
-        label="States categorized in at least one priority group SIDS/LDC/AS",
-        bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
-    ),
-    dcc.Graph(
-        id='countries-parcats',
-        config={'displayModeBar': False},
-        responsive=True,
-        figure=fig,
-        style={"flex": 1}
-    )
-], p=10, style={"flex": 1})
+
+def countries_parcats(theme='light'):
+    fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    return dmc.Stack([
+        dmc.Tooltip(
+            dmc.Checkbox(id="countries-parcats-chk", label="Highlight Priority States Lines", checked=True, fz=16),
+            multiline=True, withArrow=True, arrowSize=6, w=300, position="bottom",
+            label="States categorized in at least one priority group SIDS/LDC/AS",
+            bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
+        ),
+        dcc.Graph(
+            id={'type': 'figure', 'subtype': 'parcats', 'index': 'countries'},
+            config={'displayModeBar': False}, responsive=True,
+            figure=fig,
+            style={"flex": 1}
+        )
+    ], p=10, style={"flex": 1})
 
 
 @callback(
-    Output("countries-grid", "filterModel", allow_duplicate=True),
-    Input("countries-parcats", "clickData"),
-    State("countries-parcats", "figure"),
-    prevent_initial_call=True
-)
-def countries_parcats_graph_click(click_data, fig):
-    if not click_data:
-        return no_update
-    points = [p['pointNumber'] for p in click_data['points']]
-
-    grid_filter = {}
-    for dim in fig['data'][0]['dimensions']:
-        # get the categories set of clicked points, if only one cat, it is added for the grid filter
-        if len(cat := set(dim['values'][i] for i in points)) == 1:
-            if dim['label'] == 'REGION':
-                text = cat.pop().replace('<br>', ' ')
-                grid_filter['Region'] = {'filterType': 'text', 'type': 'contains', 'filter': text}
-            elif dim['label'] == 'PRIORITY STATES':
-                grid_filter['Priority States'] = {'filterType': 'text', 'type': 'true' if cat == {'Yes'} else 'false'}
-            else:
-                grid_filter[dim['label']] = {'filterType': 'text', 'type': 'true' if cat == {'Yes'} else 'false'}
-    return grid_filter
-
-
-@callback(
-    Output("countries-parcats", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'parcats', 'index': 'countries'}, "figure", allow_duplicate=True),
     Input("countries-parcats-carousel-1", "active"),
     Input("countries-parcats-carousel-2", "active"),
-    Input("countries-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'countries'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def update_parcats_data(carousel_1, carousel_2, virtual_data):
@@ -133,9 +112,9 @@ def update_parcats_data(carousel_1, carousel_2, virtual_data):
 
 
 @callback(
-    Output("countries-parcats", "figure", allow_duplicate=True),
+    Output({'type': 'figure', 'subtype': 'parcats', 'index': 'countries'}, "figure", allow_duplicate=True),
     Input("countries-parcats-chk", "checked"),
-    Input("countries-grid", "virtualRowData"),
+    Input({'type': 'grid', 'index': 'countries'}, "virtualRowData"),
     prevent_initial_call=True
 )
 def highlight_priority_countries(checked, virtual_data):
@@ -147,14 +126,4 @@ def highlight_priority_countries(checked, virtual_data):
 
     patched_fig = Patch()
     patched_fig["data"][0]['line']['color'] = color
-    return patched_fig
-
-
-@callback(
-    Output("countries-parcats", "figure"),
-    Input("color-scheme-switch", "checked"),
-)
-def update_figure_theme(checked):
-    patched_fig = Patch()
-    patched_fig["layout"]["template"] = pio.templates[f"mantine_{'light' if checked else 'dark'}"]
     return patched_fig
