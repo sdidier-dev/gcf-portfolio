@@ -127,8 +127,10 @@ app.layout = dmc.MantineProvider(
     prevent_initial_call=True
 )
 def switch_dashboard(value, queries_store):
+    # DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from value
+    path = os.getenv('DASH_URL_BASE_PATHNAME', '/') + value[1:],
     # 'callback-nav' to only refresh page_container
-    return value, queries_store[value], 'callback-nav'
+    return path, queries_store[value], 'callback-nav'
 
 
 # http://127.0.0.1:8050/countries?country=a+b&country=c&countryOperator=AND&SIDS=true&RPnb=10-20

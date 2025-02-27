@@ -102,6 +102,7 @@ fig.update_layout(
 
 def entities_treemap(theme='light'):
     fig.update_layout(template=pio.templates[f"mantine_{theme}"])
+    fig.update_traces(root_color="rgba(0,0,0,0.1)" if theme == 'light' else "rgba(255,255,255,0.1)")
     return dmc.Group([
         dmc.Stack([
             dmc.NumberInput(
