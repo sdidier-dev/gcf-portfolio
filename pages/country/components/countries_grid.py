@@ -1,17 +1,15 @@
-import json
 import os
-from urllib.parse import urlparse, parse_qs
 
 import pandas as pd
-from dash import Dash, _dash_renderer, Input, Output, State, callback, clientside_callback, no_update, Patch, html, ctx, \
-    ALL
+from dash import Input, Output, State, callback, no_update, Patch, html
 import dash_ag_grid as dag
 
-import dash_mantine_components as dmc
-from dash_iconify import DashIconify
+from dotenv import load_dotenv
 
-from app_config import df_countries, header_template_with_icon, query_to_filter, filter_to_query, query_to_col, \
-    col_to_query
+from app_config import df_countries, header_template_with_icon, query_to_col, col_to_query
+
+# load env variable to know if the app is local or deployed
+load_dotenv()
 
 financing_header_tooltip = '''
   The amount of GCF funding allocated to each country  
@@ -171,13 +169,16 @@ def cell_icon_click(click_data, virtual_data):
     if not click_data:
         return no_update
 
+    # Note: DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from the subdomains below
+    base_path = os.getenv('DASH_URL_BASE_PATHNAME', '/')
+
     if click_data['colId'] == '# RP':
         if click_data['value'] == 'TOTAL':
             countries = [row['Country Name'].replace(' ', '_') for row in virtual_data]
             query = f"?{col_to_query['readiness']['Country']}={'+'.join(countries)}"
         else:
             query = f"?{col_to_query['readiness']['Country']}={click_data['value']}"
-        return "/readiness", query, 'callback-nav'
+        return base_path + "readiness", query, 'callback-nav'
 
     elif click_data['colId'] == '# FA':
         if click_data['value'] == 'TOTAL':
@@ -185,7 +186,7 @@ def cell_icon_click(click_data, virtual_data):
             query = f"?{col_to_query['fa']['Countries']}={'+'.join(countries)}"
         else:
             query = f"?{col_to_query['fa']['Countries']}={click_data['value']}"
-        return "/funded-activities", query, 'callback-nav'
+        return base_path + "funded-activities", query, 'callback-nav'
 
     else:
         return no_update
