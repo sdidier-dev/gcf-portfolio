@@ -89,7 +89,7 @@ fig.add_treemap(
     texttemplate='<span style="font-size: 1.2em"><b>%{label} - %{customdata[0]} Entities</b></span><br>',
     hovertemplate=(
         '%{currentPath}<br><br>'
-        '<span style="font-size: 1.2em"><b>%{label} - %{customdata[0]} Entities</b></span><br>'),
+        '<span style="font-size: 1.2em"><b>%{label} - %{customdata[0]} Entities</b></span><extra></extra>'),
 )
 
 fig.update_layout(
@@ -153,7 +153,7 @@ def entities_treemap(theme='light'):
 )
 def update_tree_data(virtual_data, selected_value, virtual_data_level):
     patched_fig = Patch()
-    if not virtual_data:
+    if not virtual_data or not virtual_data_level:
         patched_fig["data"][0].update({
             'ids': [], 'labels': [], 'parents': [],
             'values': [], 'text': [], 'customdata': []
@@ -241,4 +241,15 @@ def update_text_hover_info(selected_value, show_more):
         texttemplate=template,
         hovertemplate='%{currentPath}<br><br>' + template + '<extra></extra>'
     ))
+    return patched_fig
+
+
+@callback(
+    Output({'type': 'figure', 'subtype': 'treemap', 'index': 'entities'}, "figure", allow_duplicate=True),
+    Input({"type": "reset-filter-btn", "index": 'entities'}, "n_clicks"),
+    prevent_initial_call=True
+)
+def reset_treemap_level(_):
+    patched_fig = Patch()
+    patched_fig["data"][0]["level"] = ''
     return patched_fig

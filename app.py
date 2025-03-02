@@ -27,15 +27,6 @@ app = Dash(
 
 server = app.server
 page_container.style = {"flex": 1}
-# page_container.className = 'flex-fill overflow-auto'
-
-
-# dashboard_layouts = {
-#     "countries": countries_dashboard,
-#     "readiness": readiness_dashboard,
-#     "fa": FA_dashboard,
-#     "entities": entities_dashboard
-# }
 
 header = dmc.Group(
     [
@@ -63,7 +54,7 @@ header = dmc.Group(
         ])
     ],
     justify='space-between', pb=10,
-    style={'border-bottom': "2px solid var(--primary)"}
+    style={'borderBottom': "2px solid var(--primary)"}
 )
 
 app.layout = dmc.MantineProvider(
@@ -79,10 +70,10 @@ app.layout = dmc.MantineProvider(
                     {"value": "/funded-activities", "label": "FUNDED ACTIVITIES"},
                     {"value": "/entities", "label": "ENTITIES"},
                 ],
-                value="/countries",
+                value="/funded-activities",
                 color='var(--primary)', mt=10,
-                style={'box-shadow': 'var(--mantine-shadow-md)', 'flex-wrap': 'wrap',
-                       'overflow': 'auto', 'min-height': 50},
+                style={'boxShadow': 'var(--mantine-shadow-md)', 'flexWrap': 'wrap', 'overflow': 'auto',
+                       'minHeight': 50},
             ),
 
             page_container
@@ -107,32 +98,28 @@ app.layout = dmc.MantineProvider(
 )
 
 
-# @callback(
-#     Output("dashboard-segmented-control", "value"),
-#     # Input("dashboard-segmented-control", "id"),
-#     Input("url-location", "pathname"),
-# )
-# def update_segmented_control_value(path):
-#     print('init_segmented_control', path)
-#     return no_update
-#     # return path
-
-
 @callback(
+    Output("dashboard-segmented-control", "value"),
     Output("url-location", "pathname"),
     Output("url-location", "search"),
     Output("url-location", "refresh"),
     Input("dashboard-segmented-control", "value"),
+    Input("url-location", "pathname"),
     State("queries-store", "data"),
     prevent_initial_call=True
 )
-def switch_dashboard(value, queries_store):
-    # DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from value
-    path = os.getenv('DASH_URL_BASE_PATHNAME', '/') + value[1:],
-    # 'callback-nav' to only refresh page_container
-    return path, queries_store[value], 'callback-nav'
+def switch_dashboard(value, path, queries_store):
+    if ctx.triggered_id == 'dashboard-segmented-control':
+        # DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from value
+        path = os.getenv('DASH_URL_BASE_PATHNAME', '/') + value[1:]
+        # 'callback-nav' to only refresh page_container
+        return no_update, path, queries_store[value], 'callback-nav'
+    else:
+        # only update the segmented-control value when providing the path
+        return path, no_update, no_update, no_update
 
 
+# Query tests locally
 # http://127.0.0.1:8050/countries?country=a+b&country=c&countryOperator=AND&SIDS=true&RPnb=10-20
 # http://127.0.0.1:8050/readiness?ref=a&project=a&NAP=true&status=dis
 @callback(
@@ -171,7 +158,7 @@ def update_query_from_filter(filter_models):
     # update URL query without refreshing the page only with the first non-empty grid filter model
     # (only one should be used per page) and remove the query when there is no filter_model, like using reset btn
     for filter_model in filter_models:
-        if filter_model:
+        if filter_model and ctx.triggered_id['index'] in col_to_query.keys():
             return filter_to_query(filter_model, col_to_query[ctx.triggered_id['index']]), False
     return '', False
 

@@ -22,7 +22,7 @@ cat_cols = {
     'ESS Category': {'Category C': '#15a14a', 'Category B': '#27ae60', 'Category A': '#2ecc71',
                      'Intermediation 3': '#1569a1', 'Intermediation 2': '#2980b9', 'Intermediation 1': '#3498db'},
     'Priority States': {'Yes': '#15a14a', 'No': '#1569a1'},
-    'Multiple Countries': {'No': '#15a14a', 'Yes': '#1569a1'},
+    'Multi Country': {'No': '#15a14a', 'Yes': '#1569a1'},
     'Modality': {'PAP': '#15a14a', 'SAP': '#1569a1'},
 }
 
@@ -33,7 +33,7 @@ total_financing_sum = df_FA['FA Financing'].sum()
 def cat_hover(col, cat):
     if col == 'Priority States':
         return 'Priority States' if cat == 'Yes' else 'Not Priority States'
-    elif col == 'Multiple Countries':
+    elif col == 'Multi Country':
         return 'Multiple Countries Projects' if cat == 'Yes' else 'Single Country Projects'
     elif col == 'Modality':
         return 'Proposal Approval Process (standard)' if cat == 'PAP' else 'Simplified Approval Process'
@@ -47,7 +47,7 @@ for col in cat_cols:
     dff['Number'] = df_FA[col].value_counts()
 
     # rename bool as Yes/No
-    if col in ['Priority States', 'Multiple Countries']:
+    if col in ['Priority States', 'Multi Country']:
         dff = dff.rename({True: 'Yes', False: 'No'})
 
     for cat in cat_cols[col]:
@@ -66,7 +66,7 @@ for col in cat_cols:
             texttemplate="<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
                          "%{customdata[1]} (%{customdata[2]})<br>",
             hovertemplate="<b>%{customdata[4]}</b><br>"
-                          "%{customdata[1]:.0%} of Total<br>"
+                          "%{customdata[3]:.0%} of Total<br>"
                           "%{customdata[1]} (%{customdata[2]})<extra></extra>",
             marker=dict(
                 color=cat_cols[col][cat],
@@ -90,11 +90,11 @@ fig.add_annotation(
 
 fig.update_xaxes(
     title={'text': 'Financing', 'font_size': 16, 'font_weight': "bold"},
-    range=[0, total_financing_sum * 1.03],
+    fixedrange=True, range=[0, total_financing_sum * 1.03],
     showgrid=False, showline=True, linewidth=2,
     ticks="outside", tickwidth=2, tickprefix='$'
 )
-fig.update_yaxes(tickfont_weight="bold", autorange="reversed")
+fig.update_yaxes(fixedrange=True, tickfont_weight="bold", autorange="reversed")
 
 fig.update_layout(
     barmode='stack',
@@ -142,7 +142,7 @@ def update_fa_bar_data(carousel, virtual_data, fig):
     for col in cat_cols:
         dff_cols[col] = pd.DataFrame(dff_grid.groupby(col)['FA Financing'].sum())
         dff_cols[col]['Number'] = dff_grid[col].value_counts()
-        if col in ['Priority States', 'Multiple Countries']:
+        if col in ['Priority States', 'Multi Country']:
             dff_cols[col] = dff_cols[col].rename({True: 'Yes', False: 'No'})
 
     for i, trace in enumerate(fig['data']):
@@ -155,17 +155,17 @@ def update_fa_bar_data(carousel, virtual_data, fig):
             # set x=0 for the cat will hide the bar so no need to update customdata, texttemplate, hovertemplate
             patched_fig["data"][i]['x'] = [0]
         else:
-            # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
-            customdata = [(
-                cat,
-                # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
-                format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
-                dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat)
-            )]
 
             # carousel 0=Financing, 1=Number
             if carousel:
                 x = [dff['Number'][cat]]
+                # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
+                customdata = [(
+                    cat,
+                    # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
+                    format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
+                    dff['Number'][cat] / total_number_sum, cat_hover(col, cat)
+                )]
                 texttemplate = ("<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
                                 "%{customdata[2]} (%{customdata[1]})<br>")
                 hovertemplate = ("<b>%{customdata[4]}</b><br>"
@@ -173,6 +173,13 @@ def update_fa_bar_data(carousel, virtual_data, fig):
                                  "%{customdata[2]} (%{customdata[1]})<extra></extra>")
             else:
                 x = [dff['FA Financing'][cat]]
+                # customdata: 0=cat, 1=financing, 2=number, 3=financing %, 4=cat_hover
+                customdata = [(
+                    cat,
+                    # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
+                    format_money_number_si(dff['FA Financing'][cat]), dff['Number'][cat],
+                    dff['FA Financing'][cat] / total_financing_sum, cat_hover(col, cat)
+                )]
                 texttemplate = ("<b>%{customdata[0]} %{customdata[3]:.0%}</b><br>"
                                 "%{customdata[1]} (%{customdata[2]})<br>")
                 hovertemplate = ("<b>%{customdata[4]}</b><br>"

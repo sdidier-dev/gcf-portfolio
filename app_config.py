@@ -50,7 +50,7 @@ def text_carousel(text_list: list[str], carousel_id: str):
         controlSize=15,
         # custom class to Hide inactive controls and Show controls on hover
         classNames={"control": "carousel-control", "controls": "carousel-controls", "root": "carousel-root"},
-        style={'display': 'flex', 'align-items': 'center', 'height': 60}
+        style={'display': 'flex', 'alignItems': 'center', 'height': 60}
     )
 
 
@@ -93,6 +93,7 @@ df_countries['Priority States'] = df_countries[['SIDS', 'LDC', 'AS']].any(axis=1
 # Entities Data #####################################################################################
 # fix bad data
 df_entities['BM'] = df_entities['BM'].fillna('0')
+df_entities['Entity'] = df_entities['Entity'].str.replace('_', ' ')
 df_entities['Size'] = df_entities['Size'].str.replace('Medium, Small', 'Medium')
 # convert the BM col as int to be easier to handle
 df_entities['BM'] = df_entities['BM'].str.replace('B.', '', regex=False).astype(int)
@@ -107,6 +108,7 @@ entities_details.rename(columns={"Name": "Entity Name", "Country": "Entity Count
 # Readiness Data #####################################################################################
 
 df_readiness.rename(columns={"LDCs": "LDC"}, inplace=True)
+df_readiness['Delivery Partner'] = df_readiness['Delivery Partner'].str.replace('_', ' ')
 df_readiness['Region'] = (
     df_readiness['Region'].str
     .replace('AF', 'Africa')
@@ -131,6 +133,7 @@ df_readiness['Partner Name'] = df_readiness['Partner Name'].fillna('*Details Mis
 # Funded Activities Data #####################################################################################
 
 # add entity name for hover
+df_FA['Entity'] = df_FA['Entity'].str.replace('_', ' ')
 df_FA = pd.merge(df_FA, entities_details[['Entity', "Entity Name"]], on='Entity', how='left')
 # fill missing data with '*Details Missing*'
 df_FA['Entity Name'] = df_FA['Entity Name'].fillna('*Details Missing*')
@@ -142,8 +145,8 @@ priority_countries = df_countries[df_countries['Priority States']]['Country Name
 df_FA['Priority States'] = df_FA['Countries'].apply(
     lambda countries: any(country.strip() in priority_countries for country in countries.split(','))
 )
-# add multi countries
-df_FA['Multiple Countries'] = df_FA['Countries'].apply(lambda countries: len(countries.split(',')) > 1)
+# add multi country
+df_FA['Multi Country'] = df_FA['Countries'].apply(lambda countries: len(countries.split(',')) > 1)
 
 
 # URL queries to grid filters and the opposite #################################################################

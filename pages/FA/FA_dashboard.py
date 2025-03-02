@@ -48,14 +48,14 @@ def render_children(_, checked):
                         rightSection=' ', rightSectionWidth=0,
                         leftSectionPointerEvents="none", rightSectionPointerEvents="none",
                         ml=-5,  # add a negative margin left to remove the gap
-                        styles={"input": {'color': 'var(--primary)', 'font-size': 20, 'font-weight': 'bold',
-                                          'text-decoration': 'underline', 'cursor': 'pointer'},
+                        styles={"input": {'color': 'var(--primary)', 'fontSize': 20, 'fontWeight': 'bold',
+                                          'textDecoration': 'underline', 'cursor': 'pointer'},
                                 "dropdown": {'border': '1px solid var(--primary)'},
-                                "option": {'font-size': 14, 'font-weight': 'bold'}},
+                                "option": {'fontSize': 14, 'fontWeight': 'bold'}},
                         comboboxProps={"transitionProps": {"transition": "scale-y", "duration": 200}},
                     ),
                 ], className='card-header', fz=20, h=40,
-                    style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                    style={'gap': 5, 'borderRadius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
 
                 components.fa_timeline(theme)
@@ -70,7 +70,7 @@ def render_children(_, checked):
                     text_carousel(["Financing", "Number"], "fa-bar-carousel"),
                     "Distribution by Categories",
                 ], className='card-header', fz=20, h=40,
-                    style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                    style={'gap': 5, 'borderRadius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
 
                 components.fa_bar(theme)
@@ -83,7 +83,7 @@ def render_children(_, checked):
                 dmc.Center([
                     "Projects Financing Distribution",
                 ], className='card-header', fz=20, h=40,
-                    style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                    style={'gap': 5, 'borderRadius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
 
                 components.fa_histogram(theme)
@@ -93,12 +93,12 @@ def render_children(_, checked):
                 miw=400, mih=400, style={"flex": 1, 'overflow': 'visible'}
             ),
 
-        ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
+        ], style={"flex": 1, 'flexWrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'
         ),
         dmc.Group([
             dmc.Button("Reset Filters", id={"type": "reset-filter-btn", "index": 'fa'},
                        variant="outline", color='var(--primary)',
-                       size='compact-xs', radius="lg", px=10, style={"align-self": 'center '}),
+                       size='compact-xs', radius="lg", px=10, style={"alignSelf": 'center '}),
             dmc.Tooltip(
                 dmc.Center(DashIconify(icon='clarity:info-line', color='var(--primary)', width=25)),
                 label=[
@@ -112,7 +112,7 @@ def render_children(_, checked):
                 bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
                 transitionProps={"transition": "scale-x", "duration": 300},
             ),
-        ], style={"align-self": 'center'}),
+        ], style={"alignSelf": 'center'}),
 
         components.fa_grid(theme)
 

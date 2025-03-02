@@ -54,9 +54,7 @@ dagcomponentfuncs.CountriesCell = function (props) {
     }
     return React.createElement(
         "div",
-        {
-            style: {display: 'flex', 'alignItems': 'center', padding: '0px 5px'}
-        },
+        {style: {display: 'flex', 'alignItems': 'center', padding: '0px 5px'}},
         cellChildren
     )
 }
@@ -103,6 +101,10 @@ dagcomponentfuncs.CustomTooltipCountries = function (props) {
 }
 
 dagcomponentfuncs.CheckBool = function (props) {
+    // no bool styling for bottom pinned row
+    if (props.node.rowPinned === 'bottom') {
+        return props.value
+    }
     if (props.value) {
         primaryColor = window.getComputedStyle(document.body).getPropertyValue('--primary')
         return React.createElement(
@@ -133,19 +135,24 @@ dagcomponentfuncs.CustomTooltipHeaders = function (props) {
     )
 }
 
-dagcomponentfuncs.CustomButtonCell = function (props) {
-    // // no icon for bottom pinned row
-    // if (props.node.rowPinned == 'bottom') {
-    //     return props.value
-    // }
-
+dagcomponentfuncs.InternalLinkCell = function (props) {
     const {setData, data} = props;
 
-    function onClick() {
-        console.log(data)
-        setData(data['Country Name']);
-    }
+    const country_or_entity = data['Country Name' in data ? 'Country Name' : 'Entity']
+    const tooltipText = country_or_entity === 'TOTAL' ?
+        `All filtered ${'Country Name' in data ? "Countries" : "Entities"}` : country_or_entity
 
+    const tooltipLabel = React.createElement(window.dash_core_components.Markdown, {},
+        `Go to **${tooltipText}** 
+        ${props.column.colId === '# RP' ? 'Readiness Programmes' : 'Funded Activities'} Dashboard`,
+    )
+
+    const tooltipBackground = window.getComputedStyle(document.body).getPropertyValue('--mantine-color-body')
+    const tooltipTextColor = window.getComputedStyle(document.body).getPropertyValue('--mantine-color-text')
+
+    function onClick() {
+        setData(country_or_entity);
+    }
 
     return React.createElement(
         "div",
@@ -157,49 +164,54 @@ dagcomponentfuncs.CustomButtonCell = function (props) {
                 props.value,
             ),
             React.createElement(
-                window.dash_iconify.DashIconify,
-                {
-                    onClick,
-                    icon: 'mingcute:external-link-line',
-                    className: "custom-cell-icon-link", //custom class adding hover effect
-                    width: 20,
-                },
-            )
+                window.dash_mantine_components.Tooltip,
+                {label: tooltipLabel, display: 'flex', position: "left", bg: tooltipBackground, c: tooltipTextColor},
+                React.createElement(
+                    window.dash_mantine_components.Center, {},
+                    React.createElement(
+                        window.dash_iconify.DashIconify,
+                        {
+                            onClick,
+                            icon: 'iconamoon:arrow-top-right-1-light', height: 25,
+                            className: "custom-cell-icon-link", //custom class adding hover effect
+                        },
+                    ),
+                ),
+            ),
         ]
     )
 }
 
-// dagcomponentfuncs.CustomButtonCell = function (props) {
-//     const {setData, data} = props;
-//
-//     function onClick() {
-//         setData();
-//     }
-//
-//     return React.createElement(
-//         window.dash_bootstrap_components.ActionIcon,
-//         {
-//             onClick,
-//             color: props.color,
-//         },
-//         [
-//             props.value,
-//             React.createElement(
-//                 window.dash_iconify.DashIconify,
-//                 {icon: 'mingcute:check-fill', width: 25, color: primaryColor},
-//             )
-//         ]
-//     );
-// if (props.value) {
-//     primaryColor = window.getComputedStyle(document.body).getPropertyValue('--primary')
-//     return React.createElement(
-//         window.dash_iconify.DashIconify,
-//         {icon: 'mingcute:check-fill', width: 25, color: primaryColor},
-//     );
-// } else {
-//     return '-'
-// }
-// }
+dagcomponentfuncs.ExternalLinkCell = function (props) {
+
+    const tooltipBackground = window.getComputedStyle(document.body).getPropertyValue('--mantine-color-body')
+    const tooltipTextColor = window.getComputedStyle(document.body).getPropertyValue('--mantine-color-text')
+
+    return React.createElement(
+        "div",
+        {style: {display: 'flex', 'alignItems': 'center', width: '100%', gap: '10px'}},
+        [
+            React.createElement(
+                window.dash_mantine_components.Tooltip,
+                {
+                    label: 'Visit the GCF Webpage of the Project for More Details.',
+                    display: 'flex', position: "right", bg: tooltipBackground, c: tooltipTextColor
+                },
+                React.createElement(
+                    'a', {href: 'https://www.greenclimate.fund/project/' + props.data['Ref #'], target: '_blank'},
+                    React.createElement(
+                        window.dash_mantine_components.Center, {},
+                        React.createElement(
+                            window.dash_iconify.DashIconify, {icon: 'mingcute:external-link-line', height: 25}
+                        ),
+                    )
+                ),
+            ),
+            React.createElement("div", {}, props.value),
+        ]
+    )
+}
+
 
 dagcomponentfuncs.CustomReadinessStatusCell = function (props) {
 

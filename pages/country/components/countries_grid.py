@@ -11,6 +11,9 @@ from app_config import df_countries, header_template_with_icon, query_to_col, co
 # load env variable to know if the app is local or deployed
 load_dotenv()
 
+total_cols = ['SIDS', 'LDC', 'AS', 'RP Financing $', '# RP', 'FA Financing $', '# FA']
+totals = df_countries[total_cols].sum()
+
 financing_header_tooltip = '''
   The amount of GCF funding allocated to each country  
   is an estimate based on the best information available  
@@ -30,10 +33,9 @@ columnDefs = [
         climate change that are eligible to receive GCF funding.
         ''',
      "cellRenderer": "CountriesCell",
-     # special styling for the bottom pinned row 'total' cell and center flags
-     'colSpan': {"function": "params.data['Country Name'] === 'TOTAL' ? 5 : 1"},
-     'cellStyle': {"function": "params.value == 'TOTAL' ? {'text-align': 'end'} "
-                               ": {'display': 'flex', 'align-items': 'center', 'gap': 10,}"},
+     # special styling for the bottom pinned row 'total' cell
+     'colSpan': {"function": "params.data['Country Name'] === 'TOTAL' ? 2 : 1"},
+     'cellStyle': {"function": "params.value == 'TOTAL' && {'display': 'flex', 'justifyContent': 'flex-end'}"},
      "filterParams": {"maxNumConditions": 200, "buttons": ["reset"]},
      },
     {'field': 'Region', "filterParams": {"maxNumConditions": 5, "buttons": ["reset"]}},
@@ -73,7 +75,7 @@ columnDefs = [
           'headerTooltip': financing_header_tooltip
           },
          {'field': '# RP', 'headerName': 'Nb of Projects', "cellClass": 'center-flex-cell',
-          "cellRenderer": "CustomButtonCell",
+          "cellRenderer": "InternalLinkCell",
           },
      ]},
     {'headerName': 'Funded Activities', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
@@ -86,7 +88,7 @@ columnDefs = [
           'headerTooltip': financing_header_tooltip
           },
          {'field': '# FA', 'headerName': 'Nb of Projects', "cellClass": 'center-flex-cell',
-          "cellRenderer": "CustomButtonCell", "width": 140
+          "cellRenderer": "InternalLinkCell", "width": 140
           }
      ]},
 ]
@@ -100,10 +102,9 @@ defaultColDef = {
 
 dashGridOptions = {
     "headerHeight": 30,
-    'tooltipShowDelay': 500,
-    'tooltipHideDelay': 15000,
-    'tooltipInteraction': True,
-    "popupParent": {"function": "setPopupsParent()"}
+    'tooltipShowDelay': 500, 'tooltipHideDelay': 15000, 'tooltipInteraction': True,
+    "popupParent": {"function": "setPopupsParent()"},
+    "pinnedBottomRowData": [{"Country Name": "TOTAL", **{col: totals[col] for col in total_cols}}]
 }
 
 
@@ -118,9 +119,10 @@ def countries_grid(theme='light'):
             dangerously_allow_code=True,
             columnSize="autoSize",
             className=f"ag-theme-quartz{'' if theme == 'light' else '-dark'}",
-            style={"height": '100%', "width": 1390, 'box-shadow': 'var(--mantine-shadow-md)'},
+            style={"height": '100%', "width": 1390},
         )
-    ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
+    ], style={"flex": 1, 'display': 'flex', 'justifyContent': 'center', 'width': '100%', 'overflow': 'auto',
+              'boxShadow': 'var(--mantine-shadow-md)'})
 
 
 # mapping field/queries
@@ -147,9 +149,8 @@ def row_pinning_bottom(virtual_data):
     if not virtual_data:
         return no_update
 
-    cols = ['RP Financing $', '# RP', 'FA Financing $', '# FA']
+    cols = ['SIDS', 'LDC', 'AS', 'RP Financing $', '# RP', 'FA Financing $', '# FA']
     dff = pd.DataFrame(virtual_data, columns=cols)
-
     totals = dff[cols].sum()
 
     grid_option_patch = Patch()
@@ -177,7 +178,7 @@ def cell_icon_click(click_data, virtual_data):
             countries = [row['Country Name'].replace(' ', '_') for row in virtual_data]
             query = f"?{col_to_query['readiness']['Country']}={'+'.join(countries)}"
         else:
-            query = f"?{col_to_query['readiness']['Country']}={click_data['value']}"
+            query = f"?{col_to_query['readiness']['Country']}={click_data['value'].replace(' ', '_')}"
         return base_path + "readiness", query, 'callback-nav'
 
     elif click_data['colId'] == '# FA':
@@ -185,7 +186,7 @@ def cell_icon_click(click_data, virtual_data):
             countries = [row['Country Name'].replace(' ', '_') for row in virtual_data]
             query = f"?{col_to_query['fa']['Countries']}={'+'.join(countries)}"
         else:
-            query = f"?{col_to_query['fa']['Countries']}={click_data['value']}"
+            query = f"?{col_to_query['fa']['Countries']}={click_data['value'].replace(' ', '_')}"
         return base_path + "funded-activities", query, 'callback-nav'
 
     else:

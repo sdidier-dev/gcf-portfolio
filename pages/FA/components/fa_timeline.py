@@ -22,7 +22,7 @@ cat_cols = {
     'ESS Category': {'Category C': '#15a14a', 'Category B': '#27ae60', 'Category A': '#2ecc71',
                      'Intermediation 3': '#1569a1', 'Intermediation 2': '#2980b9', 'Intermediation 1': '#3498db'},
     'Priority State': {'Priority States': '#15a14a', 'Not Priority States': '#1569a1'},
-    'Multiple Countries': {'Single Country Projects': '#15a14a', 'Multiple Countries Projects': '#1569a1'},
+    'Multi Country': {'Single Country Projects': '#15a14a', 'Multiple Countries Projects': '#1569a1'},
     'Modality': {'PAP': '#15a14a', 'SAP': '#1569a1'},
 }
 total_color = '#d4ac0d'
@@ -48,14 +48,12 @@ fig.update_xaxes(
 )
 fig.update_yaxes(
     title={'text': 'Financing', 'font_size': 16, 'font_weight': "bold"},
-    tickprefix='$',
-    showgrid=False,
-    rangemode="tozero"
-)
+    tickprefix='$', showgrid=False, rangemode="tozero")
 fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
-    margin={"r": 60, "t": 10, "l": 0, "b": 0},
+    margin={"r": 90
+        , "t": 10, "l": 0, "b": 0},
     legend=dict(xanchor="left", x=0.05, yanchor="top", y=0.95),
     hovermode="x"
 )
@@ -108,7 +106,7 @@ def update_fa_timeline_data(carousel1, col, total, stack, virtual_data, fig):
     # transform bool to yes/no
     if col == 'Priority State':
         dff[col] = dff[col].apply(lambda x: 'Priority States' if x else 'Not Priority States')
-    if col == 'Multiple Countries':
+    if col == 'Multi Country':
         dff[col] = dff[col].apply(lambda x: 'Multiple Countries Projects' if x else 'Single Country Projects')
     # get the total by board meeting
     dff_total = dff_grid.groupby('BM')['FA Financing'].sum().reset_index()
@@ -147,15 +145,17 @@ def update_fa_timeline_data(carousel1, col, total, stack, virtual_data, fig):
         ))
 
         # carousel1 0=Financing 1=Number
+        last_cum_sum = format_money_number_si(df_cat['cum-sum'].iloc[-1])
+        last_cum_num = df_cat['cum-num'].iloc[-1]
         if carousel1:
             y = df_cat['cum-num']
             # display only the last marker and label
-            text = [''] * (len(df_cat) - 1) + [df_cat['cum-num'].iloc[-1]]
+            text = [''] * (len(df_cat) - 1) + [f"{last_cum_num} ({last_cum_sum})"]
             hovertemplate = '<b>%{customdata[1]}</b> (%{customdata[0]})<br>%{customdata[3]:.0%} of Total'
         else:
             y = df_cat['cum-sum']
             # use custom function to have $1B instead of $1G, as it is not possible with D3-formatting
-            text = [''] * (len(df_cat) - 1) + [format_money_number_si(df_cat['cum-sum'].iloc[-1])]
+            text = [''] * (len(df_cat) - 1) + [f"{last_cum_sum} ({last_cum_num})"]
             hovertemplate = '<b>%{customdata[0]}</b> (%{customdata[1]})<br>%{customdata[2]:.0%} of Total'
 
         data_fig.add_scatter(

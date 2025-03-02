@@ -86,7 +86,7 @@ def entities_map(theme='light'):
     return dmc.Stack([
         dmc.Group([
             dmc.Checkbox(id="entities-map-hover-chk", label="Show Entities Names on Hover", w=150,
-                         styles={'body': {'align-items': 'center'}}),
+                         styles={'body': {'alignItems': 'center'}}),
             dmc.Stack([
                 dcc.Graph(
                     id={'type': 'figure', 'index': 'entities-map-distrib'},

@@ -45,7 +45,7 @@ def render_children(_, checked):
             dmc.Card([
                 dmc.Center([
                     "Readiness Programme Flow of Funds"
-                ], className='card-header', fz=20, h=40, style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                ], className='card-header', fz=20, h=40, style={'gap': 5, 'borderRadius': '8px 8px 0px 0px'}),
                 dmc.Divider(),
 
                 components.readiness_timeline(theme)
@@ -63,7 +63,7 @@ def render_children(_, checked):
                         text_carousel(["Financing", "Number"], "readiness-status-carousel"),
                         "by Status"
                     ], className='card-header', fz=20, h=40,
-                        style={'gap': 5, 'border-radius': '8px 8px 0px 0px'}),
+                        style={'gap': 5, 'borderRadius': '8px 8px 0px 0px'}),
                     dmc.Divider(),
 
                     components.readiness_status_bar(theme)
@@ -81,8 +81,8 @@ def render_children(_, checked):
                             size='xs', ml=5,
                             styles={
                                 'wrapper': {'display': 'flex'},
-                                "input": {'color': 'var(--primary)', 'font-size': 20, 'font-weight': 'bold',
-                                          'text-align': 'center', 'text-decoration': 'underline', 'width': 25,
+                                "input": {'color': 'var(--primary)', 'fontSize': 20, 'fontWeight': 'bold',
+                                          'textAlign': 'center', 'textDecoration': 'underline', 'width': 25,
                                           'padding': 0},
                                 'section': {'position': 'relative', 'width': 15},
                             },
@@ -90,7 +90,7 @@ def render_children(_, checked):
                         'Partners by',
                         text_carousel(["Financing", "Project Number"], "readiness-top-partners-carousel"),
                     ], className='card-header', fz=20, h=40,
-                        style={'border-radius': '8px 8px 0px 0px'}),
+                        style={'borderRadius': '8px 8px 0px 0px'}),
                     dmc.Divider(),
 
                     components.readiness_top_partners_bar(theme)
@@ -100,17 +100,17 @@ def render_children(_, checked):
                     mt=10,  # NOTE: add a margin to allow the overflow of the text Carousel control
                     miw=400, mih=330, style={"flex": 1, 'overflow': 'visible'}, p=0
                 )
-            ], style={"flex": 1, 'height': '100%', 'flex-wrap': 'wrap', 'overflow': 'auto', 'row-gap': 0},
+            ], style={"flex": 1, 'height': '100%', 'flexWrap': 'wrap', 'overflow': 'auto', 'row-gap': 0},
                 # remove the row gap, when they are w raped the cards already have the top margin
                 align='stretch', miw=400
             ),
 
-        ], style={"flex": 1, 'flex-wrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'),
+        ], style={"flex": 1, 'flexWrap': 'wrap', 'overflow': 'auto'}, align='stretch', w='100%'),
 
         dmc.Group([
             dmc.Button("Reset Filters", id={"type": "reset-filter-btn", "index": 'readiness'},
                        variant="outline", color='var(--primary)',
-                       size='compact-xs', radius="lg", px=10, style={"align-self": 'center '}),
+                       size='compact-xs', radius="lg", px=10, style={"alignSelf": 'center '}),
             dmc.Tooltip(
                 dmc.Center(DashIconify(icon='clarity:info-line', color='var(--primary)', width=25)),
                 label=[
@@ -124,7 +124,7 @@ def render_children(_, checked):
                 bg='var(--mantine-color-body)', c='var(--mantine-color-text)',
                 transitionProps={"transition": "scale-x", "duration": 300},
             ),
-        ], style={"align-self": 'center'}),
+        ], style={"alignSelf": 'center'}),
 
         components.readiness_grid(theme)
 

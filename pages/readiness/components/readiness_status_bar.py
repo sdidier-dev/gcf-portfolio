@@ -46,8 +46,8 @@ fig.update_layout(
     barcornerradius=5,  # radius of the corners of the bars
 )
 fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'font_weight': "bold"},
-                 showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
-fig.update_yaxes(showticklabels=False, autorange="reversed")
+                 fixedrange=True, showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
+fig.update_yaxes(showticklabels=False, fixedrange=True, autorange="reversed")
 
 
 def readiness_status_bar(theme='light'):

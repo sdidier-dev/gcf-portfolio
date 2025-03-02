@@ -58,7 +58,7 @@ fig.update_layout(
     showlegend=False,
 )
 fig.update_xaxes(title={'text': 'Financing', 'standoff': 10, 'font_size': 16, 'font_weight': "bold"},
-                 showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
+                 fixedrange=True, showgrid=False, showline=True, linewidth=2, ticks="inside", tickprefix='$')
 fig.update_yaxes(showticklabels=False, autorange="reversed")
 
 

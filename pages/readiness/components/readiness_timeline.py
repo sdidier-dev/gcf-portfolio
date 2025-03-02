@@ -132,14 +132,14 @@ fig.update_xaxes(
 )
 yaxis = dict(
     title={'text': 'Financing', 'font_size': 16, 'font_weight': "bold"},
-    showgrid=False, tickprefix='$', rangemode="tozero",
+    showgrid=False, tickprefix='$', rangemode="tozero", fixedrange=True,
     # showline=True, linewidth=2, linecolor='black',
     # zeroline=True, zerolinecolor="black", zerolinewidth=2,
 )
 yaxis2 = dict(
     # showline=True, linewidth=2, mirror=True,
     title={'text': 'Number of Projects', 'font_size': 16, 'font_weight': "bold"},
-    showgrid=False, rangemode="tozero", overlaying='y', side='right'
+    showgrid=False, rangemode="tozero", overlaying='y', side='right', fixedrange=True
 )
 fig.update_layout(
     paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
@@ -177,7 +177,7 @@ def readiness_timeline(theme='light'):
                 dmc.Checkbox(
                     id="readiness-timeline-reple-split-chk",
                     w=200, label="Split Financing by Replenishments Periods",
-                    styles={'body': {'align-items': 'center'}}
+                    styles={'body': {'alignItems': 'center'}}
                 ),
             ]
         ),
@@ -281,7 +281,8 @@ def update_data(agg, split_line, virtual_data):
 
 @callback(
     Output({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure', allow_duplicate=True),
-    Input({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'relayoutData'),  # Triggered by zooming/panning on figure
+    Input({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'relayoutData'),
+    # Triggered by zooming/panning on figure
     Input('readiness-timeline-dropdown', 'value'),
     State({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, 'figure'),
     prevent_initial_call=True,

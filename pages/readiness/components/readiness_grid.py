@@ -1,5 +1,6 @@
 import json
 import os
+from pprint import pprint
 
 import pandas as pd
 from dash import Dash, _dash_renderer, Input, Output, State, callback, clientside_callback, no_update, Patch, html
@@ -41,7 +42,7 @@ partner_col = {'field': 'Delivery Partner', 'tooltipField': 'Partner Name', 'wid
 country_col = {
     'field': 'Country', "cellRenderer": "CountriesCell",
     'tooltipField': 'Country', "tooltipComponent": "CustomTooltipCountries",
-    'cellStyle': {'display': 'flex', 'align-items': 'center'},
+    'cellStyle': {'display': 'flex', 'alignItems': 'center'},
     "filterParams": {"maxNumConditions": 200, "buttons": ["reset"]},
 }
 region_col = {'field': 'Region', 'width': 150, "filterParams": {"maxNumConditions": 5, "buttons": ["reset"]}}
@@ -142,9 +143,10 @@ def readiness_grid(theme='light'):
                 'Ref #', 'Delivery Partner', 'Region', 'SIDS', 'LDC', 'NAP', 'Status', 'Approved Date', 'Financing'
             ]},
             className=f"ag-theme-quartz{'' if theme == 'light' else '-dark'}",
-            style={"height": '100%', "max-width": 2225, 'box-shadow': 'var(--mantine-shadow-md)'},
+            style={"height": '100%', "maxWidth": 2225},
         )
-    ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'overflow': 'auto'})
+    ], style={"flex": 1, 'display': 'flex', 'justifyContent': 'center', 'width': '100%', 'overflow': 'auto',
+              'boxShadow': 'var(--mantine-shadow-md)'})
 
 
 query_to_col['readiness'] = {
@@ -163,3 +165,66 @@ query_to_col['readiness'] = {
     'financing': {'field': 'Financing', 'type': 'num'},
 }
 col_to_query['readiness'] = {v['field']: k for k, v in query_to_col['readiness'].items()}
+
+
+@callback(
+    Output({'type': 'grid', 'index': 'readiness'}, "filterModel", allow_duplicate=True),
+    Input({'type': 'figure', 'subtype': 'bar', 'index': 'readiness-status'}, "clickData"),
+    State({'type': 'grid', 'index': 'readiness'}, "filterModel"),
+    prevent_initial_call=True
+)
+def readiness_status_bar_click(click_data, filter_model):
+    if not click_data:
+        return no_update
+
+    selected_status = click_data['points'][0]['y']
+    filter_model['Status'] = {'filterType': 'text', 'type': 'contains', 'filter': selected_status}
+    return filter_model
+
+
+@callback(
+    Output({'type': 'grid', 'index': 'readiness'}, "filterModel", allow_duplicate=True),
+    Input({'type': 'figure', 'subtype': 'line+bar', 'index': 'readiness-timeline'}, "clickData"),
+    Input('readiness-timeline-dropdown', "value"),
+    State({'type': 'grid', 'index': 'readiness'}, "filterModel"),
+    prevent_initial_call=True
+)
+def readiness_timeline_click(click_data, agg, filter_model):
+    if not click_data:
+        return no_update
+
+    # need to deal with the dates in querry firs
+    # try to use fig zoom to select a date rage that will be applied to the grid
+
+    # line
+    # selected_date = click_data['points'][0]['x']
+
+    # 'curveNumber': 1,
+    # selected_end_date = click_data['points'][0]['x']
+
+    # {"value": "M1", "label": "Month"},
+    # {"value": "M3", "label": "Quarter"},
+    # {"value": "M6", "label": "Half Year"},
+    # {"value": "M12", "label": "Year"},
+    # {"value": "GCF", "label": "GCF Replenishments"},
+
+    # pprint(click_data)
+
+    # filter_model['Status'] = {'filterType': 'text', 'type': 'contains', 'filter': selected_status}
+
+    return no_update
+
+
+@callback(
+    Output({'type': 'grid', 'index': 'readiness'}, "filterModel", allow_duplicate=True),
+    Input({'type': 'figure', 'subtype': 'bar', 'index': 'readiness-top-partners'}, "clickData"),
+    State({'type': 'grid', 'index': 'readiness'}, "filterModel"),
+    prevent_initial_call=True
+)
+def readiness_top_partners_bar_click(click_data, filter_model):
+    if not click_data:
+        return no_update
+
+    selected_partner = click_data['points'][0]['y']
+    filter_model['Delivery Partner'] = {'filterType': 'text', 'type': 'contains', 'filter': selected_partner}
+    return filter_model

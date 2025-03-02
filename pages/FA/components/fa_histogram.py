@@ -57,12 +57,12 @@ def fa_histogram(theme='light'):
                 dmc.Button(
                     "-", id='fa-histogram-minus-btn', variant="outline",
                     color='Gray', fz=16, w=20, h=20, p=0,
-                    styles={"label": {'align-items': 'normal'}},
+                    styles={"label": {'alignItems': 'normal'}},
                 ),
                 dmc.Button(
                     "+", id='fa-histogram-plus-btn', variant="outline",
                     color='Gray', fz=16, w=20, h=20, p=0,
-                    styles={"label": {'align-items': 'normal'}},
+                    styles={"label": {'alignItems': 'normal'}},
                 ),
             ], id='fa-histogram-grp-btn'),
             'Bins Size',

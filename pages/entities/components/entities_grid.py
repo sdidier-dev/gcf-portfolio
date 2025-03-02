@@ -13,13 +13,20 @@ from app_config import df_entities, header_template_with_icon, query_to_col, col
 # sort by ref for the default order in the grid
 df_entities.sort_values('Entity', inplace=True, na_position='last')
 
+total_cols = ['FA Financing', '# Approved']
+totals = df_entities[total_cols].sum()
+
 columnDefs = [
-    {'field': 'Entity', 'tooltipField': 'Entity', 'width': 120},
+    {'field': 'Entity', 'tooltipField': 'Entity', 'width': 120,
+     # special styling for the bottom pinned row 'total' cell
+     'colSpan': {"function": "params.data['Entity'] === 'TOTAL' ? 9 : 1"},
+     'cellStyle': {"function": "params.value == 'TOTAL' && {'display': 'flex', 'justifyContent': 'flex-end'}"},
+     },
     {'field': 'Name', 'tooltipField': 'Name', 'width': 300},
     {'field': 'Country',
      "cellRenderer": "CountriesCell",
      'tooltipField': 'Country', "tooltipComponent": "CustomTooltipCountries",
-     'cellStyle': {'display': 'flex', 'align-items': 'center'}, 'width': 150
+     'cellStyle': {'display': 'flex', 'alignItems': 'center'}, 'width': 150
      },
     {'headerName': 'Details', "headerClass": 'center-aligned-header', "suppressStickyLabel": True,
      'children': [
@@ -47,7 +54,7 @@ columnDefs = [
           "width": 140
           },
          {'field': '# Approved', 'headerName': 'Nb of Projects', "cellClass": 'center-flex-cell',
-          "cellRenderer": "CustomButtonCell", "width": 140
+          "cellRenderer": "InternalLinkCell", "width": 140
           }
      ]},
 ]
@@ -61,9 +68,9 @@ defaultColDef = {
 }
 
 dashGridOptions = {
-    "headerHeight": 30, "rowHeight": 50,
-    'tooltipShowDelay': 500, 'tooltipHideDelay': 15000, 'tooltipInteraction': True,
+    "headerHeight": 30, 'tooltipShowDelay': 500, 'tooltipHideDelay': 15000, 'tooltipInteraction': True,
     "popupParent": {"function": "setPopupsParent()"},  # let the tooltip overflow outside the grid
+    "pinnedBottomRowData": [{"Entity": "TOTAL", **{col: totals[col] for col in total_cols}}]
 }
 
 
@@ -77,10 +84,10 @@ def entities_grid(theme='light'):
             dashGridOptions=dashGridOptions,
             dangerously_allow_code=True,
             className=f"ag-theme-quartz{'' if theme == 'light' else '-dark'}",
-            style={"height": '100%', 'box-shadow': 'var(--mantine-shadow-md)'},
+            style={"height": '100%'},
         )
-    ], style={"flex": 1, 'display': 'flex', 'justify-content': 'center', 'width': '100%', 'maxWidth': 1500,
-              'overflow': 'auto'})
+    ], style={"flex": 1, 'display': 'flex', 'justifyContent': 'center', 'width': '100%', 'maxWidth': 1500,
+              'overflow': 'auto', 'boxShadow': 'var(--mantine-shadow-md)'})
 
 
 # mapping field/queries
@@ -101,37 +108,80 @@ col_to_query['entities'] = {v['field']: k for k, v in query_to_col['entities'].i
 
 
 @callback(
-    Output({'type': 'grid', 'index': 'entities'}, "filterModel", allow_duplicate=True),
-    Input({'type': 'figure', 'subtype': 'map', 'index': 'entities'}, "clickData"),
+    Output({'type': 'grid', 'index': 'entities'}, "dashGridOptions"),
+    Input({'type': 'grid', 'index': 'entities'}, "virtualRowData"),
+)
+def row_pinning_bottom(virtual_data):
+    if not virtual_data:
+        return no_update
+
+    cols = ['FA Financing', '# Approved']
+    dff = pd.DataFrame(virtual_data, columns=cols)
+    totals = dff[cols].sum()
+
+    grid_option_patch = Patch()
+    grid_option_patch["pinnedBottomRowData"] = [{"Entity": "TOTAL", **{col: totals[col] for col in cols}}]
+    return grid_option_patch
+
+
+@callback(
+    Output("url-location", "pathname", allow_duplicate=True),
+    Output("url-location", "search", allow_duplicate=True),
+    Output("url-location", "refresh", allow_duplicate=True),
+    Input({'type': 'grid', 'index': 'entities'}, "cellRendererData"),
+    State({'type': 'grid', 'index': 'entities'}, "virtualRowData"),
     prevent_initial_call=True
 )
-def entities_map_click(click_data):
+def cell_icon_click(click_data, virtual_data):
     if not click_data:
         return no_update
+
+    # Note: DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from the subdomains below
+    base_path = os.getenv('DASH_URL_BASE_PATHNAME', '/')
+
+    if click_data['value'] == 'TOTAL':
+        entities = [row['Entity'].replace(' ', '_') for row in virtual_data]
+        query = f"?{col_to_query['fa']['Entity']}={'+'.join(entities)}"
+    else:
+        query = f"?{col_to_query['fa']['Entity']}={click_data['value'].replace(' ', '_')}"
+    return base_path + "funded-activities", query, 'callback-nav'
+
+
+@callback(
+    Output({'type': 'grid', 'index': 'entities'}, "filterModel", allow_duplicate=True),
+    Input({'type': 'figure', 'subtype': 'map', 'index': 'entities'}, "clickData"),
+    State({'type': 'grid', 'index': 'entities'}, "filterModel"),
+    prevent_initial_call=True
+)
+def entities_map_click(click_data, filter_model):
+    if not click_data:
+        return no_update
+
     selected_country = click_data['points'][0]['customdata'][-1]
-    return {'Country': {'filterType': 'text', 'type': 'contains', 'filter': selected_country}}
+    filter_model['Country'] = {'filterType': 'text', 'type': 'contains', 'filter': selected_country}
+    return filter_model
 
 
 @callback(
     Output({'type': 'grid', 'index': 'entities'}, "filterModel", allow_duplicate=True),
     Input({'type': 'figure', 'subtype': 'treemap', 'index': 'entities'}, "clickData"),
     State({'type': 'grid', 'index': 'entities-levels-drag'}, "virtualRowData"),
+    State({'type': 'grid', 'index': 'entities'}, "filterModel"),
     prevent_initial_call=True
 )
-def entities_treemap_click(click_data, virtual_data_level):
+def entities_treemap_click(click_data, virtual_data_level, filter_model):
     if not click_data:
         return no_update
 
     levels_order = [row['level'] for row in virtual_data_level]
     categories = click_data['points'][0]['id'].split('/')[1:]
 
-    filterModel = {}
     for i, cat in enumerate(categories):
         col = levels_order[i]
         if col == 'DAE':
-            filterModel[col] = {'filterType': 'text',
-                                'type': 'true' if cat == 'Direct Access Entities (DAE)' else 'false'}
+            filter_model[col] = {'filterType': 'text',
+                                 'type': 'true' if cat == 'Direct Access Entities (DAE)' else 'false'}
         else:
-            filterModel[col] = {'filterType': 'text', 'type': 'contains', 'filter': cat}
+            filter_model[col] = {'filterType': 'text', 'type': 'contains', 'filter': cat}
 
-    return filterModel
+    return filter_model
