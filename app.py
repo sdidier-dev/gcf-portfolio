@@ -15,6 +15,7 @@ import importlib
 
 # load env variable to know if the app is local or deployed
 load_dotenv()
+BASE_PATHNAME = os.getenv('DASH_URL_BASE_PATHNAME', '/')
 
 _dash_renderer._set_react_version("18.2.0")
 dmc.add_figure_templates()
@@ -65,28 +66,28 @@ app.layout = dmc.MantineProvider(
             dmc.SegmentedControl(
                 id="dashboard-segmented-control",
                 data=[
-                    {"value": "/countries", "label": "COUNTRIES"},
-                    {"value": "/readiness", "label": "READINESS PROGRAMMES"},
-                    {"value": "/funded-activities", "label": "FUNDED ACTIVITIES"},
-                    {"value": "/entities", "label": "ENTITIES"},
+                    {"value": BASE_PATHNAME + "countries", "label": "COUNTRIES"},
+                    {"value": BASE_PATHNAME + "readiness", "label": "READINESS PROGRAMMES"},
+                    {"value": BASE_PATHNAME + "funded-activities", "label": "FUNDED ACTIVITIES"},
+                    {"value": BASE_PATHNAME + "entities", "label": "ENTITIES"},
                 ],
-                value="/countries",
+                value=BASE_PATHNAME + "countries",
                 color='var(--primary)', mt=10,
                 style={'boxShadow': 'var(--mantine-shadow-md)', 'flexWrap': 'wrap', 'overflow': 'auto',
-                       'minHeight': 50},
+                       'minHeight': 40},
             ),
 
             page_container
 
         ], h='100vh', p=10, style={'gap': 0}),
 
-        dcc.Location(id='url-location',
-                     # refresh='callback-nav'
-                     ),
+        dcc.Location(id='url-location'),
         # keep the queries corresponding to grid filter models to reapply them when switching tabs
         dcc.Store(id="queries-store",
                   # storage_type='session',  # cleared when closing the browser
-                  data={"/countries": '', "/readiness": '', "/funded-activities": '', "/entities": ''}
+                  data={
+                      BASE_PATHNAME + "countries": '', BASE_PATHNAME + "readiness": '',
+                      BASE_PATHNAME + "funded-activities": '', BASE_PATHNAME + "entities": ''}
                   ),
     ],
     id="mantine-provider",
@@ -110,12 +111,8 @@ app.layout = dmc.MantineProvider(
 )
 def switch_dashboard(value, path, queries_store):
     if ctx.triggered_id == 'dashboard-segmented-control':
-        # DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from value
-        print('before ', value, path, queries_store, os.getenv('DASH_URL_BASE_PATHNAME', '/'))
-        path = os.getenv('DASH_URL_BASE_PATHNAME', '/') + value[1:]
-        print('after ', value, path, queries_store)
         # 'callback-nav' to only refresh page_container
-        return value, path, queries_store[value], 'callback-nav'
+        return no_update, value, queries_store[value], 'callback-nav'
     else:
         # only update the segmented-control value when providing the path
         return path, no_update, no_update, no_update
