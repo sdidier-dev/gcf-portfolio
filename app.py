@@ -70,7 +70,7 @@ app.layout = dmc.MantineProvider(
                     {"value": "/funded-activities", "label": "FUNDED ACTIVITIES"},
                     {"value": "/entities", "label": "ENTITIES"},
                 ],
-                value="/funded-activities",
+                value="/countries",
                 color='var(--primary)', mt=10,
                 style={'boxShadow': 'var(--mantine-shadow-md)', 'flexWrap': 'wrap', 'overflow': 'auto',
                        'minHeight': 50},
@@ -111,9 +111,11 @@ app.layout = dmc.MantineProvider(
 def switch_dashboard(value, path, queries_store):
     if ctx.triggered_id == 'dashboard-segmented-control':
         # DASH_URL_BASE_PATHNAME needs a trailing '/', so must be removed from value
+        print('before ', value, path, queries_store, os.getenv('DASH_URL_BASE_PATHNAME', '/'))
         path = os.getenv('DASH_URL_BASE_PATHNAME', '/') + value[1:]
+        print('after ', value, path, queries_store)
         # 'callback-nav' to only refresh page_container
-        return no_update, path, queries_store[value], 'callback-nav'
+        return value, path, queries_store[value], 'callback-nav'
     else:
         # only update the segmented-control value when providing the path
         return path, no_update, no_update, no_update
