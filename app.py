@@ -49,7 +49,7 @@ header = dmc.Group(
             ),
             dmc.Anchor(
                 DashIconify(icon="mdi:github", width=34), c='var(--primary)',
-                href="https://github.com/sdidier-dev/figure-friday", target="_blank", display='flex'
+                href="https://github.com/sdidier-dev/gcf-portfolio", target="_blank", display='flex'
             ),
 
         ])
