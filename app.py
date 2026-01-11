@@ -1,17 +1,13 @@
-import json
 import os
-from pprint import pprint
-from urllib.parse import urlparse, parse_qs
 
-from dash import Dash, dcc, Input, Output, callback, _dash_renderer, Patch, ctx, ALL, page_container, page_registry, \
-    no_update, html, State, MATCH
 import dash_mantine_components as dmc
+import plotly.io as pio
+from dash import Dash, dcc, Input, Output, callback, _dash_renderer, Patch, ctx, ALL, page_container, no_update, State, \
+    MATCH
 from dash_iconify import DashIconify
 from dotenv import load_dotenv
-import plotly.io as pio
 
-from app_config import parse_as_number, query_to_filter, filter_to_query, query_to_col, col_to_query
-import importlib
+from app_config import query_to_filter, filter_to_query, query_to_col, col_to_query
 
 # load env variable to know if the app is local or deployed
 load_dotenv()
